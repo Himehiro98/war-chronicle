@@ -29,16 +29,16 @@ export default function Hero() {
 
       <div style={{
         position: 'relative',
-        maxWidth: 1280,
+        maxWidth: 1440,
         margin: '0 auto',
-        padding: '60px 32px 60px',
+        padding: '48px 32px 48px',
         display: 'flex',
-        gap: 48,
+        gap: 32,
         alignItems: 'center',
         flexWrap: 'wrap',
       }}>
         {/* ── 左：テキスト ── */}
-        <div style={{ flex: '1 1 540px', minWidth: 320 }}>
+        <div style={{ flex: '1 1 480px', minWidth: 320 }}>
           {/* タグライン */}
           <div style={{
             fontSize: 11, letterSpacing: '0.2em',
@@ -114,13 +114,13 @@ export default function Hero() {
           {/* 周囲の光のハロ効果 */}
           <div style={{
             position: 'absolute',
-            inset: -40,
-            background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)',
+            inset: -60,
+            background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 70%)',
             pointerEvents: 'none',
             zIndex: 0,
           }} />
           <div style={{ position: 'relative', zIndex: 1 }}>
-            <RotatingGlobe size={580} />
+            <RotatingGlobe size={720} />
           </div>
           {/* キャプション */}
           <div style={{
@@ -174,17 +174,22 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* モバイル時は地球儀を小さく */}
+      {/* レスポンシブ：画面幅に応じて地球儀をスケール */}
       <style jsx>{`
-        @media (max-width: 900px) {
+        @media (max-width: 1200px) {
+          :global(.hero-globe-wrap) {
+            transform: scale(0.85);
+          }
+        }
+        @media (max-width: 1000px) {
           :global(.hero-globe-wrap) {
             margin: 24px auto 0;
             transform: scale(0.7);
           }
         }
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
           :global(.hero-globe-wrap) {
-            transform: scale(0.55);
+            transform: scale(0.5);
           }
         }
       `}</style>
