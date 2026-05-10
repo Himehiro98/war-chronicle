@@ -11,6 +11,21 @@ export const WARS: War[] = [
   /* ─────────────────── 近世（1700-1899） ─────────────────── */
 
   {
+    id: 'great-northern-war',
+    year: 1700, endYear: 1721,
+    name: '大北方戦争',
+    region: 0, type: 'war', era: 'early-modern',
+    theater: '北欧・バルト海・東欧',
+    mapHighlight: 'europe',
+    markers: [
+      { cx: 185, cy: 12, label: 'ストックホルム（スウェーデン・カール12世）', isMain: true },
+      { cx: 215, cy: 18, label: 'モスクワ（ロシア・ピョートル大帝）', enemy: true },
+      { cx: 190, cy: 16, label: 'ナルヴァ（1700年初戦・スウェーデン勝利）' },
+      { cx: 210, cy: 24, label: 'ポルタヴァ（1709年決戦・ロシア勝利）', isMain: true },
+      { cx: 193, cy: 14, label: 'ニスタット（1721年講和条約）' },
+    ],
+  },
+  {
     id: 'war-of-spanish-succession',
     year: 1701, endYear: 1714,
     name: 'スペイン継承戦争',
@@ -23,6 +38,51 @@ export const WARS: War[] = [
       { cx: 162, cy: 28, label: '英国・蘭・墺（同盟）', ally: true },
       { cx: 166, cy: 38, label: 'ブレンハイム（1704決戦）', isMain: true },
       { cx: 170, cy: 35, label: 'ユトレヒト（条約1713）' },
+    ],
+  },
+  {
+    id: 'war-of-polish-succession',
+    year: 1733, endYear: 1738,
+    name: 'ポーランド継承戦争',
+    region: 0, type: 'war', era: 'early-modern',
+    theater: 'ポーランド・イタリア半島・ライン川流域',
+    mapHighlight: 'europe',
+    markers: [
+      { cx: 193, cy: 22, label: 'ワルシャワ（選挙地・スタニスワフ1世支持）', isMain: true },
+      { cx: 185, cy: 35, label: 'ウィーン（オーストリア・ハプスブルク）', enemy: true },
+      { cx: 170, cy: 42, label: 'パリ（フランス・ルイ15世）', ally: true },
+      { cx: 215, cy: 22, label: 'サンクトペテルブルク（ロシア）', enemy: true },
+      { cx: 183, cy: 36, label: 'ダンツィヒ包囲戦（1734年）', isMain: true },
+    ],
+  },
+  {
+    id: 'war-of-austrian-succession',
+    year: 1740, endYear: 1748,
+    name: 'オーストリア継承戦争',
+    region: 0, type: 'war', era: 'early-modern',
+    theater: 'ヨーロッパ全域・北米（ジョージ王戦争）・インド',
+    mapHighlight: 'europe',
+    markers: [
+      { cx: 185, cy: 35, label: 'ウィーン（マリア・テレジア）', isMain: true },
+      { cx: 183, cy: 22, label: 'ベルリン（フリードリヒ2世・プロイセン）', enemy: true },
+      { cx: 185, cy: 30, label: 'シュレジエン（プロイセン侵攻・1740.12）', isMain: true },
+      { cx: 170, cy: 42, label: 'フランス（対墺同盟）', enemy: true },
+      { cx: 175, cy: 38, label: 'フォントノワ（1745決戦）' },
+    ],
+  },
+  {
+    id: 'russo-turkish-war-1768',
+    year: 1768, endYear: 1774,
+    name: '露土戦争（1768-1774）',
+    region: 0, type: 'war', era: 'early-modern',
+    theater: '黒海北岸・バルカン半島・エーゲ海',
+    mapHighlight: 'eastern-europe',
+    markers: [
+      { cx: 215, cy: 22, label: 'サンクトペテルブルク（ロシア・エカチェリーナ2世）', isMain: true },
+      { cx: 205, cy: 50, label: 'コンスタンティノープル（オスマン帝国）', enemy: true },
+      { cx: 207, cy: 32, label: 'カグル（1770年ルミャンツェフ勝利）', isMain: true },
+      { cx: 205, cy: 40, label: 'チェスメ海戦（1770年ロシア艦隊勝利）', isMain: true },
+      { cx: 208, cy: 30, label: 'キュチュク・カイナルジャ（1774年条約）' },
     ],
   },
   {
