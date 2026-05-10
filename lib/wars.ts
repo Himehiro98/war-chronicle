@@ -69,6 +69,9 @@ export const WARS: War[] = [
       { coordinates: [2.3, 48.9], label: 'フランス（対墺同盟）', enemy: true },
       { coordinates: [3.5, 50.6], label: 'フォントノワ（1745決戦）' },
     ],
+    cotenLinks: [
+      { title: 'フリードリヒ大王編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%83%95%E3%83%AA%E3%83%BC%E3%83%89%E3%83%AA%E3%83%92%E5%A4%A7%E7%8E%8B' },
+    ],
   },
   {
     id: 'russo-turkish-war-1768',
@@ -83,6 +86,9 @@ export const WARS: War[] = [
       { coordinates: [28.2, 45.9], label: 'カグル（1770年ルミャンツェフ勝利）', isMain: true },
       { coordinates: [26.4, 38.3], label: 'チェスメ海戦（1770年ロシア艦隊勝利）', isMain: true },
       { coordinates: [27.9, 43.9], label: 'キュチュク・カイナルジャ（1774年条約）' },
+    ],
+    cotenLinks: [
+      { title: 'オスマン帝国編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%82%AA%E3%82%B9%E3%83%9E%E3%83%B3%E5%B8%9D%E5%9B%BD' },
     ],
   },
   {
@@ -99,6 +105,9 @@ export const WARS: War[] = [
       { coordinates: [37.6, 55.8], label: 'ロシア', enemy: true },
       { coordinates: [-0.1, 51.5], label: '英国（同盟）', ally: true },
     ],
+    cotenLinks: [
+      { title: 'フリードリヒ大王編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%83%95%E3%83%AA%E3%83%BC%E3%83%89%E3%83%AA%E3%83%92%E5%A4%A7%E7%8E%8B' },
+    ],
   },
   {
     id: 'american-independence',
@@ -114,6 +123,9 @@ export const WARS: War[] = [
       { coordinates: [2.3, 48.9], label: '仏（支援）', ally: true },
       { coordinates: [-0.1, 51.5], label: '英', enemy: true },
     ],
+    cotenLinks: [
+      { title: 'アメリカ開拓史編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%82%A2%E3%83%A1%E3%83%AA%E3%82%AB%E9%96%8B%E6%8B%93%E5%8F%B2' },
+    ],
   },
   {
     id: 'french-revolution',
@@ -127,6 +139,9 @@ export const WARS: War[] = [
       { coordinates: [2.1, 48.8], label: 'ヴェルサイユ' },
       { coordinates: [16.4, 48.2], label: 'オーストリア', enemy: true },
       { coordinates: [-0.1, 51.5], label: '英（干渉）', enemy: true },
+    ],
+    cotenLinks: [
+      { title: 'フランス革命編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%83%95%E3%83%A9%E3%83%B3%E3%82%B9%E9%9D%A9%E5%91%BD' },
     ],
   },
   {
@@ -157,6 +172,9 @@ export const WARS: War[] = [
       { coordinates: [37.6, 55.8], label: 'モスクワ（1812遠征）' },
       { coordinates: [12.4, 51.3], label: 'ライプツィヒ（諸国民の戦い1813）' },
       { coordinates: [4.4, 50.7], label: 'ワーテルロー（最終決戦1815）', isMain: true },
+    ],
+    cotenLinks: [
+      { title: 'フランス革命編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%83%95%E3%83%A9%E3%83%B3%E3%82%B9%E9%9D%A9%E5%91%BD' },
     ],
   },
   {
@@ -217,6 +235,9 @@ export const WARS: War[] = [
       { coordinates: [-99.5, 26.0], label: 'リオ・グランデ（開戦地）' },
       { coordinates: [-119.4, 36.8], label: 'カリフォルニア（占領）' },
       { coordinates: [-105.9, 35.7], label: 'サンフェ・トラム（米領化）' },
+    ],
+    cotenLinks: [
+      { title: 'アメリカ開拓史編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%82%A2%E3%83%A1%E3%83%AA%E3%82%AB%E9%96%8B%E6%8B%93%E5%8F%B2' },
     ],
   },
   {
@@ -307,6 +328,9 @@ export const WARS: War[] = [
       { coordinates: [-77.0, 38.9], label: 'ワシントンD.C.（北軍首都）', ally: true },
       { coordinates: [-78.8, 37.4], label: 'アポマトックス（南軍降伏）' },
     ],
+    cotenLinks: [
+      { title: 'リンカン編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%83%AA%E3%83%B3%E3%82%AB%E3%83%B3' },
+    ],
   },
   {
     id: 'boshin-war',
@@ -336,6 +360,9 @@ export const WARS: War[] = [
       { coordinates: [28.9, 41.5], label: 'コンスタンティノープル直前（停戦）' },
       { coordinates: [28.2, 41.0], label: 'サン・ステファノ条約（1878.3）' },
       { coordinates: [13.4, 52.5], label: 'ベルリン（条約改定1878.6）' },
+    ],
+    cotenLinks: [
+      { title: 'オスマン帝国編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%82%AA%E3%82%B9%E3%83%9E%E3%83%B3%E5%B8%9D%E5%9B%BD' },
     ],
   },
   {
@@ -477,6 +504,9 @@ export const WARS: War[] = [
       { coordinates: [130.7, 32.7], label: '田原坂（最大激戦1877.3）' },
       { coordinates: [139.7, 35.7], label: '東京（明治政府）', enemy: true },
       { coordinates: [131.6, 31.9], label: '延岡・宮崎（撤退戦）' },
+    ],
+    cotenLinks: [
+      { title: '西郷隆盛編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E8%A5%BF%E9%83%B7%E9%9A%86%E7%9B%9B' },
     ],
   },
 
@@ -927,6 +957,9 @@ export const WARS: War[] = [
       { coordinates: [28.9, 41.0], label: 'オスマン帝国（バルカン領土喪失）', enemy: true },
       { coordinates: [18.4, 43.8], label: 'サラエボ（1914火種の地）' },
     ],
+    cotenLinks: [
+      { title: 'オスマン帝国編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%82%AA%E3%82%B9%E3%83%9E%E3%83%B3%E5%B8%9D%E5%9B%BD' },
+    ],
   },
   {
     id: 'irish-independence-war',
@@ -1049,6 +1082,9 @@ export const WARS: War[] = [
       { coordinates: [-0.6, 49.4], label: 'ノルマンディー（Dデイ1944）', isMain: true },
       { coordinates: [2.3, 48.9], label: 'パリ（解放1944）', ally: true },
       { coordinates: [19.2, 50.0], label: 'アウシュヴィッツ（ホロコースト）' },
+    ],
+    cotenLinks: [
+      { title: 'ヒトラー編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%83%92%E3%83%88%E3%83%A9%E3%83%BC' },
     ],
   },
   {
