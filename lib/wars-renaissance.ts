@@ -77,8 +77,8 @@ export const WARS_RENAISSANCE: War[] = [
       { coordinates: [139.69, 35.69], label: '江戸（1603年徳川幕府開府）' },
     ],
     cotenLinks: [
-      { title: '織田信長編', url: 'https://cotenradio.fm/' },
-      { title: '秀吉・家康編', url: 'https://cotenradio.fm/' },
+      { title: '織田信長編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E7%B9%94%E7%94%B0%E4%BF%A1%E9%95%B7' },
+      { title: '秀吉・家康編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E7%A7%80%E5%90%89%E3%83%BB%E5%AE%B6%E5%BA%B7' },
     ],
     weight: 3,
     tags: ['権力真空', '帝国衰退', '指導者個人要因', '同盟暴走', '王朝継承'],
@@ -141,7 +141,7 @@ export const WARS_RENAISSANCE: War[] = [
       { coordinates: [-0.13, 51.51], label: 'ロンドン条約（1604年講和）' },
     ],
     cotenLinks: [
-      { title: 'エリザベス一世編', url: 'https://cotenradio.fm/' },
+      { title: 'エリザベス一世編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%82%A8%E3%83%AA%E3%82%B6%E3%83%99%E3%82%B9%E4%B8%80%E4%B8%96' },
     ],
     weight: 2,
     tags: ['宗教対立', '帝国衰退', '情報戦・プロパガンダ', '誤算・誤認知', '海洋覇権'],
@@ -164,7 +164,7 @@ export const WARS_RENAISSANCE: War[] = [
       { coordinates: [127.76, 34.76], label: '露梁海戦（1598年11月・李舜臣戦死・終戦）', isMain: true },
     ],
     cotenLinks: [
-      { title: '秀吉・家康編', url: 'https://cotenradio.fm/' },
+      { title: '秀吉・家康編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E7%A7%80%E5%90%89%E3%83%BB%E5%AE%B6%E5%BA%B7' },
     ],
     weight: 2,
     tags: ['指導者個人要因', '同盟暴走', '誤算・誤認知', '帝国衰退', '文明衝突', '海洋覇権'],
@@ -247,7 +247,7 @@ export const WARS_RENAISSANCE: War[] = [
       { coordinates: [21.18, 45.13], label: 'カルロヴィッツ（1699年講和条約）', isMain: true },
     ],
     cotenLinks: [
-      { title: 'オスマン帝国編', url: 'https://cotenradio.fm/' },
+      { title: 'オスマン帝国編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%82%AA%E3%82%B9%E3%83%9E%E3%83%B3%E5%B8%9D%E5%9B%BD' },
     ],
     weight: 2,
     tags: ['帝国衰退', '宗教対立', '同盟暴走', '誤算・誤認知'],

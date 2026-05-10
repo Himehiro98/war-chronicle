@@ -398,14 +398,13 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
   if (!war) return null;
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 flex flex-col"
+    <div className={isMobile ? 'fixed inset-0 flex flex-col' : 'absolute bottom-0 left-0 right-0 flex flex-col'}
       style={{
         background: '#fafaf9',
         transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
         transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
-        zIndex: 30,
-        height: `${drawerHeight}%`,
-        top: isMobile && isOpen ? 0 : 'auto',
+        zIndex: isMobile ? 50 : 30,
+        height: isMobile ? '100dvh' : `${drawerHeight}%`,
         boxShadow: '0 -4px 24px rgba(0,0,0,0.12)',
       }}>
 
@@ -470,52 +469,73 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
       </div>
 
       {/* タブバー */}
-      <div className="flex flex-shrink-0 items-stretch wd-tabs-bar"
+      <div className="flex-shrink-0 wd-tabs-bar"
         style={{
           background: '#1f1a14',
           borderBottom: `2px solid ${activeConfig.accent}`,
           overflowX: 'auto',
           overflowY: 'hidden',
           WebkitOverflowScrolling: 'touch',
+          display: 'flex',
+          flexWrap: 'nowrap',
+          width: '100%',
         }}>
-        {TABS.map((t) => {
-          const isActive = t.id === activeTab;
-          const isPinned = t.pinned;
-          return (
-            <button key={t.id} onClick={() => setActiveTab(t.id)}
-              style={{
-                padding: isMobile ? '10px 14px' : '8px 16px',
-                fontSize: isMobile ? 11 : 10,
-                cursor: 'pointer',
-                fontFamily: 'inherit', letterSpacing: '0.04em',
-                background: isActive ? t.accent : (isPinned ? `${t.accent}25` : 'transparent'),
-                color: isActive ? 'white' : (isPinned ? '#fca5a5' : '#9a8f7a'),
-                borderBottom: isActive ? `2px solid ${t.accent}` : '2px solid transparent',
-                borderLeft: isPinned && !isActive ? `2px solid ${t.accent}` : 'none',
-                marginBottom: -2,
-                marginLeft: isPinned && !isMobile ? 'auto' : 0,
-                fontWeight: isActive || isPinned ? 700 : 400,
-                transition: 'all 0.15s',
-                display: 'flex', alignItems: 'center', gap: 4,
-                position: 'relative',
-                flexShrink: 0,
-                whiteSpace: 'nowrap',
-                writingMode: 'horizontal-tb',
-              }}>
-              <span>{t.emoji}</span>
-              <span style={{ writingMode: 'horizontal-tb' }}>{t.label}</span>
-              {isPinned && !isActive && (
+        <div style={{
+          display: 'inline-flex',
+          flexWrap: 'nowrap',
+          minWidth: 'max-content',
+          width: 'max-content',
+        }}>
+          {TABS.map((t) => {
+            const isActive = t.id === activeTab;
+            const isPinned = t.pinned;
+            return (
+              <button key={t.id} onClick={() => setActiveTab(t.id)}
+                style={{
+                  padding: isMobile ? '10px 12px' : '8px 16px',
+                  fontSize: isMobile ? 11 : 10,
+                  cursor: 'pointer',
+                  fontFamily: 'inherit', letterSpacing: '0.04em',
+                  background: isActive ? t.accent : (isPinned ? `${t.accent}25` : 'transparent'),
+                  color: isActive ? 'white' : (isPinned ? '#fca5a5' : '#9a8f7a'),
+                  borderBottom: isActive ? `2px solid ${t.accent}` : '2px solid transparent',
+                  borderLeft: isPinned && !isActive ? `2px solid ${t.accent}` : 'none',
+                  marginBottom: -2,
+                  marginLeft: isPinned && !isMobile ? 'auto' : 0,
+                  fontWeight: isActive || isPinned ? 700 : 400,
+                  transition: 'all 0.15s',
+                  display: 'inline-flex', alignItems: 'center', gap: 4,
+                  position: 'relative',
+                  flexShrink: 0,
+                  flexGrow: 0,
+                  flexBasis: 'auto',
+                  whiteSpace: 'nowrap',
+                  writingMode: 'horizontal-tb',
+                  wordBreak: 'keep-all',
+                  textOrientation: 'mixed',
+                  minWidth: 'max-content',
+                }}>
+                <span style={{ display: 'inline-block', flexShrink: 0 }}>{t.emoji}</span>
                 <span style={{
-                  position: 'absolute', top: 2, right: 4,
-                  width: 6, height: 6, borderRadius: '50%',
-                  background: t.accent,
-                  boxShadow: `0 0 6px ${t.accent}`,
-                  animation: 'pulse 2s infinite',
-                }} />
-              )}
-            </button>
-          );
-        })}
+                  display: 'inline-block',
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
+                  writingMode: 'horizontal-tb',
+                  wordBreak: 'keep-all',
+                }}>{t.label}</span>
+                {isPinned && !isActive && (
+                  <span style={{
+                    position: 'absolute', top: 2, right: 4,
+                    width: 6, height: 6, borderRadius: '50%',
+                    background: t.accent,
+                    boxShadow: `0 0 6px ${t.accent}`,
+                    animation: 'pulse 2s infinite',
+                  }} />
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* コンテンツ */}

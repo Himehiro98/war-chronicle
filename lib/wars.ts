@@ -1385,8 +1385,8 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'russian-revolution',
-    year: 1917, endYear: 1922,
-    name: 'ロシア革命・内戦',
+    year: 1917, endYear: 1918,
+    name: 'ロシア革命',
     region: 0, type: 'revolution', era: '20th-century',
     theater: 'ロシア全域',
     mapHighlight: 'eastern-europe',
@@ -1869,10 +1869,10 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'burmese-independence-war',
-    year: 1948, endYear: 1960,
-    name: 'ビルマ独立戦争',
+    year: 1948, endYear: 2025,
+    name: 'ミャンマー内戦',
     region: 1, type: 'colonial', era: '20th-century',
-    theater: 'ビルマ全土（イラワジ・デルタ・カレン州・シャン高原）',
+    theater: 'ミャンマー全土（ビルマ族中央・カレン州・シャン高原・カチン州）',
     mapHighlight: 'southeast-asia',
     markers: [
       { coordinates: [96.16, 16.8], label: 'ラングーン（首都・1948.1.4独立宣言）', isMain: true },
