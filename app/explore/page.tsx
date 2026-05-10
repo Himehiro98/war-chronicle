@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import Timeline from '@/components/Timeline';
 import MapPanel from '@/components/MapPanel';
 import DetailDrawer from '@/components/DetailDrawer';
@@ -80,15 +79,16 @@ export default function Home() {
     setActiveEra(war.era);
   }, []);
 
-  // ?war=xxx のクエリで初期選択
-  const searchParams = useSearchParams();
+  // ?war=xxx のクエリで初期選択（client-side のみ）
   useEffect(() => {
-    const warId = searchParams.get('war');
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const warId = params.get('war');
     if (warId) {
       const w = WARS.find((x) => x.id === warId);
       if (w) handleSelectWar(w);
     }
-  }, [searchParams, handleSelectWar]);
+  }, [handleSelectWar]);
 
   const content = selectedWar ? (WAR_CONTENT[selectedWar.id] ?? null) : null;
 
