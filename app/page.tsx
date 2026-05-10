@@ -35,10 +35,11 @@ export default function Home() {
           </Link>
           <nav style={{ display: 'flex', gap: 4 }}>
             {[
-              { label: '学ぶ',     href: '#learning-paths', emoji: '🎓' },
-              { label: 'テーマ',   href: '#modern-themes',  emoji: '🌐' },
-              { label: 'パターン', href: '#patterns',       emoji: '🧬' },
-              { label: '探索',     href: '/explore',        emoji: '🗺️' },
+              { label: '学ぶ',         href: '#learning-paths', emoji: '🎓' },
+              { label: 'テーマ',       href: '#modern-themes',  emoji: '🌐' },
+              { label: 'パターン',     href: '#patterns',       emoji: '🧬' },
+              { label: 'ネットワーク', href: '/network',        emoji: '🕸️' },
+              { label: '探索',         href: '/explore',        emoji: '🗺️' },
             ].map((n) => (
               <a key={n.label} href={n.href} style={{
                 padding: '6px 14px', borderRadius: 4, fontSize: 12,

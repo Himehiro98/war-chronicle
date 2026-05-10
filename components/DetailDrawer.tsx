@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { War, TabContent, LessonsData } from '@/lib/types';
+import { War, TabContent, LessonsData, HumanLayerData } from '@/lib/types';
 import { WANTA_COMMENTS } from '@/lib/wanta';
 import { LESSONS } from '@/lib/lessons';
+import { HUMAN_LAYERS } from '@/lib/human-layers';
 import WantaBubble from './WantaBubble';
 
-type TabId = 'digest' | 'detail' | 'perspectives' | 'structure' | 'legacy' | 'lessons';
+type TabId = 'digest' | 'detail' | 'perspectives' | 'structure' | 'legacy' | 'human' | 'lessons';
 
 const TABS: { id: TabId; label: string; emoji: string; accent: string; pinned?: boolean }[] = [
   { id: 'digest',       label: 'ダイジェスト', emoji: '📋', accent: '#2563eb' },
@@ -14,6 +15,7 @@ const TABS: { id: TabId; label: string; emoji: string; accent: string; pinned?: 
   { id: 'perspectives', label: '各国の視点',   emoji: '🌍', accent: '#059669' },
   { id: 'structure',    label: '構造分析',     emoji: '🔍', accent: '#7c3aed' },
   { id: 'legacy',       label: '歴史的連鎖',   emoji: '🔗', accent: '#dc2626' },
+  { id: 'human',        label: '市民',         emoji: '🕊️', accent: '#0891b2' },
   { id: 'lessons',      label: '教訓',         emoji: '💡', accent: '#b91c1c', pinned: true },
 ];
 
@@ -211,6 +213,95 @@ function LegacyTab({ data }: { data: TabContent['legacy'] }) {
             </div>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+/* ── HumanTab — 市民視点（戦争を地図ゲーム化しないため） ── */
+const HUMAN_BLOCKS: { key: keyof HumanLayerData; title: string; icon: string; color: string; bg: string; desc: string }[] = [
+  { key: 'civilianLife',    title: '市民生活',         icon: '🏠', color: '#0891b2', bg: '#ecfeff', desc: '配給・徴用・統制' },
+  { key: 'refugees',        title: '難民・避難',       icon: '🚸', color: '#0284c7', bg: '#f0f9ff', desc: 'どこへ逃げたか' },
+  { key: 'hunger',          title: '飢餓・物資不足',   icon: '🍞', color: '#a16207', bg: '#fefce8', desc: '配給制と餓死' },
+  { key: 'trauma',          title: 'PTSD・世代継承',   icon: '💭', color: '#7c3aed', bg: '#f5f3ff', desc: '心の傷・家族崩壊' },
+  { key: 'children',        title: '子どもへの影響',   icon: '👶', color: '#db2777', bg: '#fdf2f8', desc: '孤児・教育中断' },
+  { key: 'cityDestruction', title: '都市破壊',         icon: '🏚️', color: '#475569', bg: '#f8fafc', desc: '失われた街' },
+];
+
+function HumanTab({ data }: { data: HumanLayerData | undefined }) {
+  if (!data) {
+    return (
+      <div style={{ padding: 24, textAlign: 'center' }}>
+        <div style={{ fontSize: 36, marginBottom: 12 }}>🕊️</div>
+        <div style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.7 }}>
+          この戦争の市民視点データは現在準備中だワン。<br />
+          戦争を「地図ゲーム」化しないため、市民生活・難民・PTSD・子ども・都市破壊の記録を執筆中。
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div>
+      {/* ヘッダー：戦争を「人」の視点で */}
+      <div className="mb-4 rounded-lg p-3"
+        style={{
+          background: 'linear-gradient(135deg, #ecfeff, #cffafe)',
+          border: '2px solid #0891b2',
+          borderLeft: '6px solid #0891b2',
+        }}>
+        <div className="flex items-center gap-2 mb-1.5">
+          <span style={{ fontSize: 16 }}>🕊️</span>
+          <span style={{ fontSize: 11, fontWeight: 800, color: '#155e75', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            人間視点 — 戦争を「地図ゲーム」化しない
+          </span>
+        </div>
+        <p style={{ fontSize: 11, lineHeight: 1.7, color: '#164e63' }}>
+          数字や戦略の影に、必ず<strong>市民</strong>がいた。難民・飢餓・PTSD・子どもへの影響——
+          英雄譚として消費するのではなく、戦争の<strong>本当のコスト</strong>を記憶する。
+        </p>
+      </div>
+
+      {/* 6軸グリッド */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12, marginBottom: 16 }}>
+        {HUMAN_BLOCKS.map((b) => (
+          <div key={b.key} className="rounded-lg overflow-hidden"
+            style={{ border: `1px solid ${b.color}30`, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+            <div className="px-3 py-2 flex items-center gap-2"
+              style={{ background: b.color, color: 'white' }}>
+              <span style={{ fontSize: 13 }}>{b.icon}</span>
+              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.05em' }}>
+                {b.title}
+              </span>
+              <span style={{ fontSize: 9, opacity: 0.85, marginLeft: 'auto', fontStyle: 'italic' }}>
+                {b.desc}
+              </span>
+            </div>
+            <div className="p-3"
+              style={{ background: b.bg, fontSize: 11, lineHeight: 1.7, color: '#374151' }}
+              dangerouslySetInnerHTML={{ __html: data[b.key] }} />
+          </div>
+        ))}
+      </div>
+
+      {/* 没入型「ある市民の一日」 */}
+      <div className="rounded-lg overflow-hidden"
+        style={{
+          border: '2px solid #0891b2',
+          background: 'linear-gradient(135deg, #f0fdfa, #ecfeff)',
+        }}>
+        <div className="px-4 py-2.5 flex items-center gap-2"
+          style={{ background: '#155e75', color: 'white' }}>
+          <span style={{ fontSize: 14 }}>📖</span>
+          <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em' }}>
+            ある市民の一日
+          </span>
+          <span style={{ fontSize: 9, marginLeft: 'auto', opacity: 0.8, fontStyle: 'italic' }}>
+            没入型ストーリー
+          </span>
+        </div>
+        <div className="p-4"
+          style={{ fontSize: 12, lineHeight: 1.85, color: '#0c4a6e' }}
+          dangerouslySetInnerHTML={{ __html: data.oneDayStory }} />
       </div>
     </div>
   );
@@ -422,6 +513,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
             {activeTab === 'perspectives' && <PerspectivesTab data={content.perspectives} />}
             {activeTab === 'structure'    && <StructureTab    data={content.structure} />}
             {activeTab === 'legacy'       && <LegacyTab       data={content.legacy} />}
+            {activeTab === 'human'        && <HumanTab        data={HUMAN_LAYERS[war.id] ?? content.human} />}
             {activeTab === 'lessons'      && <LessonsTab      data={LESSONS[war.id] ?? content.lessons} />}
             <WantaBubble
               comment={WANTA_COMMENTS[war.id]?.[activeTab] ?? content.wanta?.[activeTab]}
