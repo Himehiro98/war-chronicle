@@ -72,7 +72,7 @@ export const WARS_MEDIEVAL: War[] = [
     markers: [
       { coordinates: [0.5, 49.4], label: 'ノルマンディー（ウィリアム公）', isMain: true },
       { coordinates: [0.4, 50.9], label: 'ヘイスティングズ（1066.10.14決戦）', isMain: true },
-      { coordinates: [-1.3, 51.0], label: 'スタンフォード・ブリッジ（9.25・対ノルウェー）' },
+      { coordinates: [-0.9, 53.99], label: 'スタンフォード・ブリッジ（9.25・対ノルウェー）' },
       { coordinates: [-0.1, 51.5], label: 'ロンドン（戴冠12.25）' },
       { coordinates: [10.7, 59.9], label: 'ノルウェー王ハーラル3世（敗北）', enemy: true },
     ],

@@ -539,7 +539,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
       </div>
 
       {/* コンテンツ */}
-      <div className="overflow-y-auto flex-1 p-4" style={{ background: '#f5f0e8' }}>
+      <div className="overflow-y-auto flex-1 p-4 wd-drawer-body" style={{ background: '#f5f0e8' }}>
         {isLoading ? (
           <LoadingSkeleton />
         ) : content ? (

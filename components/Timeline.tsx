@@ -3,6 +3,7 @@
 import { useRef, useCallback, useMemo } from 'react';
 import { War, EraId } from '@/lib/types';
 import { WARS, REGIONS, ERA_CONFIG } from '@/lib/wars';
+import { useIsMobile } from '@/lib/useIsMobile';
 
 const TYPE_STYLES: Record<string, string> = {
   war:        'bg-rust-pale border-l-rust',
@@ -28,6 +29,7 @@ function formatYearLabel(y: number): string {
 
 export default function Timeline({ selectedId, onSelect, activeEra, activeRegion, width }: Props) {
   const { start, end } = ERA_CONFIG[activeEra];
+  const isMobile = useIsMobile(768);
 
   const eraWars = WARS.filter((w) => {
     if (w.era !== activeEra) return false;
@@ -131,11 +133,11 @@ export default function Timeline({ selectedId, onSelect, activeEra, activeRegion
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* 地域ヘッダー */}
         <div className="flex flex-shrink-0"
-          style={{ borderBottom: '1px solid rgba(42,34,24,0.3)', background: '#e8e0cc', height: 28 }}>
-          <div style={{ width: 56, flexShrink: 0, borderRight: '1px solid rgba(42,34,24,0.15)' }} />
+          style={{ borderBottom: '1px solid rgba(42,34,24,0.3)', background: '#e8e0cc', height: isMobile ? 36 : 28 }}>
+          <div style={{ width: isMobile ? 44 : 56, flexShrink: 0, borderRight: '1px solid rgba(42,34,24,0.15)' }} />
           {REGIONS.map((r) => (
             <div key={r} className="flex-1 text-center text-ink-light font-body flex items-center justify-center"
-              style={{ fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase',
+              style={{ fontSize: isMobile ? 11 : 9, letterSpacing: '0.05em', fontWeight: isMobile ? 600 : 400,
                 borderRight: '1px solid rgba(42,34,24,0.15)' }}>
               {r}
             </div>
@@ -167,17 +169,18 @@ export default function Timeline({ selectedId, onSelect, activeEra, activeRegion
 
             // ── 戦争のある年 ──
             const isCenturyMark = item.year % 100 === 0;
+            const rowMin = isMobile ? 52 : 36;
             return (
               <div key={`y-${item.year}`} data-year={item.year} className="flex"
                 style={{
-                  minHeight: 36,
+                  minHeight: rowMin,
                   borderTop: isCenturyMark ? '1px solid rgba(42,34,24,0.3)' : undefined,
                 }}>
                 {/* 年ラベル */}
                 <div className="flex-shrink-0 flex items-start justify-end pr-1.5"
-                  style={{ width: 56, borderRight: '1px solid rgba(42,34,24,0.15)', paddingTop: 6 }}>
+                  style={{ width: isMobile ? 44 : 56, borderRight: '1px solid rgba(42,34,24,0.15)', paddingTop: isMobile ? 8 : 6 }}>
                   <span className={isCenturyMark ? 'text-ink-mid font-semibold' : 'text-ink-light'}
-                    style={{ fontSize: isCenturyMark ? 10 : 9, letterSpacing: '0.05em' }}>
+                    style={{ fontSize: isMobile ? (isCenturyMark ? 12 : 11) : (isCenturyMark ? 10 : 9), letterSpacing: '0.04em' }}>
                     {formatYearLabel(item.year)}
                   </span>
                 </div>
@@ -188,25 +191,26 @@ export default function Timeline({ selectedId, onSelect, activeEra, activeRegion
                     const regionWars = item.wars.filter((w) => w.region === region);
                     return (
                       <div key={region} className="flex-1 p-1"
-                        style={{ borderRight: region < 3 ? '1px solid rgba(42,34,24,0.15)' : undefined, minHeight: 36 }}>
+                        style={{ borderRight: region < 3 ? '1px solid rgba(42,34,24,0.15)' : undefined, minHeight: rowMin }}>
                         {regionWars.map((war) => (
                           <button
                             key={war.id}
                             onClick={() => onSelect(war)}
-                            className={`w-full text-left rounded border-l-[3px] px-1.5 py-1 mb-0.5 transition-all duration-200 hover:translate-x-0.5 ${TYPE_STYLES[war.type]} ${selectedId === war.id ? 'shadow-[0_0_0_2px_#2a2218]' : ''}`}>
+                            className={`w-full text-left rounded border-l-[3px] mb-0.5 transition-all duration-200 hover:translate-x-0.5 ${TYPE_STYLES[war.type]} ${selectedId === war.id ? 'shadow-[0_0_0_2px_#2a2218]' : ''}`}
+                            style={{ padding: isMobile ? '6px 7px' : '4px 6px', minHeight: isMobile ? 44 : 'auto' }}>
                             <div className="flex items-start gap-1">
-                              <div className="font-semibold text-ink flex-1" style={{ fontSize: 9, lineHeight: 1.2 }}>
+                              <div className="font-semibold text-ink flex-1" style={{ fontSize: isMobile ? 12 : 9, lineHeight: 1.25 }}>
                                 {war.name}
                               </div>
                               {war.cotenLinks && war.cotenLinks.length > 0 && (
                                 <span style={{
-                                  fontSize: 7, padding: '1px 3px', borderRadius: 3,
+                                  fontSize: isMobile ? 9 : 7, padding: isMobile ? '1px 4px' : '1px 3px', borderRadius: 3,
                                   background: '#e8611a', color: 'white', fontWeight: 700,
                                   flexShrink: 0, lineHeight: 1.4,
                                 }}>🎙</span>
                               )}
                             </div>
-                            <div className="text-ink-light" style={{ fontSize: 8, marginTop: 1 }}>
+                            <div className="text-ink-light" style={{ fontSize: isMobile ? 10 : 8, marginTop: 2 }}>
                               {formatYearLabel(war.year)}–{formatYearLabel(war.endYear)}
                             </div>
                           </button>

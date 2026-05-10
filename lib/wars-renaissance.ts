@@ -50,7 +50,7 @@ export const WARS_RENAISSANCE: War[] = [
     theater: 'アンデス山脈・ペルー',
     mapHighlight: 'americas',
     markers: [
-      { coordinates: [-78.51, -6.46], label: 'カハマルカ（1532年11月16日アタワルパ捕縛）', isMain: true },
+      { coordinates: [-78.50, -7.16], label: 'カハマルカ（1532年11月16日アタワルパ捕縛）', isMain: true },
       { coordinates: [-71.97, -13.52], label: 'クスコ（1533年陥落・インカ旧都）', isMain: true },
       { coordinates: [-77.04, -12.05], label: 'リマ（1535年スペイン副王領首都建設）' },
       { coordinates: [-72.55, -13.16], label: 'ビルカバンバ（最後の抵抗・1572年トゥパク・アマル処刑）' },

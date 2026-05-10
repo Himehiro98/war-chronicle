@@ -1,9 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "War Chronicle — 多角的戦争史データベース",
-  description: "近現代の戦争の歴史を多角的に学ぶデータベース",
+  description: "戦争は突然起きない。人類は似た条件で何度も衝突してきた。100以上の戦争を時系列・地理・因果・構造で横断する知的教養プラットフォーム。",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#0f172a",
 };
 
 export default function RootLayout({
