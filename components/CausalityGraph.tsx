@@ -96,13 +96,14 @@ export default function CausalityGraph({ filterEra, filterTag, focusWarId }: Pro
     const bucketCounts = new Map<string, number>();
 
     const nodes: Node[] = pool.map((w) => {
-      const x = (w.year - 1700) * 6;
-      const yearBucket = Math.floor(w.year / 5);
+      // 原点を BC3000 にシフトし、5000年を約7000pxに圧縮
+      const x = (w.year + 3000) * 1.4;
+      const yearBucket = Math.floor(w.year / 25);
       const key = `${w.region}-${yearBucket}`;
       const slot = bucketCounts.get(key) ?? 0;
       bucketCounts.set(key, slot + 1);
 
-      const baseY = w.region * 200;
+      const baseY = w.region * 220;
       const y = baseY + slot * 70;
 
       const { w: nw, h: nh, fontSize } = sizeForWeight(w.weight);
@@ -125,8 +126,8 @@ export default function CausalityGraph({ filterEra, filterTag, focusWarId }: Pro
             >
               <div>{w.name}</div>
               <div style={{ fontSize: fontSize - 2, opacity: 0.85, fontWeight: 400 }}>
-                {w.year}
-                {w.endYear && w.endYear !== w.year ? `–${w.endYear}` : ''}
+                {w.year < 0 ? `BC${-w.year}` : w.year}
+                {w.endYear && w.endYear !== w.year ? `–${w.endYear < 0 ? 'BC' + (-w.endYear) : w.endYear}` : ''}
               </div>
             </div>
           ),

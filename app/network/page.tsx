@@ -5,10 +5,14 @@ import Link from 'next/link';
 import CausalityGraph from '@/components/CausalityGraph';
 
 const ERA_OPTIONS: { value: string; label: string }[] = [
-  { value: 'all', label: '全て' },
-  { value: 'early-modern', label: '近世' },
-  { value: '20th-century', label: '20世紀' },
-  { value: 'contemporary', label: '現代' },
+  { value: 'all',           label: '全て（重い）' },
+  { value: 'prehistoric',   label: '先史〜古代文明' },
+  { value: 'ancient',       label: '古代' },
+  { value: 'medieval',      label: '中世' },
+  { value: 'renaissance',   label: '近世初期' },
+  { value: 'early-modern',  label: '近世' },
+  { value: '20th-century',  label: '20世紀' },
+  { value: 'contemporary',  label: '現代' },
 ];
 
 const TAG_OPTIONS: { value: string; label: string }[] = [
@@ -24,6 +28,16 @@ const TAG_OPTIONS: { value: string; label: string }[] = [
   { value: '冷戦構造', label: '冷戦構造' },
   { value: '植民地解放', label: '植民地解放' },
   { value: '誤算・誤認知', label: '誤算・誤認知' },
+  { value: '指導者個人要因', label: '指導者個人要因' },
+  { value: '権力真空', label: '権力真空' },
+  { value: '民族浄化', label: '民族浄化' },
+  { value: '核抑止', label: '核抑止' },
+  { value: '情報戦・プロパガンダ', label: '情報戦・プロパガンダ' },
+  { value: '王朝継承', label: '王朝継承' },
+  { value: '文明衝突', label: '文明衝突' },
+  { value: '軍事革命', label: '軍事革命' },
+  { value: '海洋覇権', label: '海洋覇権' },
+  { value: '遊牧vs農耕', label: '遊牧vs農耕' },
 ];
 
 const REGION_LEGEND: { color: string; label: string }[] = [
@@ -34,7 +48,8 @@ const REGION_LEGEND: { color: string; label: string }[] = [
 ];
 
 export default function NetworkPage() {
-  const [era, setEra] = useState<string>('all');
+  // 「全て」だと130+ノードで重いのでデフォルトは20世紀
+  const [era, setEra] = useState<string>('20th-century');
   const [tag, setTag] = useState<string>('all');
 
   return (
