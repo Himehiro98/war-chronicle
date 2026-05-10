@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import RotatingGlobe from './RotatingGlobe';
 
 export default function Hero() {
   return (
@@ -30,74 +31,121 @@ export default function Hero() {
         position: 'relative',
         maxWidth: 1280,
         margin: '0 auto',
-        padding: '80px 32px 60px',
+        padding: '60px 32px 60px',
+        display: 'flex',
+        gap: 48,
+        alignItems: 'center',
+        flexWrap: 'wrap',
       }}>
-        {/* タグライン */}
+        {/* ── 左：テキスト ── */}
+        <div style={{ flex: '1 1 540px', minWidth: 320 }}>
+          {/* タグライン */}
+          <div style={{
+            fontSize: 11, letterSpacing: '0.2em',
+            color: '#94a3b8', textTransform: 'uppercase',
+            marginBottom: 20, fontWeight: 600,
+          }}>
+            War Chronicle ／ 多角的戦争史データベース
+          </div>
+
+          {/* メインメッセージ — テーゼ */}
+          <h1 className="font-serif" style={{
+            fontSize: 'clamp(28px, 4.5vw, 52px)',
+            lineHeight: 1.25,
+            fontWeight: 700,
+            letterSpacing: '0.02em',
+            marginBottom: 12,
+            color: '#f8fafc',
+          }}>
+            戦争は突然起きない。<br />
+            人類は<span style={{ color: '#fbbf24' }}>似た条件</span>で、<br />
+            何度も衝突してきた。
+          </h1>
+
+          <p style={{
+            fontSize: 13, lineHeight: 1.85, color: '#cbd5e1',
+            marginTop: 20, marginBottom: 28,
+          }}>
+            100以上の戦争を、<strong style={{ color: '#fbbf24' }}>時系列・地理・因果・構造</strong>で横断する。
+            過去のパターンから、現代の危機を読み解き、<strong style={{ color: '#fbbf24' }}>戦争を防ぐ示唆</strong>を得るための知的教養プラットフォーム。
+          </p>
+
+          {/* CTA */}
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <Link href="#learning-paths" style={{
+              padding: '11px 22px', borderRadius: 4,
+              background: '#fbbf24', color: '#0f172a',
+              fontWeight: 700, fontSize: 12, letterSpacing: '0.05em',
+              textDecoration: 'none', transition: 'all 0.2s',
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+            }}>
+              🎓 歴史から学ぶ
+            </Link>
+            <Link href="#modern-themes" style={{
+              padding: '11px 22px', borderRadius: 4,
+              background: 'transparent', color: '#f8fafc',
+              border: '1px solid rgba(248,250,252,0.3)',
+              fontWeight: 600, fontSize: 12, letterSpacing: '0.05em',
+              textDecoration: 'none', transition: 'all 0.2s',
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+            }}>
+              🌐 現代を読み解く
+            </Link>
+            <Link href="/explore" style={{
+              padding: '11px 22px', borderRadius: 4,
+              background: 'transparent', color: '#94a3b8',
+              border: '1px solid rgba(148,163,184,0.3)',
+              fontWeight: 600, fontSize: 12, letterSpacing: '0.05em',
+              textDecoration: 'none', transition: 'all 0.2s',
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+            }}>
+              🗺️ すべての戦争を探索
+            </Link>
+          </div>
+        </div>
+
+        {/* ── 右：回転する地球儀 ── */}
         <div style={{
-          fontSize: 11, letterSpacing: '0.2em',
-          color: '#94a3b8', textTransform: 'uppercase',
-          marginBottom: 20, fontWeight: 600,
-        }}>
-          War Chronicle ／ 多角的戦争史データベース
+          flex: '0 0 auto',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          position: 'relative',
+        }}
+        className="hero-globe-wrap">
+          {/* 周囲の光のハロ効果 */}
+          <div style={{
+            position: 'absolute',
+            inset: -40,
+            background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }} />
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <RotatingGlobe size={460} />
+          </div>
+          {/* キャプション */}
+          <div style={{
+            position: 'absolute',
+            bottom: -8,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontSize: 9,
+            color: '#64748b',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            whiteSpace: 'nowrap',
+          }}>
+            ● 主要決戦地 ／ ドラッグで回転 ／ ホバーで詳細
+          </div>
         </div>
+      </div>
 
-        {/* メインメッセージ — テーゼ */}
-        <h1 className="font-serif" style={{
-          fontSize: 'clamp(32px, 5vw, 56px)',
-          lineHeight: 1.25,
-          fontWeight: 700,
-          letterSpacing: '0.02em',
-          marginBottom: 12,
-          color: '#f8fafc',
-        }}>
-          戦争は突然起きない。<br />
-          人類は<span style={{ color: '#fbbf24' }}>似た条件</span>で、<br />
-          何度も衝突してきた。
-        </h1>
-
-        <p style={{
-          fontSize: 14, lineHeight: 1.85, color: '#cbd5e1',
-          maxWidth: 640, marginTop: 24, marginBottom: 36,
-        }}>
-          100以上の戦争を、<strong style={{ color: '#fbbf24' }}>時系列・地理・因果・構造</strong>で横断する。
-          <br />
-          過去のパターンから、現代の危機を読み解き、<strong style={{ color: '#fbbf24' }}>戦争を防ぐ示唆</strong>を得るための知的教養プラットフォーム。
-        </p>
-
-        {/* CTA */}
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 48 }}>
-          <Link href="#learning-paths" style={{
-            padding: '12px 28px', borderRadius: 4,
-            background: '#fbbf24', color: '#0f172a',
-            fontWeight: 700, fontSize: 13, letterSpacing: '0.05em',
-            textDecoration: 'none', transition: 'all 0.2s',
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-          }}>
-            🎓 歴史から学ぶ
-          </Link>
-          <Link href="#modern-themes" style={{
-            padding: '12px 28px', borderRadius: 4,
-            background: 'transparent', color: '#f8fafc',
-            border: '1px solid rgba(248,250,252,0.3)',
-            fontWeight: 600, fontSize: 13, letterSpacing: '0.05em',
-            textDecoration: 'none', transition: 'all 0.2s',
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-          }}>
-            🌐 現代を読み解く
-          </Link>
-          <Link href="/explore" style={{
-            padding: '12px 28px', borderRadius: 4,
-            background: 'transparent', color: '#94a3b8',
-            border: '1px solid rgba(148,163,184,0.3)',
-            fontWeight: 600, fontSize: 13, letterSpacing: '0.05em',
-            textDecoration: 'none', transition: 'all 0.2s',
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-          }}>
-            🗺️ すべての戦争を探索
-          </Link>
-        </div>
-
-        {/* キーマトリクス（思想を補強する小さな数字） */}
+      {/* キーマトリクス（思想を補強する小さな数字）— セクション全幅 */}
+      <div style={{
+        position: 'relative',
+        maxWidth: 1280,
+        margin: '0 auto',
+        padding: '0 32px 48px',
+      }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
@@ -125,6 +173,21 @@ export default function Hero() {
           ))}
         </div>
       </div>
+
+      {/* モバイル時は地球儀を小さく */}
+      <style jsx>{`
+        @media (max-width: 900px) {
+          :global(.hero-globe-wrap) {
+            margin: 24px auto 0;
+            transform: scale(0.7);
+          }
+        }
+        @media (max-width: 600px) {
+          :global(.hero-globe-wrap) {
+            transform: scale(0.55);
+          }
+        }
+      `}</style>
     </section>
   );
 }
