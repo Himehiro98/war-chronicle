@@ -19,6 +19,8 @@ interface Props {
   onClose: () => void;
   content: TabContent | null;
   isLoading: boolean;
+  drawerHeight: number; // percentage of main area
+  onResizeStart: (e: React.MouseEvent) => void;
 }
 
 function DigestTab({ data }: { data: TabContent['digest'] }) {
@@ -148,7 +150,7 @@ function LoadingSkeleton() {
   );
 }
 
-export default function DetailDrawer({ war, isOpen, onClose, content, isLoading }: Props) {
+export default function DetailDrawer({ war, isOpen, onClose, content, isLoading, drawerHeight, onResizeStart }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>('digest');
 
   if (!war) return null;
@@ -158,15 +160,38 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading 
       className="absolute bottom-0 left-0 right-0 flex flex-col"
       style={{
         background: '#f5f0e8',
-        borderTop: '2px solid #8b3a1e',
         transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
         transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
         zIndex: 10,
-        maxHeight: '75%',
+        height: `${drawerHeight}%`,
         boxShadow: '0 -4px 24px rgba(42,34,24,0.15)',
       }}
     >
-      {/* ハンドル */}
+      {/* 垂直リサイズハンドル ↕ */}
+      <div
+        onMouseDown={onResizeStart}
+        title="ドラッグで高さ調整"
+        style={{
+          height: 10,
+          flexShrink: 0,
+          cursor: 'row-resize',
+          background: 'rgba(42,34,24,0.12)',
+          borderTop: '2px solid #8b3a1e',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(139,58,30,0.3)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'rgba(42,34,24,0.12)')}
+      >
+        <div style={{ display: 'flex', gap: 4 }}>
+          {[0,1,2].map(i => (
+            <div key={i} style={{ width: 2, height: 2, borderRadius: '50%', background: 'rgba(42,34,24,0.5)' }} />
+          ))}
+        </div>
+      </div>
+
+      {/* タイトルバー */}
       <div
         className="flex items-center justify-between px-4 py-2.5 flex-shrink-0 cursor-pointer"
         style={{ background: '#2a2218', borderBottom: '1px solid rgba(42,34,24,0.15)' }}

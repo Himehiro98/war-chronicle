@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import Timeline from '@/components/Timeline';
 import MapPanel from '@/components/MapPanel';
 import DetailDrawer from '@/components/DetailDrawer';
@@ -16,6 +16,55 @@ export default function Home() {
   const [drawerOpen, setDrawerOpen]   = useState(false);
   const [activeEra, setActiveEra]     = useState<EraId>('early-modern');
   const [activeRegion, setActiveRegion] = useState('全て');
+
+  // リサイズ状態
+  const [timelineWidth, setTimelineWidth] = useState(50); // %
+  const [drawerHeight, setDrawerHeight]   = useState(75); // % of main area
+
+  const mainRef       = useRef<HTMLDivElement>(null);
+  const horizResizing = useRef(false);
+  const vertResizing  = useRef(false);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (horizResizing.current && mainRef.current) {
+        const rect = mainRef.current.getBoundingClientRect();
+        const pct  = ((e.clientX - rect.left) / rect.width) * 100;
+        setTimelineWidth(Math.max(20, Math.min(80, pct)));
+      }
+      if (vertResizing.current && mainRef.current) {
+        const rect = mainRef.current.getBoundingClientRect();
+        const pct  = ((rect.bottom - e.clientY) / rect.height) * 100;
+        setDrawerHeight(Math.max(20, Math.min(88, pct)));
+      }
+    };
+    const onUp = () => {
+      horizResizing.current = false;
+      vertResizing.current  = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    return () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    };
+  }, []);
+
+  const handleHorizDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    horizResizing.current = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  }, []);
+
+  const handleVertDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    vertResizing.current = true;
+    document.body.style.cursor = 'row-resize';
+    document.body.style.userSelect = 'none';
+  }, []);
 
   const handleSelectWar = useCallback((war: War) => {
     setSelectedWar(war);
@@ -91,15 +140,53 @@ export default function Home() {
       </div>
 
       {/* ── メイン ── */}
-      <main className="flex flex-1 overflow-hidden relative">
-        <Timeline selectedId={selectedWar?.id ?? null} onSelect={handleSelectWar} activeEra={activeEra} activeRegion={activeRegion} />
+      <main ref={mainRef} className="flex flex-1 overflow-hidden relative">
+        {/* 年表 */}
+        <Timeline
+          selectedId={selectedWar?.id ?? null}
+          onSelect={handleSelectWar}
+          activeEra={activeEra}
+          activeRegion={activeRegion}
+          width={timelineWidth}
+        />
+
+        {/* 水平ドラッグハンドル ⇔ */}
+        <div
+          onMouseDown={handleHorizDown}
+          title="ドラッグで幅調整"
+          style={{
+            width: 8,
+            flexShrink: 0,
+            cursor: 'col-resize',
+            background: 'rgba(42,34,24,0.12)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 5,
+            transition: 'background 0.15s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(139,58,30,0.35)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(42,34,24,0.12)')}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            {[0,1,2].map(i => (
+              <div key={i} style={{ width: 2, height: 2, borderRadius: '50%', background: 'rgba(42,34,24,0.5)' }} />
+            ))}
+          </div>
+        </div>
+
+        {/* 地図 */}
         <MapPanel selectedWar={selectedWar} />
+
+        {/* 詳細ドロワー（下から展開） */}
         <DetailDrawer
           war={selectedWar}
           isOpen={drawerOpen}
           onClose={() => setDrawerOpen(false)}
           content={content}
           isLoading={false}
+          drawerHeight={drawerHeight}
+          onResizeStart={handleVertDown}
         />
       </main>
     </div>

@@ -14,9 +14,10 @@ interface Props {
   onSelect: (war: War) => void;
   activeEra: EraId;
   activeRegion: string;
+  width: number; // percentage
 }
 
-export default function Timeline({ selectedId, onSelect, activeEra, activeRegion }: Props) {
+export default function Timeline({ selectedId, onSelect, activeEra, activeRegion, width }: Props) {
   const { start, end } = ERA_CONFIG[activeEra];
   const years = Array.from({ length: end - start + 1 }, (_, i) => start + i);
   const eraWars = WARS.filter((w) => {
@@ -26,7 +27,7 @@ export default function Timeline({ selectedId, onSelect, activeEra, activeRegion
   });
 
   return (
-    <div className="flex flex-col h-full" style={{ width: '65%', borderRight: '1px solid rgba(42,34,24,0.3)' }}>
+    <div className="flex flex-col h-full" style={{ width: `${width}%`, flexShrink: 0, borderRight: '1px solid rgba(42,34,24,0.3)' }}>
       {/* 地域ヘッダー */}
       <div className="flex flex-shrink-0"
         style={{ borderBottom: '1px solid rgba(42,34,24,0.3)', background: '#e8e0cc' }}>

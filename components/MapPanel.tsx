@@ -11,7 +11,7 @@ interface Props {
 
 export default function MapPanel({ selectedWar }: Props) {
   return (
-    <div className="flex flex-col overflow-hidden" style={{ width: '35%' }}>
+    <div className="flex flex-col overflow-hidden" style={{ flex: 1, minWidth: 0 }}>
       {/* ヘッダー */}
       <div className="flex-shrink-0 px-3.5 py-2.5"
         style={{ borderBottom: '1px solid rgba(42,34,24,0.15)', background: '#e8e0cc' }}>
