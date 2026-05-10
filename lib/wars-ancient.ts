@@ -221,7 +221,7 @@ export const WARS_ANCIENT: War[] = [
       { coordinates: [37.6173, 55.7558], label: 'フン族西進拠点', enemy: true },
     ],
     weight: 3,
-    tags: ['帝国衰退', '権力真空', '経済危機', 'ナショナリズム'],
+    tags: ['帝国衰退', '権力真空', '経済危機', 'ナショナリズム', '遊牧vs農耕'],
     ideologies: ['ゲルマン部族社会', 'ローマ衰退'],
     causes: ['roman-republic-fall', 'three-kingdoms-china'],
     influences: ['gothic-war-justinian'],

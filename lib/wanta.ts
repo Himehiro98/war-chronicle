@@ -1,6 +1,7 @@
 import { WantaComments } from './types';
+import { WANTA_EXTRA } from './wanta-extra';
 
-export const WANTA_COMMENTS: Record<string, WantaComments> = {
+const _WANTA_INLINE: Record<string, WantaComments> = {
   'great-northern-war': {
     digest: 'スウェーデンが「北欧の王様」から転落した戦争だワン。代わりにロシアが大国になったんだ。',
     detail: 'カール12世は18歳で即位した若き天才。連戦連勝だったけど、ロシアの冬と泥に負けたんだワン。ナポレオンと同じ失敗ばい。',
@@ -743,4 +744,10 @@ export const WANTA_COMMENTS: Record<string, WantaComments> = {
     structure: 'もしNATOが2008年にウクライナを正式加盟させていたら、ロシアは侵攻できなかったかもしれないんだワン。',
     legacy: 'NATO拡大（フィンランド・スウェーデン）・欧州再武装・世界エネルギー秩序、全部が変わってるワン。今の世界を作ってる戦争なんだ。',
   },
+};
+
+// 既存（102戦争）と追加分（32戦争）をマージ
+export const WANTA_COMMENTS: Record<string, WantaComments> = {
+  ..._WANTA_INLINE,
+  ...WANTA_EXTRA,
 };

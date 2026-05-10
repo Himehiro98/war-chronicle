@@ -21,7 +21,13 @@ export type WarTag =
   | '民族浄化'
   | '権力真空'
   | '誤算・誤認知'
-  | '指導者個人要因';
+  | '指導者個人要因'
+  // 古代・中世データ流入で見えてきた追加パターン
+  | '王朝継承'
+  | '文明衝突'
+  | '軍事革命'
+  | '海洋覇権'
+  | '遊牧vs農耕';
 
 /**
  * 戦争の重み — 情報レイヤー
@@ -177,4 +183,23 @@ export interface TagDescription {
   modernRisk: string;      // 現代の警戒対象
   accent: string;          // 表示色
   emoji: string;
+}
+
+/**
+ * 宗教テーマ — 主要宗教を軸に歴史を読み解く
+ */
+export interface ReligionTheme {
+  id: string;
+  name: string;            // ユダヤ教
+  englishName: string;     // Judaism
+  emoji: string;
+  accent: string;
+  period: string;          // '紀元前2000年頃〜現代'
+  shortThesis: string;     // 短いテーゼ
+  origin: string;          // 起源・背景
+  coreBeliefs: string;     // 教義の核
+  keyConcepts: string[];   // キー概念
+  keyWarIds: string[];     // 関連戦争ID（時系列順）
+  paradox: string;         // この宗教が抱える内的矛盾
+  modernSituation: string; // 現代における姿
 }

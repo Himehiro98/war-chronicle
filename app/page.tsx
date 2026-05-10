@@ -4,9 +4,11 @@ import Link from 'next/link';
 import Hero from '@/components/Hero';
 import LearningPathCard from '@/components/LearningPathCard';
 import ThemeCard from '@/components/ThemeCard';
+import ReligionCard from '@/components/ReligionCard';
 import TagCloud from '@/components/TagCloud';
 import { LEARNING_PATHS } from '@/lib/learning-paths';
 import { MODERN_THEMES } from '@/lib/modern-themes';
+import { RELIGION_THEMES } from '@/lib/religion-themes';
 
 export default function Home() {
   return (
@@ -37,6 +39,7 @@ export default function Home() {
             {[
               { label: '学ぶ',         href: '#learning-paths', emoji: '🎓' },
               { label: 'テーマ',       href: '#modern-themes',  emoji: '🌐' },
+              { label: '宗教',         href: '#religions',      emoji: '🕊️' },
               { label: 'パターン',     href: '#patterns',       emoji: '🧬' },
               { label: 'ネットワーク', href: '/network',        emoji: '🕸️' },
               { label: '探索',         href: '/explore',        emoji: '🗺️' },
@@ -128,6 +131,35 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ── Section 2.5: 宗教から歴史を読む ── */}
+      <section id="religions" style={{ padding: '80px 32px', maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ marginBottom: 40 }}>
+          <div style={{ fontSize: 10, letterSpacing: '0.2em', color: '#7c2d12', textTransform: 'uppercase', fontWeight: 700, marginBottom: 8 }}>
+            🕊️ HISTORY THROUGH RELIGION
+          </div>
+          <h2 className="font-serif" style={{ fontSize: 32, fontWeight: 700, color: '#0f172a', lineHeight: 1.3, marginBottom: 12 }}>
+            宗教から歴史を読み解く
+          </h2>
+          <p style={{ fontSize: 13, color: '#475569', lineHeight: 1.7, maxWidth: 720 }}>
+            ユダヤ教・キリスト教・イスラム教・ヒンドゥー教・仏教——
+            <br />
+            主要5宗教を軸に3500年の戦争史を貫く。<strong>宗教は戦争の原因か、それとも戦争の言語か。</strong>
+          </p>
+        </div>
+
+        {RELIGION_THEMES.length === 0 ? (
+          <div style={{ padding: '40px 20px', textAlign: 'center', background: '#fafaf9', borderRadius: 8, color: '#94a3b8', fontSize: 12 }}>
+            🕊️ 宗教テーマを準備中だワン...
+          </div>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 }}>
+            {RELIGION_THEMES.map((t) => (
+              <ReligionCard key={t.id} theme={t} />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* ── Section 3: パターン ── */}
