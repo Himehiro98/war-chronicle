@@ -16,8 +16,7 @@ export interface War {
 }
 
 export interface MapMarker {
-  cx: number;
-  cy: number;
+  coordinates: [number, number]; // [longitude, latitude]
   label: string;
   isMain?: boolean;
   ally?: boolean;
