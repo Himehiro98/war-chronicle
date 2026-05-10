@@ -31,10 +31,10 @@ export const LEARNING_PATHS: LearningPath[] = [
     emoji: '🐉',
     accent: '#dc2626',
     warIds: [
-      'first-opium-war',
+      'opium-war',
       'second-opium-war',
       'taiping-rebellion',
-      'sino-japanese-war',
+      'first-sino-japanese-war',
       'boxer-rebellion',
       'second-sino-japanese-war',
       'chinese-civil-war',
@@ -50,8 +50,8 @@ export const LEARNING_PATHS: LearningPath[] = [
     emoji: '🕌',
     accent: '#b45309',
     warIds: [
-      'ww1-middle-east',
-      'arab-israeli-war-1948',
+      'world-war-1',
+      'first-arab-israeli-war',
       'suez-crisis',
       'six-day-war',
       'yom-kippur-war',
@@ -74,11 +74,11 @@ export const LEARNING_PATHS: LearningPath[] = [
     warIds: [
       'korean-war',
       'vietnam-war',
-      'cuban-missile-crisis',
+      'cuban-revolution',
       'angolan-civil-war',
       'soviet-afghan-war',
       'falklands-war',
-      'yugoslav-wars',
+      'bosnian-war',
     ],
     estimatedMinutes: 50,
   },
@@ -93,10 +93,10 @@ export const LEARNING_PATHS: LearningPath[] = [
     warIds: [
       'world-war-1',         // 同盟暴走
       'world-war-2-europe',  // 経済危機→ナショナリズム
-      'cuban-missile-crisis',// 安全保障ジレンマ
+      'crimean-war',         // 安全保障ジレンマ（黒海覇権争い）
       'iraq-war',            // 誤算・誤認知
       'libyan-civil-war',    // 権力真空
-      'yugoslav-wars',       // ナショナリズム/民族浄化
+      'bosnian-war',         // ナショナリズム/民族浄化
     ],
     estimatedMinutes: 40,
   },

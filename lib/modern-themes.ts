@@ -42,7 +42,7 @@ export const MODERN_THEMES: ModernTheme[] = [
     background:
       '日清戦争（1895）で台湾は日本領に。WW2で中華民国に「返還」。1949年、毛沢東の共産党に敗れた国民党（蒋介石）が台湾に逃れて「中華民国」を継続。北京（中華人民共和国）と台北（中華民国）が両方「中国正統」を主張。米国は1979年に北京を承認しつつ、台湾関係法で防衛コミット。冷戦期は緊張凍結。1990年代以降、台湾の民主化と独自アイデンティティ強化、中国の経済軍事力急伸で構造変化。',
     keyWarIds: [
-      'sino-japanese-war',
+      'first-sino-japanese-war',
       'second-sino-japanese-war',
       'pacific-war',
       'chinese-civil-war',
@@ -68,8 +68,8 @@ export const MODERN_THEMES: ModernTheme[] = [
     background:
       '1916年サイクス・ピコ協定で英仏が中東を分割（民族・宗派を無視）。1917年バルフォア宣言でユダヤ人国家建設約束。1948年イスラエル建国とアラブ諸国の連続戦争。冷戦期は米ソ代理戦争（1956年スエズ動乱）、1979年イラン革命でシーア派政治イスラム台頭。湾岸戦争・イラク戦争で米のヘゲモニー、続く「アラブの春」で権威主義崩壊と内戦連鎖（リビア・シリア・イエメン）。地下資源は介入動機を強化。',
     keyWarIds: [
-      'ww1-middle-east',
-      'arab-israeli-war-1948',
+      'world-war-1',
+      'first-arab-israeli-war',
       'suez-crisis',
       'six-day-war',
       'yom-kippur-war',
@@ -100,9 +100,9 @@ export const MODERN_THEMES: ModernTheme[] = [
     background:
       'アヘン戦争（1840-）以降、海から侵略され続けた中国にとって「海洋」は脆弱性の象徴。冷戦期は陸軍中心の人民戦争。改革開放後、シーレーン（マラッカ海峡経由のエネルギー輸入）が経済の死活線となり、1990年代以降から海洋戦略を本格化。1995年ミスチーフ礁占拠から南シナ海人工島建設へ。「九段線」主張で南シナ海ほぼ全域を歴史的領海と主張、2016年ハーグ仲裁裁判所で否認されるも無視。第一列島線突破→第二列島線→グローバル海軍へ。',
     keyWarIds: [
-      'first-opium-war',
+      'opium-war',
       'second-opium-war',
-      'sino-japanese-war',
+      'first-sino-japanese-war',
       'korean-war',
     ],
     keyConcepts: [

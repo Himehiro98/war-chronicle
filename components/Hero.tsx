@@ -154,10 +154,10 @@ export default function Hero() {
           borderTop: '1px solid rgba(148,163,184,0.15)',
         }}>
           {[
-            { num: '100+', label: '戦争データ', sub: '古代〜現代（拡充中）' },
+            { num: '167', label: '戦争データ', sub: 'BC1457〜2025（先史〜現代）' },
             { num: '5軸', label: '構造分析', sub: '共通点・普遍性・現代教訓・防止可能性・再現性' },
-            { num: '16', label: '戦争パターン', sub: 'ナショナリズム・経済危機・同盟暴走 等' },
-            { num: '4', label: '現代テーマ', sub: 'なぜ◯◯？を歴史で解く' },
+            { num: '21', label: '戦争パターン', sub: 'ナショナリズム・経済危機・同盟暴走・王朝継承 等' },
+            { num: '4+5', label: 'テーマ＋宗教', sub: '現代の問い4本＋主要宗教5本で歴史を読む' },
           ].map((m) => (
             <div key={m.label}>
               <div style={{ fontSize: 28, fontWeight: 700, color: '#fbbf24', lineHeight: 1, marginBottom: 4, fontFamily: 'serif' }}>

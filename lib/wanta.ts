@@ -1,5 +1,6 @@
 import { WantaComments } from './types';
 import { WANTA_EXTRA } from './wanta-extra';
+import { WANTA_EXTRA2 } from './wanta-extra2';
 
 const _WANTA_INLINE: Record<string, WantaComments> = {
   'great-northern-war': {
@@ -852,8 +853,9 @@ const _WANTA_INLINE: Record<string, WantaComments> = {
   },
 };
 
-// 既存（102戦争）と追加分（32戦争）をマージ
+// 全戦争のわんたコメント（インライン + 追加分1 + 追加分2）
 export const WANTA_COMMENTS: Record<string, WantaComments> = {
   ..._WANTA_INLINE,
   ...WANTA_EXTRA,
+  ...WANTA_EXTRA2,
 };
