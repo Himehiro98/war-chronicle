@@ -1,6 +1,9 @@
 import { TabContent } from './types';
+import { CONTENT_ANCIENT } from './content-ancient';
+import { CONTENT_MEDIEVAL } from './content-medieval';
+import { CONTENT_RENAISSANCE } from './content-renaissance';
 
-export const WAR_CONTENT: Record<string, TabContent> = {
+const _CONTENT_INLINE: Record<string, TabContent> = {
   'great-northern-war': {
     digest: {
       background:
@@ -5495,4 +5498,12 @@ export const WAR_CONTENT: Record<string, TabContent> = {
       { label: '長期的構造', color: '#b8860b', text: '民族連邦制の評価は分裂的：「民族自決を保証する制度」と「民族対立を制度化した時限爆弾」の両論。1984-85年飢饉のメディア衝撃（バンド・エイド・ライブ・エイド）が「人道的介入」の概念を再定義し、後のソマリア（1992）・ルワンダ（1994）介入論の原型となった。アフリカの民族問題と冷戦終結後の国家再編の典型事例として政治学・国際関係論で参照され続ける。' },
     ],
   },
+};
+
+// 古代・中世・近世初期は別ファイルから読み込んでマージ
+export const WAR_CONTENT: Record<string, TabContent> = {
+  ...CONTENT_ANCIENT,
+  ...CONTENT_MEDIEVAL,
+  ...CONTENT_RENAISSANCE,
+  ..._CONTENT_INLINE,
 };

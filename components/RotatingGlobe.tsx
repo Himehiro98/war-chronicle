@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { WARS } from '@/lib/wars';
 
 // react-globe.gl は WebGL/Three.js ベースなので動的インポートで SSR を回避
@@ -14,6 +15,7 @@ interface PointData {
   year: number;
   weight: number;
   region: number;
+  warId: string;
 }
 
 const REGION_COLORS: Record<number, string> = {
@@ -27,7 +29,8 @@ interface Props {
   size?: number;
 }
 
-export default function RotatingGlobe({ size = 480 }: Props) {
+export default function RotatingGlobe({ size = 600 }: Props) {
+  const router = useRouter();
   const globeRef = useRef<any>(null);
   const [ready, setReady] = useState(false);
 
@@ -41,11 +44,11 @@ export default function RotatingGlobe({ size = 480 }: Props) {
     const controls = globeRef.current.controls();
     if (!controls) return;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.6;
+    controls.autoRotateSpeed = 0.5;
     controls.enableZoom = false;
     controls.enablePan = false;
     // 初期視点：欧州・アフリカが見える角度
-    globeRef.current.pointOfView({ lat: 25, lng: 15, altitude: 2.2 }, 0);
+    globeRef.current.pointOfView({ lat: 25, lng: 15, altitude: 2.0 }, 0);
   }, [ready]);
 
   // 戦争マーカー（主要マーカーのみ、重みでサイズ・色付け）
@@ -59,8 +62,16 @@ export default function RotatingGlobe({ size = 480 }: Props) {
         year: w.year,
         weight: w.weight ?? 1,
         region: w.region,
+        warId: w.id,
       })),
   );
+
+  const handlePointClick = (point: any) => {
+    const p = point as PointData;
+    if (p?.warId) {
+      router.push(`/explore?war=${p.warId}`);
+    }
+  };
 
   return (
     <div style={{
@@ -76,20 +87,22 @@ export default function RotatingGlobe({ size = 480 }: Props) {
           height={size}
           backgroundColor="rgba(0,0,0,0)"
           showAtmosphere={true}
-          atmosphereColor="#60a5fa"
-          atmosphereAltitude={0.18}
-          globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+          atmosphereColor="#93c5fd"
+          atmosphereAltitude={0.22}
+          globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
           bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
           pointsData={pointsData}
-          pointAltitude={0.01}
-          pointRadius={(d: any) => 0.25 + d.weight * 0.18}
+          pointAltitude={0.012}
+          pointRadius={(d: any) => 0.28 + d.weight * 0.2}
           pointColor={(d: any) => REGION_COLORS[d.region] ?? '#fbbf24'}
           pointResolution={6}
           pointsMerge={false}
+          onPointClick={handlePointClick}
           pointLabel={(d: any) =>
-            `<div style="background:rgba(15,23,42,0.95);color:#f8fafc;padding:8px 12px;border-radius:6px;font-size:11px;font-family:serif;border:1px solid rgba(251,191,36,0.4);box-shadow:0 4px 12px rgba(0,0,0,0.4)">
+            `<div style="background:rgba(15,23,42,0.95);color:#f8fafc;padding:8px 12px;border-radius:6px;font-size:11px;font-family:serif;border:1px solid rgba(251,191,36,0.6);box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer">
               <div style="font-weight:700;margin-bottom:2px">${d.label}</div>
               <div style="font-size:9px;color:#94a3b8;letter-spacing:0.05em">${d.year}年</div>
+              <div style="font-size:8px;color:#fbbf24;letter-spacing:0.05em;margin-top:4px;border-top:1px solid rgba(251,191,36,0.3);padding-top:4px">クリックで詳細 →</div>
             </div>`
           }
         />

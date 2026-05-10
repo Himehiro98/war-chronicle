@@ -11,13 +11,13 @@ import { War, EraId } from '@/lib/types';
 import { ERA_CONFIG, WARS } from '@/lib/wars';
 import { WAR_CONTENT } from '@/lib/content';
 
-const ERA_ORDER: EraId[] = ['early-modern', '20th-century', 'contemporary'];
+const ERA_ORDER: EraId[] = ['ancient', 'medieval', 'renaissance', 'early-modern', '20th-century', 'contemporary'];
 const REGIONS = ['全て', '欧州', 'アジア', '中東・アフリカ', '南北米'];
 
 export default function Home() {
   const [selectedWar, setSelectedWar] = useState<War | null>(null);
   const [drawerOpen, setDrawerOpen]   = useState(false);
-  const [activeEra, setActiveEra]     = useState<EraId>('early-modern');
+  const [activeEra, setActiveEra]     = useState<EraId>('20th-century');
   const [activeRegion, setActiveRegion] = useState('全て');
 
   // モーダル

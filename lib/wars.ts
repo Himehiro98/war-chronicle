@@ -1,12 +1,18 @@
 import { War, EraId } from './types';
+import { WARS_ANCIENT } from './wars-ancient';
+import { WARS_MEDIEVAL } from './wars-medieval';
+import { WARS_RENAISSANCE } from './wars-renaissance';
 
 export const ERA_CONFIG: Record<EraId, { label: string; start: number; end: number }> = {
-  'early-modern':   { label: '近世（1700〜）', start: 1700, end: 1899 },
-  '20th-century':   { label: '20世紀',         start: 1900, end: 1999 },
-  'contemporary':   { label: '現代',            start: 2000, end: 2030 },
+  'ancient':        { label: '古代（〜500）',    start: -700, end: 500 },
+  'medieval':       { label: '中世（500〜1450）', start: 500,  end: 1450 },
+  'renaissance':    { label: '近世初期（1450〜1700）', start: 1450, end: 1700 },
+  'early-modern':   { label: '近世（1700〜）',   start: 1700, end: 1899 },
+  '20th-century':   { label: '20世紀',           start: 1900, end: 1999 },
+  'contemporary':   { label: '現代',             start: 2000, end: 2030 },
 };
 
-export const WARS: War[] = [
+const _WARS_INLINE: War[] = [
 
   /* ─────────────────── 近世（1700-1899） ─────────────────── */
 
@@ -2223,6 +2229,14 @@ export const WARS: War[] = [
     causes: ['chechen-wars', 'syrian-civil-war'],
     influences: [],
   },
+];
+
+// 古代・中世・近世初期は別ファイルから読み込んでマージ
+export const WARS: War[] = [
+  ...WARS_ANCIENT,
+  ...WARS_MEDIEVAL,
+  ...WARS_RENAISSANCE,
+  ..._WARS_INLINE,
 ];
 
 export const REGIONS = ['欧州', 'アジア', '中東・アフリカ', '南北米'] as const;

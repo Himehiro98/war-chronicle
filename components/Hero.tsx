@@ -120,21 +120,21 @@ export default function Hero() {
             zIndex: 0,
           }} />
           <div style={{ position: 'relative', zIndex: 1 }}>
-            <RotatingGlobe size={460} />
+            <RotatingGlobe size={580} />
           </div>
           {/* キャプション */}
           <div style={{
             position: 'absolute',
-            bottom: -8,
+            bottom: -4,
             left: '50%',
             transform: 'translateX(-50%)',
             fontSize: 9,
-            color: '#64748b',
+            color: '#94a3b8',
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
             whiteSpace: 'nowrap',
           }}>
-            ● 主要決戦地 ／ ドラッグで回転 ／ ホバーで詳細
+            ● 主要決戦地 ／ ドラッグで回転 ／ クリックで詳細
           </div>
         </div>
       </div>
@@ -154,7 +154,7 @@ export default function Hero() {
           borderTop: '1px solid rgba(148,163,184,0.15)',
         }}>
           {[
-            { num: '100+', label: '戦争データ', sub: '1700-2025' },
+            { num: '100+', label: '戦争データ', sub: '古代〜現代（拡充中）' },
             { num: '5軸', label: '構造分析', sub: '共通点・普遍性・現代教訓・防止可能性・再現性' },
             { num: '16', label: '戦争パターン', sub: 'ナショナリズム・経済危機・同盟暴走 等' },
             { num: '4', label: '現代テーマ', sub: 'なぜ◯◯？を歴史で解く' },

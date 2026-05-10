@@ -1,6 +1,6 @@
 export type WarType = 'war' | 'revolution' | 'colonial';
 export type RegionId = 0 | 1 | 2 | 3; // 欧州/アジア/中東・アフリカ/南北米
-export type EraId = 'early-modern' | '20th-century' | 'contemporary';
+export type EraId = 'ancient' | 'medieval' | 'renaissance' | 'early-modern' | '20th-century' | 'contemporary';
 
 /**
  * 戦争の構造タグ — 戦争を「英雄譚」ではなく「再現可能な構造」として分析するための分類軸
