@@ -412,6 +412,9 @@ export const WARS: War[] = [
       { coordinates: [129.0, 34.5], label: '対馬海峡（バルチック艦隊壊滅）', isMain: true },
       { coordinates: [30.3, 59.9], label: 'サンクトペテルブルク（ロシア）', enemy: true },
     ],
+    cotenLinks: [
+      { title: '日露戦争編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E6%97%A5%E9%9C%B2%E6%88%A6%E4%BA%89' },
+    ],
   },
 
   {
@@ -968,6 +971,10 @@ export const WARS: War[] = [
       { coordinates: [-0.5, 50.0], label: 'ソンム川（1916・初日57470名死傷）' },
       { coordinates: [13.4, 52.5], label: 'ベルリン（独）', enemy: true },
       { coordinates: [2.3, 48.9], label: 'パリ（仏）', ally: true },
+    ],
+    cotenLinks: [
+      { title: '第一次世界大戦編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%B8%96%E7%95%8C%E5%A4%A7%E6%88%A6' },
+      { title: 'ケマル・アタテュルク編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%82%B1%E3%83%9E%E3%83%AB%E3%82%A2%E3%82%BF%E3%83%86%E3%83%A5%E3%83%AB%E3%82%AF' },
     ],
   },
   {

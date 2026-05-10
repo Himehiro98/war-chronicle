@@ -75,8 +75,17 @@ export default function Timeline({ selectedId, onSelect, activeEra, activeRegion
                           key={war.id}
                           onClick={() => onSelect(war)}
                           className={`w-full text-left rounded border-l-[3px] px-1.5 py-1 mb-0.5 transition-all duration-200 hover:translate-x-0.5 ${TYPE_STYLES[war.type]} ${selectedId === war.id ? 'shadow-[0_0_0_2px_#2a2218]' : ''}`}>
-                          <div className="font-semibold text-ink" style={{ fontSize: 9, lineHeight: 1.2 }}>
-                            {war.name}
+                          <div className="flex items-start gap-1">
+                            <div className="font-semibold text-ink flex-1" style={{ fontSize: 9, lineHeight: 1.2 }}>
+                              {war.name}
+                            </div>
+                            {war.cotenLinks && war.cotenLinks.length > 0 && (
+                              <span style={{
+                                fontSize: 7, padding: '1px 3px', borderRadius: 3,
+                                background: '#e8611a', color: 'white', fontWeight: 700,
+                                flexShrink: 0, lineHeight: 1.4,
+                              }}>🎙</span>
+                            )}
                           </div>
                           <div className="text-ink-light" style={{ fontSize: 8, marginTop: 1 }}>
                             {war.year}–{war.endYear}

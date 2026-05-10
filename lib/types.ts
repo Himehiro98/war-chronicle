@@ -13,6 +13,7 @@ export interface War {
   theater: string;
   mapHighlight: string;
   markers: MapMarker[];
+  cotenLinks?: { title: string; url: string }[];
 }
 
 export interface MapMarker {
