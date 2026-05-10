@@ -178,7 +178,7 @@ export default function Home() {
             戦争の構造パターン
           </h2>
           <p style={{ fontSize: 13, color: '#475569', lineHeight: 1.7, maxWidth: 720 }}>
-            戦争を「英雄譚」ではなく「<strong>再現可能な構造</strong>」として理解する16の分類軸。
+            戦争を「英雄譚」ではなく「<strong>再現可能な構造</strong>」として理解する21の分類軸。
             タグをクリックすると、メカニズム解説と該当戦争一覧が表示される。
           </p>
         </div>
@@ -208,7 +208,7 @@ export default function Home() {
           <p style={{ fontSize: 13, color: '#cbd5e1', lineHeight: 1.7, marginBottom: 28 }}>
             年表 × 世界地図 × 詳細パネルが連動する完全エクスプローラ。
             <br />
-            100以上の戦争を時系列で俯瞰し、地図で位置を確認し、各戦争の構造分析・教訓を深掘り。
+            BC1457〜2025の<strong style={{ color: '#fbbf24' }}>167戦争</strong>を時系列で俯瞰し、地図で位置を確認し、各戦争の構造分析・教訓・市民視点を深掘り。
           </p>
           <Link href="/explore" style={{
             display: 'inline-block',
