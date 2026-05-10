@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { War, TabContent } from '@/lib/types';
+import { WANTA_COMMENTS } from '@/lib/wanta';
+import WantaBubble from './WantaBubble';
 
 type TabId = 'digest' | 'detail' | 'perspectives' | 'structure' | 'legacy';
 
@@ -338,6 +340,10 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
             {activeTab === 'perspectives' && <PerspectivesTab data={content.perspectives} />}
             {activeTab === 'structure'    && <StructureTab    data={content.structure} />}
             {activeTab === 'legacy'       && <LegacyTab       data={content.legacy} />}
+            <WantaBubble
+              comment={WANTA_COMMENTS[war.id]?.[activeTab] ?? content.wanta?.[activeTab]}
+              tabLabel={activeTab}
+            />
           </>
         ) : (
           <p style={{ fontSize: 12, color: '#9ca3af' }}>コンテンツを読み込んでいます…</p>

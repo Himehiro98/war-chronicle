@@ -30,6 +30,15 @@ export interface TabContent {
   perspectives: PerspectiveData[];
   structure: StructureData;
   legacy: LegacyData[];
+  wanta?: WantaComments;
+}
+
+export interface WantaComments {
+  digest?: string;        // 要点（ダイジェスト用）
+  detail?: string;        // 豆知識（詳説用）
+  perspectives?: string;  // 各国視点の解釈
+  structure?: string;     // 構造分析・もしもif
+  legacy?: string;        // 長期的影響
 }
 
 export interface DigestData {
