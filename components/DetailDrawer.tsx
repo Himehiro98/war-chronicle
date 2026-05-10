@@ -27,6 +27,7 @@ interface Props {
   isLoading: boolean;
   drawerHeight: number;
   onResizeStart: (e: React.MouseEvent) => void;
+  isMobile?: boolean;
 }
 
 /* ── DigestTab ── */
@@ -38,7 +39,7 @@ function DigestTab({ data }: { data: TabContent['digest'] }) {
     { title: 'その後の連鎖', body: data.aftermath, icon: '🌊', bg: '#f0fdfa', border: '#14b8a6', header: '#0f766e' },
   ];
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
       {blocks.map((b) => (
         <div key={b.title} className="rounded-lg overflow-hidden"
           style={{ border: `1px solid ${b.border}`, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
@@ -98,7 +99,7 @@ function PerspectivesTab({ data }: { data: TabContent['perspectives'] }) {
           この戦争を各国はどう語るか
         </span>
       </div>
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
         {data.map((p, i) => {
           const color = PERSPECTIVE_COLORS[i % PERSPECTIVE_COLORS.length];
           return (
@@ -106,7 +107,7 @@ function PerspectivesTab({ data }: { data: TabContent['perspectives'] }) {
               style={{
                 border: '1px solid rgba(0,0,0,0.08)',
                 boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
-                gridColumn: p.wide ? '2 / 4' : undefined,
+                gridColumn: p.wide ? '1 / -1' : undefined,
               }}>
               <div className="px-3 py-2 flex items-center gap-2"
                 style={{ background: color }}>
@@ -390,7 +391,7 @@ function LoadingSkeleton() {
   );
 }
 
-export default function DetailDrawer({ war, isOpen, onClose, content, isLoading, drawerHeight, onResizeStart }: Props) {
+export default function DetailDrawer({ war, isOpen, onClose, content, isLoading, drawerHeight, onResizeStart, isMobile = false }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>('digest');
   const activeConfig = TABS.find(t => t.id === activeTab)!;
 
@@ -402,26 +403,29 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
         background: '#fafaf9',
         transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
         transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
-        zIndex: 10,
+        zIndex: 30,
         height: `${drawerHeight}%`,
+        top: isMobile && isOpen ? 0 : 'auto',
         boxShadow: '0 -4px 24px rgba(0,0,0,0.12)',
       }}>
 
-      {/* ↕ 垂直リサイズハンドル */}
-      <div onMouseDown={onResizeStart} title="ドラッグで高さ調整"
-        style={{
-          height: 12, flexShrink: 0, cursor: 'row-resize',
-          background: '#2a2218', borderTop: '2px solid #8b3a1e',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}
-        onMouseEnter={e => (e.currentTarget.style.background = '#3d3024')}
-        onMouseLeave={e => (e.currentTarget.style.background = '#2a2218')}>
-        <div style={{ display: 'flex', gap: 3 }}>
-          {[0,1,2,3,4].map(i => (
-            <div key={i} style={{ width: 3, height: 3, borderRadius: '50%', background: 'rgba(255,255,255,0.4)' }} />
-          ))}
+      {/* ↕ リサイズハンドル（PCのみ） */}
+      {!isMobile && (
+        <div onMouseDown={onResizeStart} title="ドラッグで高さ調整"
+          style={{
+            height: 12, flexShrink: 0, cursor: 'row-resize',
+            background: '#2a2218', borderTop: '2px solid #8b3a1e',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = '#3d3024')}
+          onMouseLeave={e => (e.currentTarget.style.background = '#2a2218')}>
+          <div style={{ display: 'flex', gap: 3 }}>
+            {[0,1,2,3,4].map(i => (
+              <div key={i} style={{ width: 3, height: 3, borderRadius: '50%', background: 'rgba(255,255,255,0.4)' }} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* タイトルバー */}
       <div className="flex items-center justify-between px-4 py-2 flex-shrink-0"
@@ -466,28 +470,40 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
       </div>
 
       {/* タブバー */}
-      <div className="flex flex-shrink-0 items-stretch" style={{ background: '#1f1a14', borderBottom: `2px solid ${activeConfig.accent}` }}>
+      <div className="flex flex-shrink-0 items-stretch wd-tabs-bar"
+        style={{
+          background: '#1f1a14',
+          borderBottom: `2px solid ${activeConfig.accent}`,
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          WebkitOverflowScrolling: 'touch',
+        }}>
         {TABS.map((t) => {
           const isActive = t.id === activeTab;
           const isPinned = t.pinned;
           return (
             <button key={t.id} onClick={() => setActiveTab(t.id)}
               style={{
-                padding: '8px 16px', fontSize: 10, cursor: 'pointer',
+                padding: isMobile ? '10px 14px' : '8px 16px',
+                fontSize: isMobile ? 11 : 10,
+                cursor: 'pointer',
                 fontFamily: 'inherit', letterSpacing: '0.04em',
                 background: isActive ? t.accent : (isPinned ? `${t.accent}25` : 'transparent'),
                 color: isActive ? 'white' : (isPinned ? '#fca5a5' : '#9a8f7a'),
                 borderBottom: isActive ? `2px solid ${t.accent}` : '2px solid transparent',
                 borderLeft: isPinned && !isActive ? `2px solid ${t.accent}` : 'none',
                 marginBottom: -2,
-                marginLeft: isPinned ? 'auto' : 0,
+                marginLeft: isPinned && !isMobile ? 'auto' : 0,
                 fontWeight: isActive || isPinned ? 700 : 400,
                 transition: 'all 0.15s',
                 display: 'flex', alignItems: 'center', gap: 4,
                 position: 'relative',
+                flexShrink: 0,
+                whiteSpace: 'nowrap',
+                writingMode: 'horizontal-tb',
               }}>
               <span>{t.emoji}</span>
-              <span>{t.label}</span>
+              <span style={{ writingMode: 'horizontal-tb' }}>{t.label}</span>
               {isPinned && !isActive && (
                 <span style={{
                   position: 'absolute', top: 2, right: 4,

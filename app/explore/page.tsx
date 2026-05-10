@@ -10,6 +10,7 @@ import CompareModal from '@/components/CompareModal';
 import { War, EraId } from '@/lib/types';
 import { ERA_CONFIG, WARS } from '@/lib/wars';
 import { WAR_CONTENT } from '@/lib/content';
+import { useIsMobile } from '@/lib/useIsMobile';
 
 const ERA_ORDER: EraId[] = ['ancient', 'medieval', 'renaissance', 'early-modern', '20th-century', 'contemporary'];
 const REGIONS = ['全て', '欧州', 'アジア', '中東・アフリカ', '南北米'];
@@ -27,6 +28,10 @@ export default function Home() {
   // リサイズ状態
   const [timelineWidth, setTimelineWidth] = useState(50); // %
   const [drawerHeight, setDrawerHeight]   = useState(75); // % of main area
+
+  // モバイル: 年表/地図のトグル
+  const isMobile = useIsMobile(768);
+  const [mobileView, setMobileView] = useState<'timeline' | 'map'>('timeline');
 
   const mainRef       = useRef<HTMLDivElement>(null);
   const horizResizing = useRef(false);
@@ -179,52 +184,86 @@ export default function Home() {
 
       {/* ── メイン ── */}
       <main ref={mainRef} className="flex flex-1 overflow-hidden relative">
-        {/* 年表 */}
-        <Timeline
-          selectedId={selectedWar?.id ?? null}
-          onSelect={handleSelectWar}
-          activeEra={activeEra}
-          activeRegion={activeRegion}
-          width={timelineWidth}
-        />
+        {/* PC: 年表＋ハンドル＋地図 横並び */}
+        {!isMobile && (
+          <>
+            <Timeline
+              selectedId={selectedWar?.id ?? null}
+              onSelect={handleSelectWar}
+              activeEra={activeEra}
+              activeRegion={activeRegion}
+              width={timelineWidth}
+            />
+            <div
+              onMouseDown={handleHorizDown}
+              title="ドラッグで幅調整"
+              style={{
+                width: 8, flexShrink: 0, cursor: 'col-resize',
+                background: 'rgba(42,34,24,0.12)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                zIndex: 5, transition: 'background 0.15s',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(139,58,30,0.35)')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'rgba(42,34,24,0.12)')}
+            >
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                {[0,1,2].map(i => (
+                  <div key={i} style={{ width: 2, height: 2, borderRadius: '50%', background: 'rgba(42,34,24,0.5)' }} />
+                ))}
+              </div>
+            </div>
+            <MapPanel selectedWar={selectedWar} />
+          </>
+        )}
 
-        {/* 水平ドラッグハンドル ⇔ */}
-        <div
-          onMouseDown={handleHorizDown}
-          title="ドラッグで幅調整"
-          style={{
-            width: 8,
-            flexShrink: 0,
-            cursor: 'col-resize',
-            background: 'rgba(42,34,24,0.12)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 5,
-            transition: 'background 0.15s',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(139,58,30,0.35)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(42,34,24,0.12)')}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-            {[0,1,2].map(i => (
-              <div key={i} style={{ width: 2, height: 2, borderRadius: '50%', background: 'rgba(42,34,24,0.5)' }} />
-            ))}
-          </div>
-        </div>
+        {/* モバイル: 年表/地図 切替表示 */}
+        {isMobile && mobileView === 'timeline' && (
+          <Timeline
+            selectedId={selectedWar?.id ?? null}
+            onSelect={handleSelectWar}
+            activeEra={activeEra}
+            activeRegion={activeRegion}
+            width={100}
+          />
+        )}
+        {isMobile && mobileView === 'map' && (
+          <MapPanel selectedWar={selectedWar} />
+        )}
 
-        {/* 地図 */}
-        <MapPanel selectedWar={selectedWar} />
+        {/* モバイル: 切替FABボタン */}
+        {isMobile && (
+          <button
+            onClick={() => setMobileView(v => v === 'timeline' ? 'map' : 'timeline')}
+            style={{
+              position: 'absolute',
+              bottom: drawerOpen ? 16 : 20,
+              right: 16,
+              zIndex: 20,
+              width: 56, height: 56, borderRadius: 28,
+              background: '#1e40af',
+              color: 'white',
+              border: '2px solid rgba(255,255,255,0.2)',
+              boxShadow: '0 6px 16px rgba(0,0,0,0.35)',
+              fontSize: 22, cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: 'all 0.2s',
+            }}
+            aria-label={mobileView === 'timeline' ? '地図を見る' : '年表に戻る'}
+          >
+            {mobileView === 'timeline' ? '🗺️' : '📅'}
+          </button>
+        )}
 
-        {/* 詳細ドロワー（下から展開） */}
+        {/* 詳細ドロワー */}
         <DetailDrawer
           war={selectedWar}
           isOpen={drawerOpen}
           onClose={() => setDrawerOpen(false)}
           content={content}
           isLoading={false}
-          drawerHeight={drawerHeight}
+          drawerHeight={isMobile ? 100 : drawerHeight}
           onResizeStart={handleVertDown}
+          isMobile={isMobile}
         />
       </main>
 
