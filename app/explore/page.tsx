@@ -12,7 +12,7 @@ import { ERA_CONFIG, WARS } from '@/lib/wars';
 import { WAR_CONTENT } from '@/lib/content';
 import { useIsMobile } from '@/lib/useIsMobile';
 
-const ERA_ORDER: EraId[] = ['ancient', 'medieval', 'renaissance', 'early-modern', '20th-century', 'contemporary'];
+const ERA_ORDER: EraId[] = ['prehistoric', 'ancient', 'medieval', 'renaissance', 'early-modern', '20th-century', 'contemporary'];
 const REGIONS = ['全て', '欧州', 'アジア', '中東・アフリカ', '南北米'];
 
 export default function Home() {

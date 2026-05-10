@@ -1,10 +1,14 @@
 import { War, EraId } from './types';
+import { WARS_PREHISTORIC } from './wars-prehistoric';
 import { WARS_ANCIENT } from './wars-ancient';
+import { WARS_ANCIENT_EXTRA } from './wars-ancient-extra';
 import { WARS_MEDIEVAL } from './wars-medieval';
+import { WARS_MEDIEVAL_EXTRA } from './wars-medieval-extra';
 import { WARS_RENAISSANCE } from './wars-renaissance';
 
 export const ERA_CONFIG: Record<EraId, { label: string; start: number; end: number }> = {
-  'ancient':        { label: '古代（〜500）',    start: -700, end: 500 },
+  'prehistoric':    { label: '先史〜古代文明（〜BC700）', start: -3000, end: -700 },
+  'ancient':        { label: '古代（BC700〜AD500）', start: -700, end: 500 },
   'medieval':       { label: '中世（500〜1450）', start: 500,  end: 1450 },
   'renaissance':    { label: '近世初期（1450〜1700）', start: 1450, end: 1700 },
   'early-modern':   { label: '近世（1700〜）',   start: 1700, end: 1899 },
@@ -2231,10 +2235,13 @@ const _WARS_INLINE: War[] = [
   },
 ];
 
-// 古代・中世・近世初期は別ファイルから読み込んでマージ
+// 先史〜近世初期は別ファイルから読み込んでマージ
 export const WARS: War[] = [
+  ...WARS_PREHISTORIC,
   ...WARS_ANCIENT,
+  ...WARS_ANCIENT_EXTRA,
   ...WARS_MEDIEVAL,
+  ...WARS_MEDIEVAL_EXTRA,
   ...WARS_RENAISSANCE,
   ..._WARS_INLINE,
 ];
