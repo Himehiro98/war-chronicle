@@ -1,18 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { War, TabContent } from '@/lib/types';
+import { War, TabContent, LessonsData } from '@/lib/types';
 import { WANTA_COMMENTS } from '@/lib/wanta';
+import { LESSONS } from '@/lib/lessons';
 import WantaBubble from './WantaBubble';
 
-type TabId = 'digest' | 'detail' | 'perspectives' | 'structure' | 'legacy';
+type TabId = 'digest' | 'detail' | 'perspectives' | 'structure' | 'legacy' | 'lessons';
 
-const TABS: { id: TabId; label: string; emoji: string; accent: string }[] = [
+const TABS: { id: TabId; label: string; emoji: string; accent: string; pinned?: boolean }[] = [
   { id: 'digest',       label: 'ダイジェスト', emoji: '📋', accent: '#2563eb' },
   { id: 'detail',       label: '詳説',         emoji: '📖', accent: '#d97706' },
   { id: 'perspectives', label: '各国の視点',   emoji: '🌍', accent: '#059669' },
   { id: 'structure',    label: '構造分析',     emoji: '🔍', accent: '#7c3aed' },
   { id: 'legacy',       label: '歴史的連鎖',   emoji: '🔗', accent: '#dc2626' },
+  { id: 'lessons',      label: '教訓',         emoji: '💡', accent: '#b91c1c', pinned: true },
 ];
 
 interface Props {
@@ -214,6 +216,73 @@ function LegacyTab({ data }: { data: TabContent['legacy'] }) {
   );
 }
 
+/* ── LessonsTab — このクロニクルの核心 ── */
+const LESSON_BLOCKS: { key: keyof LessonsData; title: string; icon: string; color: string; bg: string; desc: string }[] = [
+  { key: 'commonalities',   title: '他の戦争との共通点',   icon: '🔁', color: '#0891b2', bg: '#ecfeff', desc: 'パターン認識' },
+  { key: 'universality',    title: '普遍的メカニズム',     icon: '⚙️', color: '#7c3aed', bg: '#f5f3ff', desc: '科学的構造' },
+  { key: 'modernLessons',   title: '現代世界への教訓',     icon: '🌐', color: '#b91c1c', bg: '#fef2f2', desc: '今へのつながり' },
+  { key: 'preventable',     title: '防止可能性の分析',     icon: '🛡️', color: '#059669', bg: '#ecfdf5', desc: '止められたか？' },
+  { key: 'reproducibility', title: '再現性・再発リスク',   icon: '⚠️', color: '#d97706', bg: '#fffbeb', desc: '同じ条件が揃ったら' },
+];
+
+function LessonsTab({ data }: { data: LessonsData | undefined }) {
+  if (!data) {
+    return (
+      <div style={{ padding: 24, textAlign: 'center' }}>
+        <div style={{ fontSize: 36, marginBottom: 12 }}>💡</div>
+        <div style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.7 }}>
+          この戦争の教訓データは現在準備中だワン。<br />
+          歴史的パターンと現代への示唆を執筆中やけん、もう少し待っててだワン🐾
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div>
+      {/* ヘッダー：このクロニクルの核心 */}
+      <div className="mb-4 rounded-lg p-3"
+        style={{
+          background: 'linear-gradient(135deg, #fef2f2, #fee2e2)',
+          border: '2px solid #b91c1c',
+          borderLeft: '6px solid #b91c1c',
+        }}>
+        <div className="flex items-center gap-2 mb-1.5">
+          <span style={{ fontSize: 16 }}>💡</span>
+          <span style={{ fontSize: 11, fontWeight: 800, color: '#7f1d1d', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            このクロニクルの核心
+          </span>
+        </div>
+        <p style={{ fontSize: 11, lineHeight: 1.7, color: '#991b1b' }}>
+          過去の戦争を科学的に分析し、現代世界において<strong>戦争を防ぐ示唆</strong>を得る。
+          パターンを発見し、再現性を見極めることで、未来の悲劇を回避するヒントを探す。
+        </p>
+      </div>
+
+      {/* 5つの分析軸 */}
+      <div className="space-y-3">
+        {LESSON_BLOCKS.map((b) => (
+          <div key={b.key} className="rounded-lg overflow-hidden"
+            style={{ border: `1px solid ${b.color}40`, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+            <div className="px-3 py-2 flex items-center gap-2"
+              style={{ background: b.color, color: 'white' }}>
+              <span style={{ fontSize: 13 }}>{b.icon}</span>
+              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.05em' }}>
+                {b.title}
+              </span>
+              <span style={{ fontSize: 9, opacity: 0.85, marginLeft: 'auto', fontStyle: 'italic' }}>
+                {b.desc}
+              </span>
+            </div>
+            <div className="p-3"
+              style={{ background: b.bg, fontSize: 11.5, lineHeight: 1.75, color: '#374151' }}
+              dangerouslySetInnerHTML={{ __html: data[b.key] }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function LoadingSkeleton() {
   return (
     <div className="grid grid-cols-2 gap-3 animate-pulse">
@@ -306,24 +375,37 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
       </div>
 
       {/* タブバー */}
-      <div className="flex flex-shrink-0" style={{ background: '#1f1a14', borderBottom: `2px solid ${activeConfig.accent}` }}>
+      <div className="flex flex-shrink-0 items-stretch" style={{ background: '#1f1a14', borderBottom: `2px solid ${activeConfig.accent}` }}>
         {TABS.map((t) => {
           const isActive = t.id === activeTab;
+          const isPinned = t.pinned;
           return (
             <button key={t.id} onClick={() => setActiveTab(t.id)}
               style={{
                 padding: '8px 16px', fontSize: 10, cursor: 'pointer',
                 fontFamily: 'inherit', letterSpacing: '0.04em',
-                background: isActive ? t.accent : 'transparent',
-                color: isActive ? 'white' : '#9a8f7a',
+                background: isActive ? t.accent : (isPinned ? `${t.accent}25` : 'transparent'),
+                color: isActive ? 'white' : (isPinned ? '#fca5a5' : '#9a8f7a'),
                 borderBottom: isActive ? `2px solid ${t.accent}` : '2px solid transparent',
+                borderLeft: isPinned && !isActive ? `2px solid ${t.accent}` : 'none',
                 marginBottom: -2,
-                fontWeight: isActive ? 700 : 400,
+                marginLeft: isPinned ? 'auto' : 0,
+                fontWeight: isActive || isPinned ? 700 : 400,
                 transition: 'all 0.15s',
                 display: 'flex', alignItems: 'center', gap: 4,
+                position: 'relative',
               }}>
               <span>{t.emoji}</span>
               <span>{t.label}</span>
+              {isPinned && !isActive && (
+                <span style={{
+                  position: 'absolute', top: 2, right: 4,
+                  width: 6, height: 6, borderRadius: '50%',
+                  background: t.accent,
+                  boxShadow: `0 0 6px ${t.accent}`,
+                  animation: 'pulse 2s infinite',
+                }} />
+              )}
             </button>
           );
         })}
@@ -340,6 +422,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
             {activeTab === 'perspectives' && <PerspectivesTab data={content.perspectives} />}
             {activeTab === 'structure'    && <StructureTab    data={content.structure} />}
             {activeTab === 'legacy'       && <LegacyTab       data={content.legacy} />}
+            {activeTab === 'lessons'      && <LessonsTab      data={LESSONS[war.id] ?? content.lessons} />}
             <WantaBubble
               comment={WANTA_COMMENTS[war.id]?.[activeTab] ?? content.wanta?.[activeTab]}
               tabLabel={activeTab}
