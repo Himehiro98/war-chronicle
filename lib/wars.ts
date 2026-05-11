@@ -5,6 +5,7 @@ import { WARS_ANCIENT_EXTRA } from './wars-ancient-extra';
 import { WARS_MEDIEVAL } from './wars-medieval';
 import { WARS_MEDIEVAL_EXTRA } from './wars-medieval-extra';
 import { WARS_RENAISSANCE } from './wars-renaissance';
+import { WARS_EXTRA } from './wars-extra';
 
 export const ERA_CONFIG: Record<EraId, { label: string; start: number; end: number }> = {
   'prehistoric':    { label: '先史〜古代文明（〜BC700）', start: -3000, end: -700 },
@@ -309,7 +310,7 @@ const _WARS_INLINE: War[] = [
       { coordinates: [-100.3, 25.7], label: 'モンテレイ・ブエナビスタ（決戦）' },
       { coordinates: [-99.5, 26.0], label: 'リオ・グランデ（開戦地）' },
       { coordinates: [-119.4, 36.8], label: 'カリフォルニア（占領）' },
-      { coordinates: [-105.9, 35.7], label: 'サンフェ・トラム（米領化）' },
+      { coordinates: [-105.9, 35.7], label: 'サンタフェ（米領化）' },
     ],
     cotenLinks: [
       { title: 'アメリカ開拓史編', url: 'https://pody.jp/player/hh0fJGjBuDtPNVFIvZKq?view=series&series=%E3%82%A2%E3%83%A1%E3%83%AA%E3%82%AB%E9%96%8B%E6%8B%93%E5%8F%B2' },
@@ -2235,7 +2236,7 @@ const _WARS_INLINE: War[] = [
   },
 ];
 
-// 先史〜近世初期は別ファイルから読み込んでマージ
+// 全戦争マージ
 export const WARS: War[] = [
   ...WARS_PREHISTORIC,
   ...WARS_ANCIENT,
@@ -2244,6 +2245,7 @@ export const WARS: War[] = [
   ...WARS_MEDIEVAL_EXTRA,
   ...WARS_RENAISSANCE,
   ..._WARS_INLINE,
+  ...WARS_EXTRA,
 ];
 
 export const REGIONS = ['欧州', 'アジア', '中東・アフリカ', '南北米'] as const;

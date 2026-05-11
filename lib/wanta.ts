@@ -1,6 +1,7 @@
 import { WantaComments } from './types';
 import { WANTA_EXTRA } from './wanta-extra';
 import { WANTA_EXTRA2 } from './wanta-extra2';
+import { WANTA_EXTRA3 } from './wanta-extra3';
 
 const _WANTA_INLINE: Record<string, WantaComments> = {
   'great-northern-war': {
@@ -858,4 +859,5 @@ export const WANTA_COMMENTS: Record<string, WantaComments> = {
   ..._WANTA_INLINE,
   ...WANTA_EXTRA,
   ...WANTA_EXTRA2,
+  ...WANTA_EXTRA3,
 };

@@ -6,6 +6,7 @@ import { LESSONS_RENAISSANCE } from './lessons-renaissance';
 import { LESSONS_EARLY_MODERN } from './lessons-early-modern';
 import { LESSONS_20TH_CENTURY } from './lessons-20th-century';
 import { LESSONS_CONTEMPORARY } from './lessons-contemporary';
+import { LESSONS_EXTRA } from './lessons-extra';
 
 /**
  * 教訓データ（マージ済み） — このクロニクルの核心
@@ -27,4 +28,5 @@ export const LESSONS: Record<string, LessonsData> = {
   ...LESSONS_EARLY_MODERN,
   ...LESSONS_20TH_CENTURY,
   ...LESSONS_CONTEMPORARY,
+  ...LESSONS_EXTRA,
 };

@@ -5,6 +5,7 @@ import { CONTENT_ANCIENT_EXTRA } from './content-ancient-extra';
 import { CONTENT_MEDIEVAL } from './content-medieval';
 import { CONTENT_MEDIEVAL_EXTRA } from './content-medieval-extra';
 import { CONTENT_RENAISSANCE } from './content-renaissance';
+import { CONTENT_EXTRA } from './content-extra';
 
 const _CONTENT_INLINE: Record<string, TabContent> = {
   'great-northern-war': {
@@ -5503,7 +5504,7 @@ const _CONTENT_INLINE: Record<string, TabContent> = {
   },
 };
 
-// 先史〜近世初期は別ファイルから読み込んでマージ
+// 全コンテンツマージ
 export const WAR_CONTENT: Record<string, TabContent> = {
   ...CONTENT_PREHISTORIC,
   ...CONTENT_ANCIENT,
@@ -5512,4 +5513,5 @@ export const WAR_CONTENT: Record<string, TabContent> = {
   ...CONTENT_MEDIEVAL_EXTRA,
   ...CONTENT_RENAISSANCE,
   ..._CONTENT_INLINE,
+  ...CONTENT_EXTRA,
 };
