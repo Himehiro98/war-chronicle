@@ -398,14 +398,29 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
   if (!war) return null;
 
   return (
-    <div className={isMobile ? 'fixed inset-0 flex flex-col' : 'absolute bottom-0 left-0 right-0 flex flex-col'}
+    <div className="flex flex-col"
       style={{
         background: '#fafaf9',
         transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
         transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
-        zIndex: isMobile ? 50 : 30,
-        height: isMobile ? '100dvh' : `${drawerHeight}%`,
         boxShadow: '0 -4px 24px rgba(0,0,0,0.12)',
+        ...(isMobile ? {
+          // モバイル：完全フルスクリーン
+          position: 'fixed',
+          top: 0, right: 0, bottom: 0, left: 0,
+          width: '100vw',
+          height: '100dvh',
+          maxWidth: '100vw',
+          maxHeight: '100dvh',
+          zIndex: 9999,
+          overflow: 'hidden',
+        } : {
+          // PC：下からスライドアップ
+          position: 'absolute',
+          left: 0, right: 0, bottom: 0,
+          height: `${drawerHeight}%`,
+          zIndex: 30,
+        }),
       }}>
 
       {/* ↕ リサイズハンドル（PCのみ） */}
@@ -426,46 +441,92 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
         </div>
       )}
 
-      {/* タイトルバー */}
-      <div className="flex items-center justify-between px-4 py-2 flex-shrink-0"
-        style={{ background: '#2a2218', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-        <div className="flex items-center gap-3">
-          <div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-serif" style={{ fontSize: 15, color: '#faf7f0', fontWeight: 600 }}>{war.name}</span>
-              <span style={{ fontSize: 10, color: '#9a8f7a' }}>{war.year} – {war.endYear}</span>
+      {/* タイトルバー（モバイル：縦積み、PC：横並び） */}
+      <div className={isMobile ? 'flex-shrink-0' : 'flex items-center justify-between px-4 py-2 flex-shrink-0'}
+        style={{
+          background: '#2a2218',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+          padding: isMobile ? '10px 14px' : undefined,
+        }}>
+        {isMobile ? (
+          <>
+            {/* モバイル：1行目に閉じるボタン+メタ、2行目に戦争名、3行目にCOTEN */}
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="wd-war-meta" style={{ fontSize: 11, color: '#9a8f7a', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {war.year} – {war.endYear} ／ {war.theater}
+              </div>
+              <button onClick={onClose}
+                style={{
+                  fontSize: 12, padding: '6px 12px', borderRadius: 4,
+                  background: 'rgba(255,255,255,0.08)', color: '#f0d5c8',
+                  border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer',
+                  letterSpacing: '0.04em', flexShrink: 0, marginLeft: 8,
+                }}>
+                ✕ 閉じる
+              </button>
             </div>
-            <span style={{ fontSize: 9, color: '#7a6e5c', letterSpacing: '0.05em' }}>{war.theater}</span>
-          </div>
-          {/* COTENリンク */}
-          {war.cotenLinks && war.cotenLinks.length > 0 && (
-            <div className="flex gap-1.5 flex-wrap">
-              {war.cotenLinks.map((link, i) => (
-                <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 4,
-                    padding: '3px 8px', borderRadius: 12, fontSize: 9, fontWeight: 600,
-                    background: 'linear-gradient(135deg, #e8611a, #c84b0a)',
-                    color: 'white', textDecoration: 'none', letterSpacing: '0.03em',
-                    boxShadow: '0 1px 3px rgba(232,97,26,0.4)',
-                    whiteSpace: 'nowrap',
-                  }}
-                  onClick={e => e.stopPropagation()}>
-                  🎙 COTEN: {link.title}
-                </a>
-              ))}
+            <div className="font-serif wd-war-title" style={{ fontSize: 17, color: '#faf7f0', fontWeight: 600, lineHeight: 1.35 }}>
+              {war.name}
             </div>
-          )}
-        </div>
-        <button onClick={onClose}
-          style={{
-            fontSize: 10, padding: '3px 10px', borderRadius: 4,
-            background: 'rgba(255,255,255,0.08)', color: '#c8bfb0',
-            border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer',
-            letterSpacing: '0.04em',
-          }}>
-          ✕ 閉じる
-        </button>
+            {war.cotenLinks && war.cotenLinks.length > 0 && (
+              <div className="flex gap-1.5 flex-wrap" style={{ marginTop: 8 }}>
+                {war.cotenLinks.map((link, i) => (
+                  <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 4,
+                      padding: '4px 10px', borderRadius: 12, fontSize: 11, fontWeight: 600,
+                      background: 'linear-gradient(135deg, #e8611a, #c84b0a)',
+                      color: 'white', textDecoration: 'none', letterSpacing: '0.03em',
+                      boxShadow: '0 1px 3px rgba(232,97,26,0.4)',
+                      whiteSpace: 'nowrap',
+                    }}
+                    onClick={e => e.stopPropagation()}>
+                    🎙 {link.title}
+                  </a>
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-3">
+              <div>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-serif" style={{ fontSize: 15, color: '#faf7f0', fontWeight: 600 }}>{war.name}</span>
+                  <span style={{ fontSize: 10, color: '#9a8f7a' }}>{war.year} – {war.endYear}</span>
+                </div>
+                <span style={{ fontSize: 9, color: '#7a6e5c', letterSpacing: '0.05em' }}>{war.theater}</span>
+              </div>
+              {war.cotenLinks && war.cotenLinks.length > 0 && (
+                <div className="flex gap-1.5 flex-wrap">
+                  {war.cotenLinks.map((link, i) => (
+                    <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 4,
+                        padding: '3px 8px', borderRadius: 12, fontSize: 9, fontWeight: 600,
+                        background: 'linear-gradient(135deg, #e8611a, #c84b0a)',
+                        color: 'white', textDecoration: 'none', letterSpacing: '0.03em',
+                        boxShadow: '0 1px 3px rgba(232,97,26,0.4)',
+                        whiteSpace: 'nowrap',
+                      }}
+                      onClick={e => e.stopPropagation()}>
+                      🎙 COTEN: {link.title}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button onClick={onClose}
+              style={{
+                fontSize: 10, padding: '3px 10px', borderRadius: 4,
+                background: 'rgba(255,255,255,0.08)', color: '#c8bfb0',
+                border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer',
+                letterSpacing: '0.04em',
+              }}>
+              ✕ 閉じる
+            </button>
+          </>
+        )}
       </div>
 
       {/* タブバー */}

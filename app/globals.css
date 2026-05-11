@@ -25,36 +25,68 @@ body {
 /* スマホでタップ反応をよくする（iOS デフォルトの 300ms 遅延を排除） */
 button, a { touch-action: manipulation; }
 
-/* スマホ専用：極端に小さいテキストを最低限読めるサイズに底上げ */
+/* スマホ専用：縦長最適化＋可読性最大化 */
 @media (max-width: 768px) {
-  body { font-size: 14px; line-height: 1.6; }
-  /* タップ標的の最小サイズ */
-  button { min-height: 36px; }
-  /* スクロールバー薄く */
+  /* 横はみ出し完全防止 */
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  body { font-size: 15px; line-height: 1.7; }
+  button { min-height: 40px; }
   ::-webkit-scrollbar { width: 3px; height: 3px; }
 
-  /* DetailDrawer 本文の底上げ（インラインスタイルを !important で上書き） */
+  /* DetailDrawer 全体 — 余白拡大・可読サイズ */
+  .wd-drawer-body {
+    padding: 16px !important;
+  }
+  .wd-drawer-body * {
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+
+  /* 本文 — 大幅サイズアップ */
   .wd-drawer-body p,
   .wd-drawer-body div[data-html-body],
   .wd-drawer-body .wd-body-text {
+    font-size: 15px !important;
+    line-height: 1.9 !important;
+  }
+
+  /* digest カード本文（dangerouslySetInnerHTML 含むdivを総当たり） */
+  .wd-drawer-body > div > div > div[class*="rounded"] > div:last-child {
+    font-size: 15px !important;
+    line-height: 1.9 !important;
+    padding: 14px !important;
+  }
+
+  /* digest カードヘッダー（色付き帯） */
+  .wd-drawer-body > div > div > div[class*="rounded"] > div:first-child {
+    padding: 10px 14px !important;
+  }
+  .wd-drawer-body > div > div > div[class*="rounded"] > div:first-child span:nth-child(2) {
     font-size: 13px !important;
-    line-height: 1.85 !important;
-  }
-  .wd-drawer-body .wd-section-heading {
-    font-size: 12px !important;
-  }
-  .wd-drawer-body .wd-card-header {
-    font-size: 11px !important;
   }
 
-  /* Hero / セクションタイトル類のスマホ調整 */
-  .wd-section-title { font-size: 24px !important; }
-  .wd-section-desc { font-size: 13px !important; line-height: 1.75 !important; }
+  /* セクション見出し */
+  .wd-section-title { font-size: 26px !important; }
+  .wd-section-desc { font-size: 15px !important; line-height: 1.8 !important; }
 
-  /* カード内本文の底上げ */
-  .wd-card-body { font-size: 13px !important; line-height: 1.75 !important; }
-  .wd-card-meta { font-size: 11px !important; }
+  /* カード一般 */
+  .wd-card-body { font-size: 15px !important; line-height: 1.8 !important; }
+  .wd-card-meta { font-size: 12px !important; }
 
-  /* ナビ・ツールバー類 */
-  .wd-nav-link { font-size: 13px !important; padding: 8px 12px !important; }
+  /* ナビ */
+  .wd-nav-link { font-size: 14px !important; padding: 10px 14px !important; }
+
+  /* 戦争タイトルバー */
+  .wd-drawer-body .font-serif { font-size: 18px !important; }
+
+  /* digestタブ等のグリッドを縦1列に強制 */
+  .wd-drawer-body .grid { gap: 12px !important; }
+
+  /* ヘッダーバー（戦争名）— もっと大きく */
+  .wd-war-title { font-size: 17px !important; line-height: 1.4 !important; }
+  .wd-war-meta { font-size: 12px !important; }
+
+  /* タブバー */
+  .wd-tabs-bar button { font-size: 13px !important; padding: 12px 16px !important; min-height: 44px !important; }
 }

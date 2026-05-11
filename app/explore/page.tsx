@@ -216,8 +216,8 @@ export default function Home() {
           </>
         )}
 
-        {/* モバイル: 年表/地図 切替表示 */}
-        {isMobile && mobileView === 'timeline' && (
+        {/* モバイル: ドロワー閉時のみ年表/地図表示（開時は完全非表示で背景透けを防ぐ） */}
+        {isMobile && !drawerOpen && mobileView === 'timeline' && (
           <Timeline
             selectedId={selectedWar?.id ?? null}
             onSelect={handleSelectWar}
@@ -226,17 +226,17 @@ export default function Home() {
             width={100}
           />
         )}
-        {isMobile && mobileView === 'map' && (
+        {isMobile && !drawerOpen && mobileView === 'map' && (
           <MapPanel selectedWar={selectedWar} />
         )}
 
-        {/* モバイル: 切替FABボタン */}
-        {isMobile && (
+        {/* モバイル: 切替FABボタン（ドロワー開時は隠す） */}
+        {isMobile && !drawerOpen && (
           <button
             onClick={() => setMobileView(v => v === 'timeline' ? 'map' : 'timeline')}
             style={{
               position: 'absolute',
-              bottom: drawerOpen ? 16 : 20,
+              bottom: 20,
               right: 16,
               zIndex: 20,
               width: 56, height: 56, borderRadius: 28,
