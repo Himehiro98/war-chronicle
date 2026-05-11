@@ -98,11 +98,11 @@ export default function Home() {
   const content = selectedWar ? (WAR_CONTENT[selectedWar.id] ?? null) : null;
 
   return (
-    <div className="flex flex-col h-screen" style={{ background: '#f1f5f9', minHeight: 600 }}>
+    <div className="flex flex-col h-screen" style={{ background: '#f1f5f9', minHeight: 600, maxWidth: '100vw', overflowX: 'hidden' }}>
 
       {/* ── ヘッダー ── */}
-      <header className="flex items-center justify-between px-5 py-2.5 flex-shrink-0"
-        style={{ background: '#0f172a', borderBottom: '2px solid #1e40af' }}>
+      <header className="flex items-center justify-between px-5 py-2.5 flex-shrink-0 flex-wrap gap-y-2"
+        style={{ background: '#0f172a', borderBottom: '2px solid #1e40af', maxWidth: '100vw' }}>
         <div className="flex items-baseline gap-2.5">
           <Link href="/" style={{
             fontSize: 11, color: '#94a3b8', textDecoration: 'none',
@@ -146,13 +146,14 @@ export default function Home() {
       </header>
 
       {/* ── ツールバー ── */}
-      <div className="flex items-center gap-3 px-4 py-2 flex-shrink-0 flex-wrap"
-        style={{ background: '#ede6d6', borderBottom: '1px solid rgba(42,34,24,0.15)' }}>
-        <span className="text-ink-light"
+      <div className="wd-toolbar flex items-center gap-3 px-4 py-2 flex-shrink-0 flex-wrap"
+        style={{ background: '#ede6d6', borderBottom: '1px solid rgba(42,34,24,0.15)', maxWidth: '100vw' }}>
+        <span className="wd-toolbar-label text-ink-light"
           style={{ fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase' }}>時代</span>
-        <div className="flex gap-1">
+        <div className="wd-chip-group flex gap-1 flex-wrap">
           {ERA_ORDER.map((era) => (
             <button key={era} onClick={() => { setActiveEra(era); setSelectedWar(null); setDrawerOpen(false); }}
+              className="wd-chip"
               style={{
                 padding: '3px 10px', borderRadius: 20, fontSize: 10, cursor: 'pointer',
                 fontFamily: 'inherit', transition: 'all 0.2s', whiteSpace: 'nowrap',
@@ -164,18 +165,20 @@ export default function Home() {
             </button>
           ))}
         </div>
-        <div style={{ width: 1, height: 20, background: 'rgba(42,34,24,0.15)' }} />
-        <span className="text-ink-light"
+        <div className="wd-toolbar-sep" style={{ width: 1, height: 20, background: 'rgba(42,34,24,0.15)' }} />
+        <span className="wd-toolbar-label text-ink-light"
           style={{ fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase' }}>地域</span>
-        <div className="flex gap-1 flex-wrap">
+        <div className="wd-chip-group flex gap-1 flex-wrap">
           {REGIONS.map((region) => (
-            <button key={region} onClick={() => setActiveRegion(region)} style={{
-              padding: '3px 8px', borderRadius: 3, fontSize: 10, cursor: 'pointer',
-              fontFamily: 'inherit', transition: 'all 0.2s',
-              border: `1px solid ${activeRegion === region ? '#1a4a42' : 'rgba(42,34,24,0.15)'}`,
-              background: activeRegion === region ? '#1a4a42' : 'transparent',
-              color: activeRegion === region ? 'white' : '#7a6e5c',
-            }}>
+            <button key={region} onClick={() => setActiveRegion(region)}
+              className="wd-chip"
+              style={{
+                padding: '3px 8px', borderRadius: 3, fontSize: 10, cursor: 'pointer',
+                fontFamily: 'inherit', transition: 'all 0.2s',
+                border: `1px solid ${activeRegion === region ? '#1a4a42' : 'rgba(42,34,24,0.15)'}`,
+                background: activeRegion === region ? '#1a4a42' : 'transparent',
+                color: activeRegion === region ? 'white' : '#7a6e5c',
+              }}>
               {region}
             </button>
           ))}
