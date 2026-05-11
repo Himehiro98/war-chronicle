@@ -6,7 +6,10 @@ import { useIsMobile } from '@/lib/useIsMobile';
 
 export default function Hero() {
   const isMobile = useIsMobile(768);
-  const globeSize = isMobile ? 280 : 520;
+  // スマホ：画面幅にほぼフィット。PC/タブレット：横並びに収まる固定サイズ
+  const globeSize = isMobile
+    ? (typeof window !== 'undefined' ? Math.min(window.innerWidth - 24, 380) : 340)
+    : 520;
   return (
     <section style={{
       position: 'relative',
