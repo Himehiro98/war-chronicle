@@ -7,6 +7,8 @@
 html {
   -webkit-text-size-adjust: 100%;  /* prevent iOS auto text inflation */
   text-size-adjust: 100%;
+  /* PC/タブレット：デフォルトで 125% ズーム相当 */
+  zoom: 1.25;
 }
 
 body {
@@ -27,8 +29,8 @@ button, a { touch-action: manipulation; }
 
 /* スマホ専用：縦長最適化＋可読性最大化（1.3倍フォント＋viewport完全フィット） */
 @media (max-width: 768px) {
-  /* 横はみ出し防止（html には overflow:hidden を付けない— iOS Safari で縦スクロール阻害） */
-  html { max-width: 100vw; }
+  /* スマホは zoom 解除（既に1.3倍フォントで対応済み） */
+  html { max-width: 100vw; zoom: 1; }
   body {
     overflow-x: hidden;
     max-width: 100vw;
