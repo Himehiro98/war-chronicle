@@ -28,6 +28,7 @@ interface Props {
   drawerHeight: number;
   onResizeStart: (e: React.MouseEvent) => void;
   isMobile?: boolean;
+  fullscreen?: boolean;
 }
 
 /* ── DigestTab ── */
@@ -391,11 +392,14 @@ function LoadingSkeleton() {
   );
 }
 
-export default function DetailDrawer({ war, isOpen, onClose, content, isLoading, drawerHeight, onResizeStart, isMobile = false }: Props) {
+export default function DetailDrawer({ war, isOpen, onClose, content, isLoading, drawerHeight, onResizeStart, isMobile = false, fullscreen = false }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>('digest');
   const activeConfig = TABS.find(t => t.id === activeTab)!;
 
   if (!war) return null;
+
+  // fullscreen: 全端末でフルスクリーン詳細ページ（年表と完全分離）
+  const isFullscreen = fullscreen || isMobile;
 
   return (
     <div className="flex flex-col"
@@ -404,8 +408,8 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
         transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
         transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
         boxShadow: '0 -4px 24px rgba(0,0,0,0.12)',
-        ...(isMobile ? {
-          // モバイル：完全フルスクリーン
+        ...(isFullscreen ? {
+          // 全端末フルスクリーン
           position: 'fixed',
           top: 0, right: 0, bottom: 0, left: 0,
           width: '100vw',
@@ -415,7 +419,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
           zIndex: 9999,
           overflow: 'hidden',
         } : {
-          // PC：下からスライドアップ
+          // 旧PC：下からスライドアップ（互換用、現在は使われない）
           position: 'absolute',
           left: 0, right: 0, bottom: 0,
           height: `${drawerHeight}%`,
@@ -423,8 +427,8 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
         }),
       }}>
 
-      {/* ↕ リサイズハンドル（PCのみ） */}
-      {!isMobile && (
+      {/* ↕ リサイズハンドル（フルスクリーンでない時のみ） */}
+      {!isFullscreen && (
         <div onMouseDown={onResizeStart} title="ドラッグで高さ調整"
           style={{
             height: 12, flexShrink: 0, cursor: 'row-resize',

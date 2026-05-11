@@ -184,8 +184,8 @@ export default function Home() {
 
       {/* ── メイン ── */}
       <main ref={mainRef} className="flex flex-1 overflow-hidden relative">
-        {/* PC: 年表＋ハンドル＋地図 横並び */}
-        {!isMobile && (
+        {/* 戦争未選択時：年表＋地図の探索ビュー（PC/タブレット） */}
+        {!isMobile && !drawerOpen && (
           <>
             <Timeline
               selectedId={selectedWar?.id ?? null}
@@ -216,7 +216,7 @@ export default function Home() {
           </>
         )}
 
-        {/* モバイル: ドロワー閉時のみ年表/地図表示（開時は完全非表示で背景透けを防ぐ） */}
+        {/* モバイル：戦争未選択時のみ年表/地図表示 */}
         {isMobile && !drawerOpen && mobileView === 'timeline' && (
           <Timeline
             selectedId={selectedWar?.id ?? null}
@@ -230,7 +230,7 @@ export default function Home() {
           <MapPanel selectedWar={selectedWar} />
         )}
 
-        {/* モバイル: 切替FABボタン（ドロワー開時は隠す） */}
+        {/* モバイル：切替FABボタン（ドロワー開時は隠す） */}
         {isMobile && !drawerOpen && (
           <button
             onClick={() => setMobileView(v => v === 'timeline' ? 'map' : 'timeline')}
@@ -254,16 +254,17 @@ export default function Home() {
           </button>
         )}
 
-        {/* 詳細ドロワー */}
+        {/* 戦争詳細ページ（フルスクリーン、全端末共通） */}
         <DetailDrawer
           war={selectedWar}
           isOpen={drawerOpen}
           onClose={() => setDrawerOpen(false)}
           content={content}
           isLoading={false}
-          drawerHeight={isMobile ? 100 : drawerHeight}
+          drawerHeight={100}
           onResizeStart={handleVertDown}
           isMobile={isMobile}
+          fullscreen={true}
         />
       </main>
 
