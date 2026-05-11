@@ -6,7 +6,7 @@ import { useIsMobile } from '@/lib/useIsMobile';
 
 export default function Hero() {
   const isMobile = useIsMobile(768);
-  const globeSize = isMobile ? 280 : 720;
+  const globeSize = isMobile ? 280 : 520;
   return (
     <section style={{
       position: 'relative',
@@ -30,7 +30,7 @@ export default function Hero() {
         pointerEvents: 'none',
       }} />
 
-      <div style={{
+      <div className="hero-row" style={{
         position: 'relative',
         maxWidth: 1440,
         margin: '0 auto',
@@ -41,7 +41,7 @@ export default function Hero() {
         flexWrap: 'wrap',
       }}>
         {/* ── 左：テキスト ── */}
-        <div style={{ flex: '1 1 480px', minWidth: 320 }}>
+        <div className="hero-text" style={{ flex: '1 1 420px', minWidth: 280 }}>
           {/* タグライン */}
           <div style={{
             fontSize: 11, letterSpacing: '0.2em',
@@ -179,14 +179,19 @@ export default function Hero() {
 
       {/* レスポンシブ：画面幅に応じて地球儀をスケール（スマホは isMobile で実サイズ変更しているのでスケール不要） */}
       <style jsx>{`
-        @media (max-width: 1200px) and (min-width: 769px) {
+        /* PC/タブレットは zoom:1.25 効果を考慮。横並び維持を優先 */
+        @media (min-width: 769px) {
+          :global(.hero-row) {
+            flex-wrap: nowrap !important;
+          }
+        }
+        @media (max-width: 1100px) and (min-width: 901px) {
           :global(.hero-globe-wrap) {
             transform: scale(0.85);
           }
         }
-        @media (max-width: 1000px) and (min-width: 769px) {
+        @media (max-width: 900px) and (min-width: 769px) {
           :global(.hero-globe-wrap) {
-            margin: 24px auto 0;
             transform: scale(0.7);
           }
         }
