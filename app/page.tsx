@@ -20,10 +20,11 @@ export default function Home() {
         borderBottom: '1px solid rgba(248,250,252,0.08)',
         position: 'sticky', top: 0, zIndex: 50,
       }}>
-        <div style={{
+        <div className="wd-top-header" style={{
           maxWidth: 1280, margin: '0 auto',
           padding: '12px 32px',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          flexWrap: 'wrap', gap: 8,
         }}>
           <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'baseline', gap: 10 }}>
             <span className="font-serif" style={{
@@ -35,7 +36,7 @@ export default function Home() {
               多角的戦争史データベース
             </span>
           </Link>
-          <nav style={{ display: 'flex', gap: 4 }}>
+          <nav className="wd-top-nav" style={{ display: 'flex', gap: 4, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             {[
               { label: '学ぶ',         href: '#learning-paths', emoji: '🎓' },
               { label: 'テーマ',       href: '#modern-themes',  emoji: '🌐' },
@@ -49,6 +50,7 @@ export default function Home() {
                 color: '#cbd5e1', textDecoration: 'none', letterSpacing: '0.04em',
                 fontWeight: 500, transition: 'all 0.15s',
                 display: 'inline-flex', alignItems: 'center', gap: 6,
+                whiteSpace: 'nowrap', flexShrink: 0,
               }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,250,252,0.06)'; e.currentTarget.style.color = '#f8fafc'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#cbd5e1'; }}>
