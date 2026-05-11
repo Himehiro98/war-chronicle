@@ -2,8 +2,11 @@
 
 import Link from 'next/link';
 import RotatingGlobe from './RotatingGlobe';
+import { useIsMobile } from '@/lib/useIsMobile';
 
 export default function Hero() {
+  const isMobile = useIsMobile(768);
+  const globeSize = isMobile ? 280 : 720;
   return (
     <section style={{
       position: 'relative',
@@ -120,7 +123,7 @@ export default function Hero() {
             zIndex: 0,
           }} />
           <div style={{ position: 'relative', zIndex: 1 }}>
-            <RotatingGlobe size={720} />
+            <RotatingGlobe size={globeSize} />
           </div>
           {/* キャプション */}
           <div style={{
@@ -174,22 +177,22 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* レスポンシブ：画面幅に応じて地球儀をスケール */}
+      {/* レスポンシブ：画面幅に応じて地球儀をスケール（スマホは isMobile で実サイズ変更しているのでスケール不要） */}
       <style jsx>{`
-        @media (max-width: 1200px) {
+        @media (max-width: 1200px) and (min-width: 769px) {
           :global(.hero-globe-wrap) {
             transform: scale(0.85);
           }
         }
-        @media (max-width: 1000px) {
+        @media (max-width: 1000px) and (min-width: 769px) {
           :global(.hero-globe-wrap) {
             margin: 24px auto 0;
             transform: scale(0.7);
           }
         }
-        @media (max-width: 700px) {
+        @media (max-width: 768px) {
           :global(.hero-globe-wrap) {
-            transform: scale(0.5);
+            margin: 24px auto 0;
           }
         }
       `}</style>

@@ -411,13 +411,10 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
         ...(isFullscreen ? {
           // 全端末フルスクリーン
           position: 'fixed',
-          top: 0, right: 0, bottom: 0, left: 0,
-          width: '100vw',
-          height: '100dvh',
-          maxWidth: '100vw',
-          maxHeight: '100dvh',
+          inset: 0,
           zIndex: 9999,
-          overflow: 'hidden',
+          // overflow:hidden は付けない。内側の overflow-y-auto コンテンツを iOS が
+          // 正しくスクロールできなくなる原因になる
         } : {
           // 旧PC：下からスライドアップ（互換用、現在は使われない）
           position: 'absolute',
