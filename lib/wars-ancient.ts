@@ -174,9 +174,9 @@ export const WARS_ANCIENT: War[] = [
     markers: [
       { coordinates: [35.2137, 31.7683], label: 'エルサレム包囲（70年・第二神殿崩壊）', isMain: true, ally: true },
       { coordinates: [35.3536, 31.3147], label: 'マサダ（73年陥落）', isMain: true },
-      { coordinates: [35.2950, 32.7000], label: 'ヨタパタ攻囲戦（67年）' },
+      { coordinates: [35.2732, 32.8260], label: 'ヨタパタ攻囲戦（67年）' },
       { coordinates: [12.4964, 41.9028], label: 'ローマ（フラウィウス朝の正統性）', isMain: true, enemy: true },
-      { coordinates: [35.0997, 33.0058], label: 'カエサレア（ローマ属州都）' },
+      { coordinates: [34.8932, 32.5000], label: 'カエサレア（ローマ属州都）' },
     ],
     weight: 2,
     tags: ['宗教対立', 'ナショナリズム', '帝国衰退'],

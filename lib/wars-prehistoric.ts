@@ -32,7 +32,7 @@ export const WARS_PREHISTORIC: War[] = [
     markers: [
       { coordinates: [36.52, 34.57], label: 'カデシュ（Tell Nebi Mend）— 戦場', isMain: true },
       { coordinates: [32.65, 25.7], label: 'テーベ（ラムセス2世のエジプト）', isMain: true, ally: true },
-      { coordinates: [34.6, 39.4], label: 'ハットゥシャ（ヒッタイト都）', isMain: true, enemy: true },
+      { coordinates: [34.62, 40.02], label: 'ハットゥシャ（ヒッタイト都）', isMain: true, enemy: true },
       { coordinates: [36.3, 33.5], label: 'オロンテス川渡河地点' },
       { coordinates: [36.7, 34.7], label: 'ヒッタイト軍伏兵地' },
     ],
@@ -70,7 +70,7 @@ export const WARS_PREHISTORIC: War[] = [
     theater: '東地中海全域（アナトリア・レヴァント・エジプト）',
     mapHighlight: 'middle-east',
     markers: [
-      { coordinates: [34.6, 39.4], label: 'ハットゥシャ（ヒッタイト崩壊 BC1190頃）', isMain: true, enemy: true },
+      { coordinates: [34.62, 40.02], label: 'ハットゥシャ（ヒッタイト崩壊 BC1190頃）', isMain: true, enemy: true },
       { coordinates: [35.78, 35.52], label: 'ウガリト（焼亡 BC1185頃）', isMain: true, enemy: true },
       { coordinates: [32.65, 25.7], label: 'テーベ（ラムセス3世のエジプト・生き残り）', isMain: true, ally: true },
       { coordinates: [31.83, 30.83], label: 'ナイル・デルタ会戦（BC1175頃）', isMain: true },
@@ -135,7 +135,7 @@ export const WARS_PREHISTORIC: War[] = [
     markers: [
       { coordinates: [43.15, 36.36], label: 'ニネヴェ（センナケリブ・アシュルバニパル都）', isMain: true, ally: true },
       { coordinates: [43.33, 36.10], label: 'ニムルド（カルフ）— 旧都', isMain: true },
-      { coordinates: [42.72, 35.46], label: 'アッシュル（宗教首都）' },
+      { coordinates: [43.26, 35.45], label: 'アッシュル（宗教首都）' },
       { coordinates: [34.85, 31.57], label: 'ラキシュ包囲（BC701・センナケリブ）', isMain: true, enemy: true },
       { coordinates: [35.21, 31.78], label: 'エルサレム（ヒゼキヤ王・包囲撤退）' },
       { coordinates: [35.49, 33.27], label: 'ティルス（フェニキア服属）' },
@@ -159,7 +159,7 @@ export const WARS_PREHISTORIC: War[] = [
       { coordinates: [44.42, 32.54], label: 'バビロン（ナボポラッサル新バビロニア）', isMain: true, ally: true },
       { coordinates: [50.00, 35.00], label: 'メディア（キュアクサレス王）', isMain: true, ally: true },
       { coordinates: [40.73, 36.66], label: 'ハラン（最後のアッシリア王アッシュル・ウバリト2世 BC609）', isMain: true },
-      { coordinates: [36.05, 35.13], label: 'カルケミシュ（BC605・エジプト援軍敗北）' },
+      { coordinates: [38.01, 36.83], label: 'カルケミシュ（BC605・エジプト援軍敗北）' },
     ],
     weight: 2,
     tags: ['帝国衰退', '同盟暴走', '権力真空'],

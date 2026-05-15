@@ -92,7 +92,7 @@ export const WARS_MEDIEVAL_EXTRA: War[] = [
       { coordinates: [14.42, 50.09], label: 'プラハ（1419第一次窓外投擲事件）', isMain: true },
       { coordinates: [9.17, 47.66], label: 'コンスタンツ（1415フス火刑）', isMain: true },
       { coordinates: [14.69, 49.43], label: 'ターボル（急進派ターボル派の拠点）' },
-      { coordinates: [15.31, 50.03], label: 'リパニ（1434.5.30・穏健派勝利）' },
+      { coordinates: [14.78, 50.07], label: 'リパニ（1434.5.30・穏健派勝利）' },
       { coordinates: [16.61, 49.20], label: 'モラヴィア（戦線拡大）' },
     ],
     weight: 2,

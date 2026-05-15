@@ -12,7 +12,7 @@ export const WARS_MEDIEVAL: War[] = [
     markers: [
       { coordinates: [39.8, 21.4], label: 'メッカ（ムハンマド・イスラム発祥）', isMain: true },
       { coordinates: [36.0, 32.7], label: 'ヤルムーク（636年・対ビザンツ決戦）', isMain: true },
-      { coordinates: [44.4, 33.3], label: 'カーディシーヤ（637年・対サーサーン朝）' },
+      { coordinates: [44.30, 31.90], label: 'カーディシーヤ（637年・対サーサーン朝）' },
       { coordinates: [-5.4, 36.0], label: 'ジブラルタル（711年・イベリア侵攻）' },
       { coordinates: [72.2, 42.5], label: 'タラス河畔（751年・対唐）' },
     ],
@@ -90,7 +90,7 @@ export const WARS_MEDIEVAL: War[] = [
     theater: '西欧・東地中海・レヴァント',
     mapHighlight: 'middle-east',
     markers: [
-      { coordinates: [4.9, 45.0], label: 'クレルモン（1095教皇ウルバヌス2世演説）', isMain: true },
+      { coordinates: [3.08, 45.78], label: 'クレルモン（1095教皇ウルバヌス2世演説）', isMain: true },
       { coordinates: [28.9, 41.0], label: 'コンスタンティノープル（集結地）' },
       { coordinates: [36.2, 36.2], label: 'アンティオキア（1098陥落）', isMain: true },
       { coordinates: [35.2, 31.8], label: 'エルサレム（1099.7.15陥落）', isMain: true },
@@ -115,8 +115,8 @@ export const WARS_MEDIEVAL: War[] = [
     markers: [
       { coordinates: [35.2, 31.8], label: 'エルサレム（1187サラディン奪還）', isMain: true },
       { coordinates: [35.1, 32.9], label: 'アッコン包囲（1189-1191）', isMain: true },
-      { coordinates: [34.9, 32.5], label: 'アルスフ（1191.9リチャード勝利）' },
-      { coordinates: [34.7, 31.7], label: 'ヤッファ（1192休戦）' },
+      { coordinates: [34.81, 32.20], label: 'アルスフ（1191.9リチャード勝利）' },
+      { coordinates: [34.75, 32.05], label: 'ヤッファ（1192休戦）' },
       { coordinates: [-1.5, 47.2], label: 'リチャード1世（イングランド）', ally: true },
     ],
     cotenLinks: [
@@ -140,7 +140,7 @@ export const WARS_MEDIEVAL: War[] = [
       { coordinates: [14.4, 44.9], label: 'ザラ陥落（1202年・キリスト教都市攻撃）' },
       { coordinates: [28.9, 41.0], label: 'コンスタンティノープル略奪（1204.4）', isMain: true },
       { coordinates: [22.9, 40.6], label: 'テッサロニキ王国（ラテン帝国分割）' },
-      { coordinates: [27.4, 39.6], label: 'ニカイア帝国（亡命ビザンツ）' },
+      { coordinates: [29.72, 40.43], label: 'ニカイア帝国（亡命ビザンツ）' },
     ],
     weight: 2,
     tags: ['宗教対立', '資源争奪', '指導者個人要因', '文明衝突'],
@@ -157,7 +157,7 @@ export const WARS_MEDIEVAL: War[] = [
     mapHighlight: 'asia',
     markers: [
       { coordinates: [106.9, 47.9], label: 'カラコルム（モンゴル本拠）', isMain: true },
-      { coordinates: [68.8, 32.5], label: 'インダス河畔（1221年）' },
+      { coordinates: [71.50, 33.00], label: 'インダス河畔（1221年）' },
       { coordinates: [44.4, 33.3], label: 'バグダード陥落（1258・アッバース朝滅亡）', isMain: true },
       { coordinates: [37.6, 55.8], label: 'モスクワ・ルーシ侵攻（1237-1240）' },
       { coordinates: [129.5, 33.6], label: '元寇（1274・1281日本侵攻）' },
@@ -183,7 +183,7 @@ export const WARS_MEDIEVAL: War[] = [
       { coordinates: [139.6, 35.3], label: '鎌倉（源頼朝挙兵）', isMain: true },
       { coordinates: [134.1, 34.4], label: '屋島の戦い（1185.2）' },
       { coordinates: [130.9, 33.9], label: '壇ノ浦（1185.3.24・平氏滅亡）', isMain: true },
-      { coordinates: [136.2, 36.3], label: '倶利伽羅峠（1183年・木曾義仲）' },
+      { coordinates: [136.79, 36.74], label: '倶利伽羅峠（1183年・木曾義仲）' },
     ],
     weight: 2,
     tags: ['権力真空', '指導者個人要因'],
@@ -239,7 +239,7 @@ export const WARS_MEDIEVAL: War[] = [
     theater: '欧州全域・北フランス',
     mapHighlight: 'europe',
     markers: [
-      { coordinates: [33.5, 44.6], label: 'カッファ（1346・ペスト欧州伝来）', isMain: true },
+      { coordinates: [35.38, 45.03], label: 'カッファ（1346・ペスト欧州伝来）', isMain: true },
       { coordinates: [12.5, 41.9], label: 'ローマ・イタリア（1347-48大流行）' },
       { coordinates: [2.6, 49.4], label: 'ボーヴェジ地方（1358ジャックリー一揆）', isMain: true },
       { coordinates: [-0.1, 51.5], label: 'ロンドン（1381ワット・タイラーの乱）' },
