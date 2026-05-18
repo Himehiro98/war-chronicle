@@ -2,7 +2,16 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import CausalityGraph from '@/components/CausalityGraph';
+import dynamic from 'next/dynamic';
+
+const CausalityGraph = dynamic(() => import('@/components/CausalityGraph'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-stone-50 rounded-lg border border-slate-200">
+      <p className="text-slate-500 text-sm">グラフ読み込み中…</p>
+    </div>
+  ),
+});
 
 const ERA_OPTIONS: { value: string; label: string }[] = [
   { value: 'all',           label: '全て（重い）' },
