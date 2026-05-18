@@ -12,22 +12,25 @@ interface Props {
 }
 
 const REGION_COLORS: Record<RegionId, string> = {
-  0: '#1e40af',
-  1: '#0891b2',
-  2: '#b45309',
-  3: '#7c3aed',
+  0: '#3b82f6',
+  1: '#06b6d4',
+  2: '#f59e0b',
+  3: '#a855f7',
+};
+const REGION_LABELS: Record<RegionId, string> = {
+  0: '欧州', 1: 'アジア', 2: '中東・アフリカ', 3: '南北米',
 };
 
-function sizeForWeight(weight: number | undefined) {
-  const wt = weight ?? 1;
-  if (wt === 3) return { w: 160, h: 56, fs: 12 };
-  if (wt === 2) return { w: 130, h: 46, fs: 11 };
-  return { w: 104, h: 38, fs: 10 };
+function nodeSize(weight?: number) {
+  const w = weight ?? 1;
+  if (w === 3) return { w: 150, h: 54, fs: 12 };
+  if (w === 2) return { w: 124, h: 44, fs: 11 };
+  return { w: 100, h: 36, fs: 10 };
 }
 
 function collectNeighbors(rootId: string, hops: number): Set<string> {
   const visited = new Set<string>([rootId]);
-  let frontier: string[] = [rootId];
+  let frontier = [rootId];
   for (let i = 0; i < hops; i++) {
     const next: string[] = [];
     for (const id of frontier) {
@@ -48,14 +51,53 @@ function collectNeighbors(rootId: string, hops: number): Set<string> {
   return visited;
 }
 
+/* simple force simulation — only moves Y, X stays year-based */
+function forceLayout(
+  items: { id: string; x: number; y0: number; w: number; h: number }[],
+  links: { si: number; ti: number }[],
+  iterations = 120,
+) {
+  const pos = items.map((n) => ({ x: n.x, y: n.y0 }));
+  const REPEL = 3500;
+  const SPRING = 0.06;
+  const GRAVITY = 0.03;
+
+  for (let iter = 0; iter < iterations; iter++) {
+    // Repulsion (Y only for same X-bucket)
+    for (let i = 0; i < pos.length; i++) {
+      for (let j = i + 1; j < pos.length; j++) {
+        const dx = pos[i].x - pos[j].x;
+        const dy = pos[i].y - pos[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy) || 1;
+        if (d > 500) continue;
+        const f = REPEL / (d * d);
+        pos[i].y += (dy / d) * f * 0.5;
+        pos[j].y -= (dy / d) * f * 0.5;
+      }
+    }
+    // Spring attraction along edges (Y only)
+    for (const lk of links) {
+      const si = pos[lk.si], ti = pos[lk.ti];
+      const dy = ti.y - si.y;
+      si.y += dy * SPRING * 0.5;
+      ti.y -= dy * SPRING * 0.5;
+    }
+    // Gravity toward region Y band
+    for (let i = 0; i < pos.length; i++) {
+      pos[i].y += (items[i].y0 - pos[i].y) * GRAVITY;
+    }
+  }
+  return pos;
+}
+
 export default function CausalityGraph({ filterEra, filterTag, focusWarId }: Props) {
   const router = useRouter();
   const svgRef = useRef<SVGSVGElement>(null);
-  const [transform, setTransform] = useState({ x: 0, y: 40, scale: 1 });
-  const dragging = useRef<{ startX: number; startY: number; tx: number; ty: number } | null>(null);
-  const [tooltip, setTooltip] = useState<{ x: number; y: number; name: string } | null>(null);
+  const [tf, setTf] = useState({ x: 0, y: 0, scale: 1 });
+  const dragging = useRef<{ sx: number; sy: number; tx: number; ty: number } | null>(null);
+  const [hoverId, setHoverId] = useState<string | null>(null);
 
-  const { nodeList, edgeList, bounds } = useMemo(() => {
+  const { nodes, edges, bounds } = useMemo(() => {
     let pool: War[] = WARS;
     if (focusWarId) {
       const ids = collectNeighbors(focusWarId, 2);
@@ -65,195 +107,246 @@ export default function CausalityGraph({ filterEra, filterTag, focusWarId }: Pro
     if (filterTag && filterTag !== 'all') pool = pool.filter((w) => ((w.tags ?? []) as string[]).includes(filterTag));
 
     const idSet = new Set(pool.map((w) => w.id));
-    const bucketCounts = new Map<string, number>();
 
-    const nodeList = pool.map((w) => {
+    // Initial positions
+    const buckets = new Map<string, number>();
+    const items = pool.map((w) => {
       const x = (w.year + 3000) * 1.6;
-      const yearBucket = Math.floor(w.year / 25);
-      const key = `${w.region}-${yearBucket}`;
-      const slot = bucketCounts.get(key) ?? 0;
-      bucketCounts.set(key, slot + 1);
-      const baseY = w.region * 200;
-      const y = baseY + slot * 68;
-      const { w: nw, h: nh, fs } = sizeForWeight(w.weight);
-      return { id: w.id, x, y, nw, nh, fs, name: w.name, year: w.year, endYear: w.endYear, region: w.region, color: REGION_COLORS[w.region], isFocus: focusWarId === w.id };
+      const bk = `${w.region}-${Math.floor(w.year / 20)}`;
+      const slot = buckets.get(bk) ?? 0;
+      buckets.set(bk, slot + 1);
+      const { w: nw, h: nh, fs } = nodeSize(w.weight);
+      const y0 = 80 + w.region * 220 + slot * 10;
+      return { id: w.id, x, y0, w: nw, h: nh, fs, war: w };
     });
 
-    const edgeList: { id: string; x1: number; y1: number; x2: number; y2: number }[] = [];
-    const nodeMap = new Map(nodeList.map((n) => [n.id, n]));
+    const idxMap = new Map(items.map((n, i) => [n.id, i]));
+    const links: { si: number; ti: number }[] = [];
     for (const w of pool) {
-      for (const causeId of w.causes ?? []) {
-        if (!idSet.has(causeId)) continue;
-        const src = nodeMap.get(causeId);
-        const dst = nodeMap.get(w.id);
-        if (!src || !dst) continue;
-        edgeList.push({
-          id: `${causeId}->${w.id}`,
-          x1: src.x + src.nw,
-          y1: src.y + src.nh / 2,
-          x2: dst.x,
-          y2: dst.y + dst.nh / 2,
-        });
+      for (const cid of w.causes ?? []) {
+        if (!idSet.has(cid)) continue;
+        const si = idxMap.get(cid);
+        const ti = idxMap.get(w.id);
+        if (si !== undefined && ti !== undefined) links.push({ si, ti });
       }
     }
 
-    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-    for (const n of nodeList) {
-      minX = Math.min(minX, n.x);
-      minY = Math.min(minY, n.y);
-      maxX = Math.max(maxX, n.x + n.nw);
-      maxY = Math.max(maxY, n.y + n.nh);
-    }
-    const bounds = nodeList.length ? { minX, minY, maxX, maxY } : { minX: 0, minY: 0, maxX: 800, maxY: 600 };
+    const pos = forceLayout(items, links);
 
-    return { nodeList, edgeList, bounds };
+    const nodes = items.map((item, i) => ({
+      ...item,
+      x: pos[i].x,
+      y: pos[i].y,
+      color: REGION_COLORS[item.war.region as RegionId],
+    }));
+
+    const nodeMap = new Map(nodes.map((n) => [n.id, n]));
+    const edges = links.map(({ si, ti }) => {
+      const src = nodes[si], dst = nodes[ti];
+      const x1 = src.x + src.w;
+      const y1 = src.y + src.h / 2;
+      const x2 = dst.x;
+      const y2 = dst.y + dst.h / 2;
+      const cx1 = x1 + (x2 - x1) * 0.4;
+      const cy1 = y1;
+      const cx2 = x1 + (x2 - x1) * 0.6;
+      const cy2 = y2;
+      return { id: `${src.id}->${dst.id}`, srcId: src.id, dstId: dst.id, d: `M${x1},${y1} C${cx1},${cy1} ${cx2},${cy2} ${x2},${y2}` };
+    });
+
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const n of nodes) {
+      minX = Math.min(minX, n.x - 10);
+      minY = Math.min(minY, n.y - 10);
+      maxX = Math.max(maxX, n.x + n.w + 10);
+      maxY = Math.max(maxY, n.y + n.h + 10);
+    }
+    const bounds = nodes.length
+      ? { minX, minY, maxX, maxY }
+      : { minX: 0, minY: 0, maxX: 800, maxY: 600 };
+
+    return { nodes, edges, bounds };
   }, [filterEra, filterTag, focusWarId]);
 
-  // Auto-fit on data change
+  // Set of connected IDs when hovering
+  const connected = useMemo(() => {
+    if (!hoverId) return null;
+    const set = new Set<string>([hoverId]);
+    edges.forEach((e) => {
+      if (e.srcId === hoverId) set.add(e.dstId);
+      if (e.dstId === hoverId) set.add(e.srcId);
+    });
+    return set;
+  }, [hoverId, edges]);
+
+  // Auto-fit
   useEffect(() => {
     const el = svgRef.current;
-    if (!el || nodeList.length === 0) return;
+    if (!el || nodes.length === 0) return;
     const { width, height } = el.getBoundingClientRect();
-    const contentW = bounds.maxX - bounds.minX + 80;
-    const contentH = bounds.maxY - bounds.minY + 80;
-    const scale = Math.min(width / contentW, height / contentH, 1.5);
-    const tx = (width - contentW * scale) / 2 - bounds.minX * scale + 40 * scale;
-    const ty = (height - contentH * scale) / 2 - bounds.minY * scale + 40 * scale;
-    setTransform({ x: tx, y: ty, scale });
-  }, [bounds, nodeList.length]);
+    const cw = bounds.maxX - bounds.minX + 60;
+    const ch = bounds.maxY - bounds.minY + 60;
+    const scale = Math.min(width / cw, height / ch, 1.2);
+    const x = (width - cw * scale) / 2 - bounds.minX * scale + 30 * scale;
+    const y = (height - ch * scale) / 2 - bounds.minY * scale + 30 * scale;
+    setTf({ x, y, scale });
+  }, [bounds, nodes.length]);
 
   const onWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
-    setTransform((t) => {
-      const factor = e.deltaY < 0 ? 1.1 : 0.9;
-      const newScale = Math.max(0.05, Math.min(3, t.scale * factor));
+    setTf((t) => {
+      const factor = e.deltaY < 0 ? 1.12 : 0.89;
+      const ns = Math.max(0.04, Math.min(4, t.scale * factor));
       const rect = svgRef.current?.getBoundingClientRect();
       if (!rect) return t;
       const mx = e.clientX - rect.left;
       const my = e.clientY - rect.top;
-      return {
-        scale: newScale,
-        x: mx - (mx - t.x) * (newScale / t.scale),
-        y: my - (my - t.y) * (newScale / t.scale),
-      };
+      return { scale: ns, x: mx - (mx - t.x) * (ns / t.scale), y: my - (my - t.y) * (ns / t.scale) };
     });
   }, []);
 
-  const onMouseDown = useCallback((e: React.MouseEvent) => {
+  const onDown = useCallback((e: React.MouseEvent) => {
     if (e.button !== 0) return;
-    dragging.current = { startX: e.clientX, startY: e.clientY, tx: transform.x, ty: transform.y };
-  }, [transform]);
-
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
+    dragging.current = { sx: e.clientX, sy: e.clientY, tx: tf.x, ty: tf.y };
+  }, [tf]);
+  const onMove = useCallback((e: React.MouseEvent) => {
     if (!dragging.current) return;
-    setTransform((t) => ({
-      ...t,
-      x: dragging.current!.tx + (e.clientX - dragging.current!.startX),
-      y: dragging.current!.ty + (e.clientY - dragging.current!.startY),
-    }));
+    setTf((t) => ({ ...t, x: dragging.current!.tx + e.clientX - dragging.current!.sx, y: dragging.current!.ty + e.clientY - dragging.current!.sy }));
   }, []);
+  const onUp = useCallback(() => { dragging.current = null; }, []);
 
-  const onMouseUp = useCallback(() => { dragging.current = null; }, []);
+  const fitView = useCallback(() => {
+    const el = svgRef.current;
+    if (!el || nodes.length === 0) return;
+    const { width, height } = el.getBoundingClientRect();
+    const cw = bounds.maxX - bounds.minX + 60;
+    const ch = bounds.maxY - bounds.minY + 60;
+    const scale = Math.min(width / cw, height / ch, 1.2);
+    const x = (width - cw * scale) / 2 - bounds.minX * scale + 30 * scale;
+    const y = (height - ch * scale) / 2 - bounds.minY * scale + 30 * scale;
+    setTf({ x, y, scale });
+  }, [bounds, nodes.length]);
 
-  const handleNodeClick = useCallback((warId: string) => {
-    router.push(`/explore?war=${warId}`);
-  }, [router]);
-
-  const yearLabel = (w: number | undefined, ey: number | undefined) => {
-    if (!w) return '';
-    const s = w < 0 ? `BC${-w}` : `${w}`;
-    if (!ey || ey === w) return s;
-    return `${s}–${ey < 0 ? 'BC' + (-ey) : ey}`;
-  };
-
-  if (nodeList.length === 0) {
+  if (nodes.length === 0) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-stone-50 rounded-lg border border-slate-200">
+      <div className="w-full h-full flex items-center justify-center rounded-xl" style={{ background: '#0f172a' }}>
         <p className="text-slate-400 text-sm">該当する戦争がありません</p>
       </div>
     );
   }
 
   return (
-    <div className="relative w-full h-full bg-stone-50 rounded-lg border border-slate-200 overflow-hidden select-none">
-      {/* zoom buttons */}
-      <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-1">
-        {['+', '−', '⤢'].map((icon, i) => (
-          <button
-            key={icon}
-            onClick={() => {
-              if (i === 2) {
-                const el = svgRef.current;
-                if (!el || nodeList.length === 0) return;
-                const { width, height } = el.getBoundingClientRect();
-                const contentW = bounds.maxX - bounds.minX + 80;
-                const contentH = bounds.maxY - bounds.minY + 80;
-                const scale = Math.min(width / contentW, height / contentH, 1.5);
-                const tx = (width - contentW * scale) / 2 - bounds.minX * scale + 40 * scale;
-                const ty = (height - contentH * scale) / 2 - bounds.minY * scale + 40 * scale;
-                setTransform({ x: tx, y: ty, scale });
-              } else {
-                setTransform((t) => ({ ...t, scale: Math.max(0.05, Math.min(3, t.scale * (i === 0 ? 1.2 : 0.8))) }));
-              }
-            }}
-            className="w-7 h-7 bg-white border border-slate-300 rounded text-slate-600 text-sm hover:bg-slate-100 flex items-center justify-center shadow-sm"
-          >{icon}</button>
+    <div className="relative w-full h-full rounded-xl overflow-hidden select-none" style={{ background: '#0f172a' }}>
+      {/* legend */}
+      <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
+        {(Object.entries(REGION_LABELS) as [string, string][]).map(([id, label]) => (
+          <div key={id} className="flex items-center gap-1 text-xs text-slate-300 bg-slate-800/80 px-2 py-1 rounded-full backdrop-blur-sm">
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: REGION_COLORS[+id as RegionId] }} />
+            {label}
+          </div>
         ))}
       </div>
 
-      {/* tooltip */}
-      {tooltip && (
-        <div className="absolute z-20 pointer-events-none bg-slate-900 text-white text-xs px-2 py-1 rounded shadow"
-          style={{ left: tooltip.x + 8, top: tooltip.y - 28 }}>
-          {tooltip.name}
-        </div>
-      )}
+      {/* node count */}
+      <div className="absolute top-3 right-3 z-10 text-xs text-slate-400 bg-slate-800/80 px-2 py-1 rounded-full">
+        {nodes.length} 件 · {edges.length} 連鎖
+      </div>
 
-      <svg
-        ref={svgRef}
-        className="w-full h-full cursor-grab active:cursor-grabbing"
-        onWheel={onWheel}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
-      >
+      {/* zoom controls */}
+      <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-1">
+        {(['+', '−', '⤢'] as const).map((icon, i) => (
+          <button key={icon}
+            onClick={() => i === 2 ? fitView() : setTf((t) => ({ ...t, scale: Math.max(0.04, Math.min(4, t.scale * (i === 0 ? 1.25 : 0.8))) }))}
+            className="w-8 h-8 rounded-lg text-slate-200 text-sm flex items-center justify-center hover:bg-slate-600 transition"
+            style={{ background: 'rgba(30,41,59,0.85)', border: '1px solid rgba(100,116,139,0.4)' }}>
+            {icon}
+          </button>
+        ))}
+      </div>
+
+      {/* hint */}
+      <div className="absolute bottom-4 right-4 z-10 text-xs text-slate-500">
+        スクロール：ズーム　ドラッグ：移動
+      </div>
+
+      <svg ref={svgRef} className="w-full h-full cursor-grab active:cursor-grabbing"
+        onWheel={onWheel} onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}>
         <defs>
-          <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L6,3 z" fill="#94a3b8" />
+          <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 z" fill="#475569" />
           </marker>
+          <marker id="arrowhead-hi" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 z" fill="#94a3b8" />
+          </marker>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
         </defs>
-        <g transform={`translate(${transform.x},${transform.y}) scale(${transform.scale})`}>
+
+        <g transform={`translate(${tf.x},${tf.y}) scale(${tf.scale})`}>
           {/* edges */}
-          {edgeList.map((e) => (
-            <line key={e.id} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-              stroke="#94a3b8" strokeWidth={1.2} opacity={0.6} markerEnd="url(#arrow)" />
-          ))}
-          {/* nodes */}
-          {nodeList.map((n) => (
-            <g key={n.id}
-              onClick={() => handleNodeClick(n.id)}
-              onMouseEnter={(e) => {
-                const rect = svgRef.current?.getBoundingClientRect();
-                if (rect) setTooltip({ x: e.clientX - rect.left, y: e.clientY - rect.top, name: n.name });
-              }}
-              onMouseLeave={() => setTooltip(null)}
-              style={{ cursor: 'pointer' }}
-            >
-              <rect x={n.x} y={n.y} width={n.nw} height={n.nh} rx={6}
-                fill={n.color}
-                stroke={n.isFocus ? '#facc15' : 'rgba(255,255,255,0.25)'}
-                strokeWidth={n.isFocus ? 3 : 1}
-                style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))' }}
+          {edges.map((e) => {
+            const isHi = connected ? (connected.has(e.srcId) && connected.has(e.dstId)) : false;
+            const dim = connected && !isHi;
+            return (
+              <path key={e.id} d={e.d} fill="none"
+                stroke={isHi ? '#94a3b8' : '#334155'}
+                strokeWidth={isHi ? 2 : 1}
+                opacity={dim ? 0.15 : isHi ? 0.9 : 0.5}
+                markerEnd={isHi ? 'url(#arrowhead-hi)' : 'url(#arrowhead)'}
+                style={isHi ? { filter: 'url(#glow)' } : undefined}
               />
-              <foreignObject x={n.x + 2} y={n.y + 2} width={n.nw - 4} height={n.nh - 4}>
-                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'sans-serif', textAlign: 'center' }}>
-                  <div style={{ fontSize: n.fs, fontWeight: 600, lineHeight: 1.2, wordBreak: 'break-all' }}>{n.name}</div>
-                  <div style={{ fontSize: n.fs - 1.5, opacity: 0.85, marginTop: 1 }}>{yearLabel(n.year, n.endYear)}</div>
-                </div>
-              </foreignObject>
-            </g>
-          ))}
+            );
+          })}
+
+          {/* nodes */}
+          {nodes.map((n) => {
+            const isHover = hoverId === n.id;
+            const isConn = connected ? connected.has(n.id) : false;
+            const dim = connected && !isConn;
+            const isFocus = focusWarId === n.id;
+            const color = n.color;
+            const yr = n.war.year < 0 ? `BC${-n.war.year}` : `${n.war.year}`;
+            const yrEnd = n.war.endYear && n.war.endYear !== n.war.year
+              ? `–${n.war.endYear < 0 ? 'BC' + (-n.war.endYear) : n.war.endYear}` : '';
+
+            return (
+              <g key={n.id}
+                onClick={() => router.push(`/explore?war=${n.id}`)}
+                onMouseEnter={() => setHoverId(n.id)}
+                onMouseLeave={() => setHoverId(null)}
+                style={{ cursor: 'pointer', opacity: dim ? 0.2 : 1, transition: 'opacity 0.15s' }}>
+                {/* glow bg on hover */}
+                {(isHover || isFocus) && (
+                  <rect x={n.x - 4} y={n.y - 4} width={n.w + 8} height={n.h + 8} rx={10}
+                    fill={color} opacity={0.25} style={{ filter: 'blur(8px)' }} />
+                )}
+                {/* main rect */}
+                <rect x={n.x} y={n.y} width={n.w} height={n.h} rx={7}
+                  fill={isHover || isConn ? color : `${color}99`}
+                  stroke={isFocus ? '#facc15' : isHover ? color : `${color}66`}
+                  strokeWidth={isFocus ? 3 : isHover ? 1.5 : 1}
+                />
+                {/* left accent bar */}
+                <rect x={n.x} y={n.y + 4} width={3} height={n.h - 8} rx={1.5} fill={color} opacity={0.9} />
+                {/* war name */}
+                <text x={n.x + n.w / 2 + 2} y={n.y + n.h / 2 - 6}
+                  textAnchor="middle" dominantBaseline="middle"
+                  fontSize={n.fs} fontWeight="600" fill="#f1f5f9"
+                  style={{ pointerEvents: 'none' }}>
+                  {n.war.name.length > 14 ? n.war.name.slice(0, 13) + '…' : n.war.name}
+                </text>
+                {/* year */}
+                <text x={n.x + n.w / 2 + 2} y={n.y + n.h / 2 + 8}
+                  textAnchor="middle" dominantBaseline="middle"
+                  fontSize={n.fs - 2} fill="#94a3b8"
+                  style={{ pointerEvents: 'none' }}>
+                  {yr}{yrEnd}
+                </text>
+              </g>
+            );
+          })}
         </g>
       </svg>
     </div>
