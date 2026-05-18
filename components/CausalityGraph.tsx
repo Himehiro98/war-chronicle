@@ -7,13 +7,13 @@ import {
   Background,
   Controls,
   MiniMap,
-  Node,
-  Edge,
+  type Node,
+  type Edge,
   MarkerType,
   Position,
-  NodeMouseHandler,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+  type NodeMouseHandler,
+} from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
 import { WARS } from '@/lib/wars';
 import type { War, RegionId } from '@/lib/types';
 
