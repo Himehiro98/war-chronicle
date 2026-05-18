@@ -1089,7 +1089,7 @@ const _WARS_INLINE: War[] = [
     theater: 'ペルー全土・アヤクーチョ州',
     mapHighlight: 'south-america',
     markers: [
-      { coordinates: [-77.0, -12.0], label: 'リマ（首都・タルサ作戦1992）', isMain: true },
+      { coordinates: [-77.0, -12.0], label: 'リマ（首都・勝利作戦1992）', isMain: true },
       { coordinates: [-74.2, -13.2], label: 'アヤクーチョ（蜂起地・センデロ拠点）', isMain: true },
       { coordinates: [-74.5, -13.5], label: 'チュスチ（最初の蜂起1980.5）' },
       { coordinates: [-72.0, -14.0], label: 'アンデス山脈農村（虐殺地帯）' },
@@ -1539,7 +1539,7 @@ const _WARS_INLINE: War[] = [
       { coordinates: [74.8, 34.1], label: 'カシミール（潜入作戦・ジブラルタル作戦）', isMain: true },
       { coordinates: [74.3, 31.5], label: 'ラホール戦線（印軍越境）', isMain: true },
       { coordinates: [77.2, 28.6], label: 'デリー（印・シャストリ首相）', ally: true },
-      { coordinates: [67.0, 24.9], label: 'カラチ（パ・アユーブ・カーン）', enemy: true },
+      { coordinates: [73.1, 33.6], label: 'ラワルピンディ（パ・アユーブ・カーン）', enemy: true },
       { coordinates: [69.3, 41.3], label: 'タシケント（停戦合意）' },
     ],
     weight: 1,
