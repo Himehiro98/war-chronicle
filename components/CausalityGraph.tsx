@@ -11,35 +11,69 @@ interface Props {
   focusWarId?: string;
 }
 
-const REGION_COLORS: Record<RegionId, string> = {
-  0: '#3b82f6',
-  1: '#06b6d4',
-  2: '#f59e0b',
-  3: '#a855f7',
+/* ── Region styling ── */
+const REGION_COLORS: Record<number, string> = {
+  0: '#60a5fa',   // blue
+  1: '#34d399',   // emerald
+  2: '#fbbf24',   // amber
+  3: '#c084fc',   // purple
 };
-const REGION_LABELS: Record<RegionId, string> = {
+const REGION_BG: Record<number, string> = {
+  0: 'rgba(59,130,246,0.06)',
+  1: 'rgba(16,185,129,0.06)',
+  2: 'rgba(245,158,11,0.06)',
+  3: 'rgba(168,85,247,0.06)',
+};
+const REGION_BORDER: Record<number, string> = {
+  0: 'rgba(59,130,246,0.2)',
+  1: 'rgba(16,185,129,0.2)',
+  2: 'rgba(245,158,11,0.2)',
+  3: 'rgba(168,85,247,0.2)',
+};
+const REGION_LABELS: Record<number, string> = {
   0: '欧州', 1: 'アジア', 2: '中東・アフリカ', 3: '南北米',
 };
 
-function nodeSize(weight?: number) {
-  const w = weight ?? 1;
-  if (w === 3) return { w: 150, h: 54, fs: 12 };
-  if (w === 2) return { w: 124, h: 44, fs: 11 };
-  return { w: 100, h: 36, fs: 10 };
+/* ── Layout constants ── */
+const BUCKET   = 25;    // years per column
+const COL_W    = 185;   // px per year-bucket column
+const NODE_W   = 140;   // default node width
+const NODE_H   = 34;    // default node height
+const NODE_GAP = 10;    // vertical gap between stacked nodes
+const SLOT_H   = NODE_H + NODE_GAP;
+const BAND_PAD = 20;    // top/bottom padding inside each region band
+const BAND_SEP = 28;    // vertical gap between region bands
+const L_PAD    = 24;    // left/right margin
+const T_PAD    = 30;    // top margin (for year labels)
+const ACCENT   = 4;     // left accent bar width
+const R_LABEL_W = 52;   // reserved width for region label on left
+
+/* ── Types ── */
+interface LNode {
+  id: string; x: number; y: number;
+  w: number; h: number; fs: number;
+  color: string; war: War;
+}
+interface LEdge {
+  id: string; srcId: string; dstId: string; d: string;
+}
+interface Band {
+  region: number; y: number; h: number;
 }
 
+/* ── Neighbour collector (for focus mode) ── */
 function collectNeighbors(rootId: string, hops: number): Set<string> {
   const visited = new Set<string>([rootId]);
   let frontier = [rootId];
   for (let i = 0; i < hops; i++) {
     const next: string[] = [];
     for (const id of frontier) {
-      const w = WARS.find((x) => x.id === id);
+      const w = WARS.find(x => x.id === id);
       if (!w) continue;
-      [...(w.causes ?? []), ...(w.influences ?? [])].forEach((n) => {
+      [...(w.causes ?? []), ...(w.influences ?? [])].forEach(n => {
         if (!visited.has(n)) { visited.add(n); next.push(n); }
       });
-      WARS.forEach((other) => {
+      WARS.forEach(other => {
         if (visited.has(other.id)) return;
         if ((other.causes ?? []).includes(id) || (other.influences ?? []).includes(id)) {
           visited.add(other.id); next.push(other.id);
@@ -51,304 +85,376 @@ function collectNeighbors(rootId: string, hops: number): Set<string> {
   return visited;
 }
 
-/* simple force simulation — only moves Y, X stays year-based */
-function forceLayout(
-  items: { id: string; x: number; y0: number; w: number; h: number }[],
-  links: { si: number; ti: number }[],
-  iterations = 120,
-) {
-  const pos = items.map((n) => ({ x: n.x, y: n.y0 }));
-  const REPEL = 3500;
-  const SPRING = 0.06;
-  const GRAVITY = 0.03;
+/* ── Deterministic grid layout — zero overlaps guaranteed ── */
+function computeLayout(pool: War[]) {
+  const empty = {
+    nodes: [] as LNode[], edges: [] as LEdge[], bands: [] as Band[],
+    totalW: 800, totalH: 400,
+    allCols: [] as number[], colXs: new Map<number, number>(),
+  };
+  if (!pool.length) return empty;
 
-  for (let iter = 0; iter < iterations; iter++) {
-    // Repulsion (Y only for same X-bucket)
-    for (let i = 0; i < pos.length; i++) {
-      for (let j = i + 1; j < pos.length; j++) {
-        const dx = pos[i].x - pos[j].x;
-        const dy = pos[i].y - pos[j].y;
-        const d = Math.sqrt(dx * dx + dy * dy) || 1;
-        if (d > 500) continue;
-        const f = REPEL / (d * d);
-        pos[i].y += (dy / d) * f * 0.5;
-        pos[j].y -= (dy / d) * f * 0.5;
-      }
-    }
-    // Spring attraction along edges (Y only)
-    for (const lk of links) {
-      const si = pos[lk.si], ti = pos[lk.ti];
-      const dy = ti.y - si.y;
-      si.y += dy * SPRING * 0.5;
-      ti.y -= dy * SPRING * 0.5;
-    }
-    // Gravity toward region Y band
-    for (let i = 0; i < pos.length; i++) {
-      pos[i].y += (items[i].y0 - pos[i].y) * GRAVITY;
+  /* 1. Group by (region, year-bucket), sort within group by year */
+  const cells = new Map<string, War[]>();
+  for (const w of pool) {
+    const bk = `${w.region}:${Math.floor(w.year / BUCKET)}`;
+    if (!cells.has(bk)) cells.set(bk, []);
+    cells.get(bk)!.push(w);
+  }
+  cells.forEach(arr => arr.sort((a, b) => a.year - b.year));
+
+  /* 2. Sorted column indices → X positions */
+  const allCols = Array.from(new Set(pool.map(w => Math.floor(w.year / BUCKET)))).sort((a, b) => a - b);
+  const colXs = new Map<number, number>(
+    allCols.map((col, i) => [col, L_PAD + R_LABEL_W + i * COL_W])
+  );
+
+  /* 3. Max slots per region → band height */
+  const maxSlots = [0, 1, 2, 3].map(r =>
+    Math.max(1, ...allCols.map(col => (cells.get(`${r}:${col}`) ?? []).length))
+  );
+  const bandHs = maxSlots.map(s => BAND_PAD * 2 + s * SLOT_H - NODE_GAP);
+
+  /* 4. Stack bands top-to-bottom */
+  const bands: Band[] = [];
+  let curY = T_PAD;
+  for (let r = 0; r < 4; r++) {
+    bands.push({ region: r, y: curY, h: bandHs[r] });
+    curY += bandHs[r] + BAND_SEP;
+  }
+
+  /* 5. Assign exact (x, y) to each node */
+  const nodes: LNode[] = pool.map(w => {
+    const col  = Math.floor(w.year / BUCKET);
+    const bk   = `${w.region}:${col}`;
+    const grp  = cells.get(bk)!;
+    const slot = grp.indexOf(w);
+    const band = bands[w.region];
+
+    // centre stack vertically within the band
+    const stackH = grp.length * SLOT_H - NODE_GAP;
+    const available = bandHs[w.region] - BAND_PAD * 2;
+    const startY = band.y + BAND_PAD + Math.max(0, (available - stackH) / 2);
+
+    const nw = w.weight === 3 ? 155 : w.weight === 2 ? 145 : NODE_W;
+    const nh = w.weight === 3 ? 40  : w.weight === 2 ? 36  : NODE_H;
+    const fs = w.weight === 3 ? 11  : w.weight === 2 ? 10  : 9;
+
+    const colX = colXs.get(col)!;
+    return {
+      id: w.id,
+      x: colX + (COL_W - nw) / 2,
+      y: startY + slot * SLOT_H,
+      w: nw, h: nh, fs,
+      color: REGION_COLORS[w.region],
+      war: w,
+    };
+  });
+
+  /* 6. Build edges (bezier S-curves) */
+  const nodeMap = new Map(nodes.map(n => [n.id, n]));
+  const idSet   = new Set(pool.map(w => w.id));
+  const edges: LEdge[] = [];
+
+  for (const w of pool) {
+    for (const cid of w.causes ?? []) {
+      if (!idSet.has(cid)) continue;
+      const src = nodeMap.get(cid);
+      const dst = nodeMap.get(w.id);
+      if (!src || !dst) continue;
+
+      const x1 = src.x + src.w, y1 = src.y + src.h / 2;
+      const x2 = dst.x,         y2 = dst.y + dst.h / 2;
+      const mx = (x1 + x2) / 2;
+      edges.push({
+        id: `${cid}->${w.id}`, srcId: cid, dstId: w.id,
+        d: `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`,
+      });
     }
   }
-  return pos;
+
+  const totalW = L_PAD + R_LABEL_W + allCols.length * COL_W + L_PAD;
+  const totalH = curY - BAND_SEP + T_PAD;
+  return { nodes, edges, bands, totalW, totalH, allCols, colXs };
 }
 
+/* ═══════════════════════════════════════
+   Component
+   ═══════════════════════════════════════ */
 export default function CausalityGraph({ filterEra, filterTag, focusWarId }: Props) {
-  const router = useRouter();
-  const svgRef = useRef<SVGSVGElement>(null);
+  const router   = useRouter();
+  const svgRef   = useRef<SVGSVGElement>(null);
   const [tf, setTf] = useState({ x: 0, y: 0, scale: 1 });
   const dragging = useRef<{ sx: number; sy: number; tx: number; ty: number } | null>(null);
-  const [hoverId, setHoverId] = useState<string | null>(null);
+  const [hoverId, setHoverId]           = useState<string | null>(null);
+  const [importantOnly, setImportantOnly] = useState(false);
 
-  const { nodes, edges, bounds } = useMemo(() => {
-    let pool: War[] = WARS;
+  /* Pool + layout */
+  const layout = useMemo(() => {
+    let pool = [...WARS];
     if (focusWarId) {
       const ids = collectNeighbors(focusWarId, 2);
-      pool = pool.filter((w) => ids.has(w.id));
+      pool = pool.filter(w => ids.has(w.id));
     }
-    if (filterEra && filterEra !== 'all') pool = pool.filter((w) => w.era === filterEra);
-    if (filterTag && filterTag !== 'all') pool = pool.filter((w) => ((w.tags ?? []) as string[]).includes(filterTag));
+    if (filterEra && filterEra !== 'all') pool = pool.filter(w => w.era === filterEra);
+    if (filterTag && filterTag !== 'all') pool = pool.filter(w => ((w.tags ?? []) as string[]).includes(filterTag));
+    if (importantOnly) pool = pool.filter(w => (w.weight ?? 1) >= 2);
+    return computeLayout(pool);
+  }, [filterEra, filterTag, focusWarId, importantOnly]);
 
-    const idSet = new Set(pool.map((w) => w.id));
+  const { nodes, edges, bands, totalW, totalH, allCols, colXs } = layout;
 
-    // Initial positions
-    const buckets = new Map<string, number>();
-    const items = pool.map((w) => {
-      const x = (w.year + 3000) * 1.6;
-      const bk = `${w.region}-${Math.floor(w.year / 20)}`;
-      const slot = buckets.get(bk) ?? 0;
-      buckets.set(bk, slot + 1);
-      const { w: nw, h: nh, fs } = nodeSize(w.weight);
-      const y0 = 80 + w.region * 220 + slot * 10;
-      return { id: w.id, x, y0, w: nw, h: nh, fs, war: w };
-    });
-
-    const idxMap = new Map(items.map((n, i) => [n.id, i]));
-    const links: { si: number; ti: number }[] = [];
-    for (const w of pool) {
-      for (const cid of w.causes ?? []) {
-        if (!idSet.has(cid)) continue;
-        const si = idxMap.get(cid);
-        const ti = idxMap.get(w.id);
-        if (si !== undefined && ti !== undefined) links.push({ si, ti });
-      }
-    }
-
-    const pos = forceLayout(items, links);
-
-    const nodes = items.map((item, i) => ({
-      ...item,
-      x: pos[i].x,
-      y: pos[i].y,
-      color: REGION_COLORS[item.war.region as RegionId],
-    }));
-
-    const nodeMap = new Map(nodes.map((n) => [n.id, n]));
-    const edges = links.map(({ si, ti }) => {
-      const src = nodes[si], dst = nodes[ti];
-      const x1 = src.x + src.w;
-      const y1 = src.y + src.h / 2;
-      const x2 = dst.x;
-      const y2 = dst.y + dst.h / 2;
-      const cx1 = x1 + (x2 - x1) * 0.4;
-      const cy1 = y1;
-      const cx2 = x1 + (x2 - x1) * 0.6;
-      const cy2 = y2;
-      return { id: `${src.id}->${dst.id}`, srcId: src.id, dstId: dst.id, d: `M${x1},${y1} C${cx1},${cy1} ${cx2},${cy2} ${x2},${y2}` };
-    });
-
-    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-    for (const n of nodes) {
-      minX = Math.min(minX, n.x - 10);
-      minY = Math.min(minY, n.y - 10);
-      maxX = Math.max(maxX, n.x + n.w + 10);
-      maxY = Math.max(maxY, n.y + n.h + 10);
-    }
-    const bounds = nodes.length
-      ? { minX, minY, maxX, maxY }
-      : { minX: 0, minY: 0, maxX: 800, maxY: 600 };
-
-    return { nodes, edges, bounds };
-  }, [filterEra, filterTag, focusWarId]);
-
-  // Set of connected IDs when hovering
+  /* Connected set for hover highlight */
   const connected = useMemo(() => {
     if (!hoverId) return null;
     const set = new Set<string>([hoverId]);
-    edges.forEach((e) => {
+    edges.forEach(e => {
       if (e.srcId === hoverId) set.add(e.dstId);
       if (e.dstId === hoverId) set.add(e.srcId);
     });
     return set;
   }, [hoverId, edges]);
 
-  // Auto-fit
+  /* Auto-fit when layout changes */
   useEffect(() => {
     const el = svgRef.current;
-    if (!el || nodes.length === 0) return;
+    if (!el || !nodes.length) return;
     const { width, height } = el.getBoundingClientRect();
-    const cw = bounds.maxX - bounds.minX + 60;
-    const ch = bounds.maxY - bounds.minY + 60;
-    const scale = Math.min(width / cw, height / ch, 1.2);
-    const x = (width - cw * scale) / 2 - bounds.minX * scale + 30 * scale;
-    const y = (height - ch * scale) / 2 - bounds.minY * scale + 30 * scale;
-    setTf({ x, y, scale });
-  }, [bounds, nodes.length]);
+    const scale = Math.min(1, width / (totalW + 20), height / (totalH + 20));
+    setTf({ scale, x: (width - totalW * scale) / 2, y: (height - totalH * scale) / 2 });
+  }, [totalW, totalH, nodes.length]);
 
+  /* Zoom / pan */
   const onWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
-    setTf((t) => {
-      const factor = e.deltaY < 0 ? 1.12 : 0.89;
-      const ns = Math.max(0.04, Math.min(4, t.scale * factor));
-      const rect = svgRef.current?.getBoundingClientRect();
-      if (!rect) return t;
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      return { scale: ns, x: mx - (mx - t.x) * (ns / t.scale), y: my - (my - t.y) * (ns / t.scale) };
+    setTf(t => {
+      const f  = e.deltaY < 0 ? 1.12 : 0.89;
+      const ns = Math.max(0.05, Math.min(5, t.scale * f));
+      const rect = svgRef.current!.getBoundingClientRect();
+      const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+      return { scale: ns, x: mx - (mx - t.x) * ns / t.scale, y: my - (my - t.y) * ns / t.scale };
     });
   }, []);
 
-  const onDown = useCallback((e: React.MouseEvent) => {
+  const onMouseDown = useCallback((e: React.MouseEvent) => {
     if (e.button !== 0) return;
     dragging.current = { sx: e.clientX, sy: e.clientY, tx: tf.x, ty: tf.y };
-  }, [tf]);
-  const onMove = useCallback((e: React.MouseEvent) => {
+  }, [tf.x, tf.y]);
+
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
     if (!dragging.current) return;
-    setTf((t) => ({ ...t, x: dragging.current!.tx + e.clientX - dragging.current!.sx, y: dragging.current!.ty + e.clientY - dragging.current!.sy }));
+    setTf(t => ({
+      ...t,
+      x: dragging.current!.tx + e.clientX - dragging.current!.sx,
+      y: dragging.current!.ty + e.clientY - dragging.current!.sy,
+    }));
   }, []);
-  const onUp = useCallback(() => { dragging.current = null; }, []);
 
-  const fitView = useCallback(() => {
+  const stopDrag = useCallback(() => { dragging.current = null; }, []);
+
+  const zoomBy = useCallback((f: number) => {
+    setTf(t => {
+      const ns = Math.max(0.05, Math.min(5, t.scale * f));
+      const el = svgRef.current;
+      if (!el) return t;
+      const { width, height } = el.getBoundingClientRect();
+      return {
+        scale: ns,
+        x: width  / 2 - (width  / 2 - t.x) * ns / t.scale,
+        y: height / 2 - (height / 2 - t.y) * ns / t.scale,
+      };
+    });
+  }, []);
+
+  const fitAll = useCallback(() => {
     const el = svgRef.current;
-    if (!el || nodes.length === 0) return;
+    if (!el) return;
     const { width, height } = el.getBoundingClientRect();
-    const cw = bounds.maxX - bounds.minX + 60;
-    const ch = bounds.maxY - bounds.minY + 60;
-    const scale = Math.min(width / cw, height / ch, 1.2);
-    const x = (width - cw * scale) / 2 - bounds.minX * scale + 30 * scale;
-    const y = (height - ch * scale) / 2 - bounds.minY * scale + 30 * scale;
-    setTf({ x, y, scale });
-  }, [bounds, nodes.length]);
+    const scale = Math.min(1, width / (totalW + 20), height / (totalH + 20));
+    setTf({ scale, x: (width - totalW * scale) / 2, y: (height - totalH * scale) / 2 });
+  }, [totalW, totalH]);
 
-  if (nodes.length === 0) {
-    return (
-      <div className="w-full h-full flex items-center justify-center rounded-xl" style={{ background: '#0f172a' }}>
-        <p className="text-slate-400 text-sm">該当する戦争がありません</p>
-      </div>
-    );
-  }
-
+  /* ── Render ── */
   return (
-    <div className="relative w-full h-full rounded-xl overflow-hidden select-none" style={{ background: '#0f172a' }}>
-      {/* legend */}
-      <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
-        {(Object.entries(REGION_LABELS) as [string, string][]).map(([id, label]) => (
-          <div key={id} className="flex items-center gap-1 text-xs text-slate-300 bg-slate-800/80 px-2 py-1 rounded-full backdrop-blur-sm">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: REGION_COLORS[+id as RegionId] }} />
-            {label}
-          </div>
-        ))}
-      </div>
-
-      {/* node count */}
-      <div className="absolute top-3 right-3 z-10 text-xs text-slate-400 bg-slate-800/80 px-2 py-1 rounded-full">
-        {nodes.length} 件 · {edges.length} 連鎖
-      </div>
-
-      {/* zoom controls */}
-      <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-1">
-        {(['+', '−', '⤢'] as const).map((icon, i) => (
-          <button key={icon}
-            onClick={() => i === 2 ? fitView() : setTf((t) => ({ ...t, scale: Math.max(0.04, Math.min(4, t.scale * (i === 0 ? 1.25 : 0.8))) }))}
-            className="w-8 h-8 rounded-lg text-slate-200 text-sm flex items-center justify-center hover:bg-slate-600 transition"
-            style={{ background: 'rgba(30,41,59,0.85)', border: '1px solid rgba(100,116,139,0.4)' }}>
-            {icon}
-          </button>
-        ))}
-      </div>
-
-      {/* hint */}
-      <div className="absolute bottom-4 right-4 z-10 text-xs text-slate-500">
-        スクロール：ズーム　ドラッグ：移動
-      </div>
-
-      <svg ref={svgRef} className="w-full h-full cursor-grab active:cursor-grabbing"
-        onWheel={onWheel} onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}>
+    <div className="relative w-full h-full select-none bg-[#080f1a] rounded-lg overflow-hidden">
+      <svg
+        ref={svgRef}
+        className="w-full h-full"
+        onWheel={onWheel}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={stopDrag}
+        onMouseLeave={stopDrag}
+        style={{ cursor: dragging.current ? 'grabbing' : 'grab' }}
+      >
         <defs>
-          <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L7,3 z" fill="#475569" />
+          <marker id="arr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+            <path d="M0,0 L7,2.5 L0,5 Z" fill="rgba(100,116,139,0.7)" />
           </marker>
-          <marker id="arrowhead-hi" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L7,3 z" fill="#94a3b8" />
+          <marker id="arr-hot" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+            <path d="M0,0 L7,2.5 L0,5 Z" fill="#94a3b8" />
           </marker>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="blur" />
+          <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
         </defs>
 
         <g transform={`translate(${tf.x},${tf.y}) scale(${tf.scale})`}>
-          {/* edges */}
-          {edges.map((e) => {
-            const isHi = connected ? (connected.has(e.srcId) && connected.has(e.dstId)) : false;
-            const dim = connected && !isHi;
+
+          {/* ── Region bands ── */}
+          {bands.map(b => (
+            <g key={b.region}>
+              {/* Band background */}
+              <rect
+                x={L_PAD} y={b.y}
+                width={totalW - L_PAD * 2} height={b.h}
+                fill={REGION_BG[b.region]}
+                stroke={REGION_BORDER[b.region]}
+                strokeWidth={1} rx={6}
+              />
+              {/* Region label (left gutter) */}
+              <text
+                x={L_PAD + R_LABEL_W / 2} y={b.y + b.h / 2}
+                fill={REGION_COLORS[b.region]}
+                fontSize={10} fontWeight="700" textAnchor="middle"
+                dominantBaseline="middle"
+                style={{ pointerEvents: 'none' }}
+              >
+                {REGION_LABELS[b.region]}
+              </text>
+            </g>
+          ))}
+
+          {/* ── Year column labels ── */}
+          {allCols.map(col => (
+            <text
+              key={col}
+              x={(colXs.get(col) ?? 0) + COL_W / 2}
+              y={T_PAD - 10}
+              fill="#334155" fontSize={9} textAnchor="middle"
+              style={{ pointerEvents: 'none' }}
+            >
+              {col * BUCKET}s
+            </text>
+          ))}
+
+          {/* ── Edges ── */}
+          {edges.map(e => {
+            const hot = hoverId !== null && (e.srcId === hoverId || e.dstId === hoverId);
             return (
-              <path key={e.id} d={e.d} fill="none"
-                stroke={isHi ? '#94a3b8' : '#334155'}
-                strokeWidth={isHi ? 2 : 1}
-                opacity={dim ? 0.15 : isHi ? 0.9 : 0.5}
-                markerEnd={isHi ? 'url(#arrowhead-hi)' : 'url(#arrowhead)'}
-                style={isHi ? { filter: 'url(#glow)' } : undefined}
+              <path
+                key={e.id} d={e.d} fill="none"
+                stroke={hot ? '#94a3b8' : '#1e3a5f'}
+                strokeWidth={hot ? 1.5 : 1}
+                opacity={hoverId !== null ? (hot ? 1 : 0.04) : 0.35}
+                markerEnd={hot ? 'url(#arr-hot)' : 'url(#arr)'}
               />
             );
           })}
 
-          {/* nodes */}
-          {nodes.map((n) => {
-            const isHover = hoverId === n.id;
-            const isConn = connected ? connected.has(n.id) : false;
-            const dim = connected && !isConn;
-            const isFocus = focusWarId === n.id;
-            const color = n.color;
-            const yr = n.war.year < 0 ? `BC${-n.war.year}` : `${n.war.year}`;
-            const yrEnd = n.war.endYear && n.war.endYear !== n.war.year
-              ? `–${n.war.endYear < 0 ? 'BC' + (-n.war.endYear) : n.war.endYear}` : '';
-
+          {/* ── Nodes ── */}
+          {nodes.map(n => {
+            const dim = hoverId !== null && !connected?.has(n.id);
+            const hot = hoverId === n.id;
+            const label = n.war.name.length > 13 ? n.war.name.slice(0, 12) + '…' : n.war.name;
             return (
-              <g key={n.id}
-                onClick={() => router.push(`/explore?war=${n.id}`)}
+              <g
+                key={n.id}
+                onClick={() => router.push(`/wars/${n.id}`)}
                 onMouseEnter={() => setHoverId(n.id)}
                 onMouseLeave={() => setHoverId(null)}
-                style={{ cursor: 'pointer', opacity: dim ? 0.2 : 1, transition: 'opacity 0.15s' }}>
-                {/* glow bg on hover */}
-                {(isHover || isFocus) && (
-                  <rect x={n.x - 4} y={n.y - 4} width={n.w + 8} height={n.h + 8} rx={10}
-                    fill={color} opacity={0.25} style={{ filter: 'blur(8px)' }} />
+                style={{ cursor: 'pointer', opacity: dim ? 0.12 : 1, transition: 'opacity 0.1s' }}
+              >
+                {/* Glow halo */}
+                {hot && (
+                  <rect
+                    x={n.x - 4} y={n.y - 4} width={n.w + 8} height={n.h + 8}
+                    fill={n.color} opacity={0.14} rx={8} filter="url(#glow)"
+                  />
                 )}
-                {/* main rect */}
-                <rect x={n.x} y={n.y} width={n.w} height={n.h} rx={7}
-                  fill={isHover || isConn ? color : `${color}99`}
-                  stroke={isFocus ? '#facc15' : isHover ? color : `${color}66`}
-                  strokeWidth={isFocus ? 3 : isHover ? 1.5 : 1}
+                {/* Body */}
+                <rect
+                  x={n.x} y={n.y} width={n.w} height={n.h}
+                  fill={hot ? '#0d2137' : '#0a1929'}
+                  stroke={hot ? n.color : 'rgba(51,65,85,0.7)'}
+                  strokeWidth={hot ? 1.5 : 0.8}
+                  rx={4}
                 />
-                {/* left accent bar */}
-                <rect x={n.x} y={n.y + 4} width={3} height={n.h - 8} rx={1.5} fill={color} opacity={0.9} />
-                {/* war name */}
-                <text x={n.x + n.w / 2 + 2} y={n.y + n.h / 2 - 6}
-                  textAnchor="middle" dominantBaseline="middle"
-                  fontSize={n.fs} fontWeight="600" fill="#f1f5f9"
-                  style={{ pointerEvents: 'none' }}>
-                  {n.war.name.length > 14 ? n.war.name.slice(0, 13) + '…' : n.war.name}
+                {/* Left accent bar */}
+                <rect
+                  x={n.x} y={n.y} width={ACCENT} height={n.h}
+                  fill={n.color} rx={4}
+                />
+                {/* War name */}
+                <text
+                  x={n.x + ACCENT + 7} y={n.y + n.h / 2 - (n.h > 36 ? 6 : 5)}
+                  fontSize={n.fs} fontWeight="600"
+                  fill={hot ? '#f1f5f9' : '#8b9ab5'}
+                  dominantBaseline="middle"
+                  style={{ pointerEvents: 'none' }}
+                >
+                  {label}
                 </text>
-                {/* year */}
-                <text x={n.x + n.w / 2 + 2} y={n.y + n.h / 2 + 8}
-                  textAnchor="middle" dominantBaseline="middle"
-                  fontSize={n.fs - 2} fill="#94a3b8"
-                  style={{ pointerEvents: 'none' }}>
-                  {yr}{yrEnd}
+                {/* Year */}
+                <text
+                  x={n.x + ACCENT + 7} y={n.y + n.h / 2 + (n.h > 36 ? 7 : 6)}
+                  fontSize={8}
+                  fill={hot ? n.color : '#3d5068'}
+                  dominantBaseline="middle"
+                  style={{ pointerEvents: 'none' }}
+                >
+                  {n.war.year}
                 </text>
               </g>
             );
           })}
         </g>
       </svg>
+
+      {/* ── Zoom controls ── */}
+      <div className="absolute bottom-4 left-4 flex flex-col gap-1.5 z-10">
+        <button
+          onClick={() => zoomBy(1.25)}
+          className="w-8 h-8 bg-slate-800/90 hover:bg-slate-700 border border-slate-700/60 text-slate-300 rounded flex items-center justify-center text-base font-light"
+        >＋</button>
+        <button
+          onClick={() => zoomBy(0.8)}
+          className="w-8 h-8 bg-slate-800/90 hover:bg-slate-700 border border-slate-700/60 text-slate-300 rounded flex items-center justify-center text-base font-light"
+        >－</button>
+        <button
+          onClick={fitAll}
+          className="w-8 h-8 bg-slate-800/90 hover:bg-slate-700 border border-slate-700/60 text-slate-300 rounded flex items-center justify-center text-xs"
+        >⤢</button>
+      </div>
+
+      {/* ── Top bar ── */}
+      <div className="absolute top-3 left-3 right-3 flex items-center gap-3 flex-wrap z-10">
+        {([0, 1, 2, 3] as RegionId[]).map(r => (
+          <div key={r} className="flex items-center gap-1.5">
+            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: REGION_COLORS[r] }} />
+            <span className="text-[10px] text-slate-500">{REGION_LABELS[r]}</span>
+          </div>
+        ))}
+        <div className="ml-auto flex items-center gap-2 flex-shrink-0">
+          <button
+            onClick={() => setImportantOnly(v => !v)}
+            className={`text-[10px] px-2 py-0.5 rounded border transition-colors ${
+              importantOnly
+                ? 'bg-blue-500/20 border-blue-500/40 text-blue-300'
+                : 'bg-slate-800/60 border-slate-700/40 text-slate-600 hover:text-slate-400'
+            }`}
+          >
+            重要のみ
+          </button>
+          <span className="text-[10px] text-slate-700">{nodes.length}件・{edges.length}連鎖</span>
+        </div>
+      </div>
+
+      {/* ── Bottom hint ── */}
+      <span className="absolute bottom-4 right-4 text-[10px] text-slate-800 z-10">
+        スクロール：ズーム　ドラッグ：移動
+      </span>
     </div>
   );
 }
