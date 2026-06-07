@@ -2,6 +2,9 @@ import { HumanLayerData } from './types';
 import { HUMAN_LAYERS_EARLY_MODERN } from './human-layers-early-modern';
 import { HUMAN_LAYERS_20TH_CENTURY } from './human-layers-20th-century';
 import { HUMAN_LAYERS_CONTEMPORARY } from './human-layers-contemporary';
+import { HUMAN_LAYERS_EXTRA1 } from './human-layers-extra1';
+import { HUMAN_LAYERS_EXTRA2 } from './human-layers-extra2';
+import { HUMAN_LAYERS_EXTRA3 } from './human-layers-extra3';
 
 /**
  * 人間視点レイヤー（マージ済み） — 戦争を「地図ゲーム」化しないための感情導線
@@ -19,4 +22,7 @@ export const HUMAN_LAYERS: Record<string, HumanLayerData> = {
   ...HUMAN_LAYERS_EARLY_MODERN,
   ...HUMAN_LAYERS_20TH_CENTURY,
   ...HUMAN_LAYERS_CONTEMPORARY,
+  ...HUMAN_LAYERS_EXTRA1,
+  ...HUMAN_LAYERS_EXTRA2,
+  ...HUMAN_LAYERS_EXTRA3,
 };
