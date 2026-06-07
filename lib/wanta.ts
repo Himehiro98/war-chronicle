@@ -2,6 +2,7 @@ import { WantaComments } from './types';
 import { WANTA_EXTRA } from './wanta-extra';
 import { WANTA_EXTRA2 } from './wanta-extra2';
 import { WANTA_EXTRA3 } from './wanta-extra3';
+import { WANTA_HUMAN } from './wanta-human';
 
 const _WANTA_INLINE: Record<string, WantaComments> = {
   'great-northern-war': {
@@ -854,10 +855,17 @@ const _WANTA_INLINE: Record<string, WantaComments> = {
   },
 };
 
-// 全戦争のわんたコメント（インライン + 追加分1 + 追加分2）
-export const WANTA_COMMENTS: Record<string, WantaComments> = {
+// 全戦争のわんたコメント（インライン + 追加分 + 市民タブ human フィールドをマージ）
+const _WANTA_MERGED: Record<string, WantaComments> = {
   ..._WANTA_INLINE,
   ...WANTA_EXTRA,
   ...WANTA_EXTRA2,
   ...WANTA_EXTRA3,
 };
+
+export const WANTA_COMMENTS: Record<string, WantaComments> = Object.fromEntries(
+  Object.entries(_WANTA_MERGED).map(([id, c]) => [
+    id,
+    { ...c, human: WANTA_HUMAN[id]?.human ?? c.human },
+  ])
+);
