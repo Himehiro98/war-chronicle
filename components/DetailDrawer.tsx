@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { War, TabContent, LessonsData, HumanLayerData } from '@/lib/types';
 import { WANTA_COMMENTS } from '@/lib/wanta';
 import { LESSONS } from '@/lib/lessons';
@@ -392,6 +392,40 @@ function LoadingSkeleton() {
   );
 }
 
+/* ── Claudeに質問ボタン ── */
+function AskClaudeButton({ war }: { war: War }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleClick = useCallback(async () => {
+    const template = `「${war.name}」（${war.year}年〜${war.endYear}年、${war.theater}）について質問します。\n\n知りたいこと：[ここに質問を入力してください]\n\n例：この戦争が現代の○○に与えた影響は？／なぜこの戦争は起きたのか？／類似した現代の状況は？`;
+    try { await navigator.clipboard.writeText(template); } catch { /* 続行 */ }
+    setCopied(true);
+    setTimeout(() => window.open('https://claude.ai/new', '_blank', 'noopener,noreferrer'), 1200);
+    setTimeout(() => setCopied(false), 4000);
+  }, [war]);
+
+  return (
+    <button
+      onClick={handleClick}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        padding: '4px 10px', borderRadius: 4, fontSize: 10, fontWeight: 600,
+        background: copied ? '#d97706' : 'rgba(217,119,6,0.15)',
+        color: copied ? '#fff' : '#d97706',
+        border: `1px solid ${copied ? '#d97706' : 'rgba(217,119,6,0.4)'}`,
+        cursor: 'pointer', letterSpacing: '0.03em',
+        transition: 'all 0.2s',
+        flexShrink: 0,
+      }}
+    >
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
+      </svg>
+      {copied ? '✅ コピー済み→Claude開く' : '💬 Claudeに質問'}
+    </button>
+  );
+}
+
 export default function DetailDrawer({ war, isOpen, onClose, content, isLoading, drawerHeight, onResizeStart, isMobile = false, fullscreen = false }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>('digest');
   const activeConfig = TABS.find(t => t.id === activeTab)!;
@@ -456,15 +490,18 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
               <div className="wd-war-meta" style={{ fontSize: 11, color: '#9a8f7a', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {war.year} – {war.endYear} ／ {war.theater}
               </div>
-              <button onClick={onClose}
-                style={{
-                  fontSize: 12, padding: '6px 12px', borderRadius: 4,
-                  background: 'rgba(255,255,255,0.08)', color: '#f0d5c8',
-                  border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer',
-                  letterSpacing: '0.04em', flexShrink: 0, marginLeft: 8,
-                }}>
-                ✕ 閉じる
-              </button>
+              <div style={{ display: 'flex', gap: 6, flexShrink: 0, marginLeft: 8 }}>
+                <AskClaudeButton war={war} />
+                <button onClick={onClose}
+                  style={{
+                    fontSize: 12, padding: '6px 12px', borderRadius: 4,
+                    background: 'rgba(255,255,255,0.08)', color: '#f0d5c8',
+                    border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer',
+                    letterSpacing: '0.04em', flexShrink: 0,
+                  }}>
+                  ✕ 閉じる
+                </button>
+              </div>
             </div>
             <div className="font-serif wd-war-title" style={{ fontSize: 17, color: '#faf7f0', fontWeight: 600, lineHeight: 1.35 }}>
               {war.name}
@@ -517,15 +554,18 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
                 </div>
               )}
             </div>
-            <button onClick={onClose}
-              style={{
-                fontSize: 10, padding: '3px 10px', borderRadius: 4,
-                background: 'rgba(255,255,255,0.08)', color: '#c8bfb0',
-                border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer',
-                letterSpacing: '0.04em',
-              }}>
-              ✕ 閉じる
-            </button>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+              <AskClaudeButton war={war} />
+              <button onClick={onClose}
+                style={{
+                  fontSize: 10, padding: '3px 10px', borderRadius: 4,
+                  background: 'rgba(255,255,255,0.08)', color: '#c8bfb0',
+                  border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer',
+                  letterSpacing: '0.04em',
+                }}>
+                ✕ 閉じる
+              </button>
+            </div>
           </>
         )}
       </div>

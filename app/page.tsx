@@ -44,6 +44,8 @@ export default function Home() {
               { label: 'パターン',     href: '#patterns',       emoji: '🧬' },
               { label: 'ネットワーク', href: '/network',        emoji: '🕸️' },
               { label: '探索',         href: '/explore',        emoji: '🗺️' },
+              { label: '教訓一覧',     href: '/lessons',        emoji: '💡' },
+              { label: '全文検索',     href: '/search',         emoji: '🔍' },
             ].map((n) => (
               <a key={n.label} href={n.href} style={{
                 padding: '6px 14px', borderRadius: 4, fontSize: 12,
