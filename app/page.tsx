@@ -42,7 +42,6 @@ export default function Home() {
               { label: 'テーマ',       href: '#modern-themes',  emoji: '🌐' },
               { label: '宗教',         href: '#religions',      emoji: '🕊️' },
               { label: 'パターン',     href: '#patterns',       emoji: '🧬' },
-              { label: 'ネットワーク', href: '/network',        emoji: '🕸️' },
               { label: '探索',         href: '/explore',        emoji: '🗺️' },
               { label: '教訓一覧',     href: '/lessons',        emoji: '💡' },
               { label: '全文検索',     href: '/search',         emoji: '🔍' },
