@@ -45,6 +45,10 @@ export default function Home() {
               { label: '探索',         href: '/explore',        emoji: '🗺️' },
               { label: '教訓一覧',     href: '/lessons',        emoji: '💡' },
               { label: '全文検索',     href: '/search',         emoji: '🔍' },
+              { label: 'AI診断',       href: '/diagnose',       emoji: '🔮' },
+              { label: 'リスク診断',   href: '/risk-check',     emoji: '🔍' },
+              { label: 'フラッシュ',   href: '/flashcards',     emoji: '🃏' },
+              { label: 'ライブ',       href: '/live',           emoji: '🔴' },
             ].map((n) => (
               <a key={n.label} href={n.href} style={{
                 padding: '6px 14px', borderRadius: 4, fontSize: 12,

@@ -401,6 +401,45 @@ function ClaudeIcon({ size = 12 }: { size?: number }) {
   );
 }
 
+/* ── 音声ナレーターボタン ── */
+function NarratorButton({ text }: { text: string }) {
+  const [speaking, setSpeaking] = useState(false);
+
+  const handleClick = useCallback(() => {
+    if (!('speechSynthesis' in window)) return;
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+      return;
+    }
+    const plain = text.replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, ' ');
+    const utter = new SpeechSynthesisUtterance(plain);
+    utter.lang = 'ja-JP';
+    utter.rate = 0.95;
+    utter.onend = () => setSpeaking(false);
+    utter.onerror = () => setSpeaking(false);
+    window.speechSynthesis.speak(utter);
+    setSpeaking(true);
+  }, [text, speaking]);
+
+  return (
+    <button
+      onClick={handleClick}
+      title={speaking ? '読み上げを停止' : '音声で読み上げ'}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 4,
+        padding: '4px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600,
+        background: speaking ? 'rgba(34,197,94,0.2)' : 'rgba(148,163,184,0.1)',
+        color: speaking ? '#4ade80' : '#94a3b8',
+        border: `1px solid ${speaking ? 'rgba(74,222,128,0.4)' : 'rgba(148,163,184,0.2)'}`,
+        cursor: 'pointer', transition: 'all 0.2s', flexShrink: 0,
+      }}
+    >
+      {speaking ? '⏹' : '🔊'}
+    </button>
+  );
+}
+
 /* ── Claudeに質問ボタン ── */
 function AskClaudeButton({ war }: { war: War }) {
   const [copied, setCopied] = useState(false);
@@ -499,6 +538,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
                 {war.year} – {war.endYear} ／ {war.theater}
               </div>
               <div style={{ display: 'flex', gap: 6, flexShrink: 0, marginLeft: 8 }}>
+                {content && <NarratorButton text={content.digest?.background ?? ''} />}
                 <AskClaudeButton war={war} />
                 <button onClick={onClose}
                   style={{
@@ -563,6 +603,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
               )}
             </div>
             <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+              {content && <NarratorButton text={content.digest?.background ?? ''} />}
               <AskClaudeButton war={war} />
               <button onClick={onClose}
                 style={{
