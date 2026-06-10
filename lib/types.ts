@@ -109,6 +109,7 @@ export interface WantaComments {
   legacy?: string;
   lessons?: string;
   human?: string;
+  exam?: string;
 }
 
 export interface DigestData {
@@ -183,6 +184,17 @@ export interface TagDescription {
   modernRisk: string;      // 現代の警戒対象
   accent: string;          // 表示色
   emoji: string;
+}
+
+/**
+ * 論述チャレンジ — 本サイトオリジナルの入試型論述問題
+ * 実在の入試問題の転載ではなく、国公立二次・難関私大の
+ * 出題形式を踏襲したオリジナル問題（著作権・捏造出典の問題を回避）
+ */
+export interface ExamQuestion {
+  type: string;       // '国公立二次型' | '私大論述型' など
+  question: string;   // 問題文（「〜の観点から○字以内で述べよ」形式）
+  answer: string;     // 解答例
 }
 
 /**

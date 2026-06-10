@@ -6,9 +6,10 @@ import { WANTA_COMMENTS } from '@/lib/wanta';
 import { LESSONS } from '@/lib/lessons';
 import { HUMAN_LAYERS } from '@/lib/human-layers';
 import { WARS } from '@/lib/wars';
+import { EXAM_QUESTIONS } from '@/lib/exam-questions';
 import WantaBubble from './WantaBubble';
 
-type TabId = 'digest' | 'detail' | 'perspectives' | 'structure' | 'legacy' | 'human' | 'lessons';
+type TabId = 'digest' | 'detail' | 'perspectives' | 'structure' | 'legacy' | 'human' | 'lessons' | 'exam';
 
 const TABS: { id: TabId; label: string; emoji: string; accent: string; pinned?: boolean }[] = [
   { id: 'digest',       label: 'ダイジェスト', emoji: '📋', accent: '#2563eb' },
@@ -17,6 +18,7 @@ const TABS: { id: TabId; label: string; emoji: string; accent: string; pinned?: 
   { id: 'structure',    label: '構造分析',     emoji: '🔍', accent: '#7c3aed' },
   { id: 'legacy',       label: '歴史的連鎖',   emoji: '🔗', accent: '#dc2626' },
   { id: 'human',        label: '市民',         emoji: '🕊️', accent: '#0891b2' },
+  { id: 'exam',         label: '論述',         emoji: '🎓', accent: '#0e7490' },
   { id: 'lessons',      label: '教訓',         emoji: '💡', accent: '#b91c1c', pinned: true },
 ];
 
@@ -399,6 +401,104 @@ function ClaudeIcon({ size = 12 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <path d="m3.127 10.604 3.135-1.76.053-.153-.053-.085H6.11l-.525-.032-1.791-.048-1.554-.065-1.505-.08-.38-.081L0 7.832l.036-.234.32-.214.455.04 1.009.069 1.513.105 1.097.064 1.626.17h.259l.036-.105-.089-.065-.068-.064-1.566-1.062-1.695-1.121-.887-.646-.48-.327-.243-.306-.104-.67.435-.48.585.04.15.04.593.456 1.267.981 1.654 1.218.242.202.097-.068.012-.049-.109-.181-.9-1.626-.96-1.655-.428-.686-.113-.411a2 2 0 0 1-.068-.484l.496-.674L4.446 0l.662.089.279.242.411.94.666 1.48 1.033 2.014.302.597.162.553.06.17h.105v-.097l.085-1.134.157-1.392.154-1.792.052-.504.25-.605.497-.327.387.186.319.456-.045.294-.19 1.23-.37 1.93-.243 1.29h.142l.161-.16.654-.868 1.097-1.372.484-.545.565-.601.363-.287h.686l.505.751-.226.775-.707.895-.585.759-.839 1.13-.524.904.048.072.125-.012 1.897-.403 1.024-.186 1.223-.21.553.258.06.263-.218.536-1.307.323-1.533.307-2.284.54-.028.02.032.04 1.029.098.44.024h1.077l2.005.15.525.346.315.424-.053.323-.807.411-3.631-.863-.872-.218h-.12v.073l.726.71 1.331 1.202 1.667 1.55.084.383-.214.302-.226-.032-1.464-1.101-.565-.497-1.28-1.077h-.084v.113l.295.432 1.557 2.34.08.718-.112.234-.404.141-.444-.08-.911-1.28-.94-1.44-.759-1.291-.093.053-.448 4.821-.21.246-.484.186-.403-.307-.214-.496.214-.98.258-1.28.21-1.016.19-1.263.112-.42-.008-.028-.092.012-.953 1.307-1.448 1.957-1.146 1.227-.274.109-.477-.247.045-.44.266-.39 1.586-2.018.956-1.25.617-.723-.004-.105h-.036l-4.212 2.736-.75.096-.324-.302.04-.496.154-.162 1.267-.871z"/>
     </svg>
+  );
+}
+
+/* ── ExamTab — 論述チャレンジ（本サイトオリジナル問題） ── */
+function ExamTab({ warId }: { warId: string }) {
+  const questions = EXAM_QUESTIONS[warId];
+  const [openAnswers, setOpenAnswers] = useState<Set<number>>(new Set());
+
+  if (!questions || questions.length === 0) {
+    return (
+      <div style={{ padding: 24, textAlign: 'center' }}>
+        <div style={{ fontSize: 36, marginBottom: 12 }}>🎓</div>
+        <div style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.7 }}>
+          この戦争の論述問題は準備中やけん。<br />
+          もうしばらく待っちょってな。
+        </div>
+      </div>
+    );
+  }
+
+  const toggleAnswer = (i: number) => {
+    setOpenAnswers(prev => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  };
+
+  return (
+    <div>
+      {/* ヘッダー＋オリジナル明記 */}
+      <div className="mb-4 rounded-lg p-3"
+        style={{ background: '#ecfeff', border: '1px solid #06b6d4', borderLeft: '4px solid #0e7490' }}>
+        <div className="flex items-center gap-2 mb-1.5">
+          <span style={{ fontSize: 13 }}>🎓</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: '#155e75', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            論述チャレンジ
+          </span>
+        </div>
+        <p style={{ fontSize: 11, lineHeight: 1.7, color: '#164e63' }}>
+          国公立二次試験の出題形式を踏襲した<strong>本サイトオリジナル問題</strong>。
+          まず自分の言葉で答えを組み立ててから、解答例と比べてみよう。
+          「自分で思い出して書く」ことが、読むだけの何倍も記憶に残る（テスト効果）。
+        </p>
+        <p style={{ fontSize: 9, color: '#0e7490', marginTop: 6 }}>
+          ※実在の大学入試問題の転載ではありません（著作権保護のため）。内容は本サイトのファクトチェック済みコンテンツに基づきます。
+        </p>
+      </div>
+
+      {/* 問題リスト */}
+      {questions.map((q, i) => (
+        <div key={i} className="mb-4 rounded-lg overflow-hidden"
+          style={{ border: '1px solid #67e8f9', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+          {/* 問題ヘッダー */}
+          <div className="px-3 py-2 flex items-center gap-2" style={{ background: '#0e7490' }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: 'white' }}>問{questions.length > 1 ? i + 1 : ''}</span>
+            <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.8)', marginLeft: 'auto', fontStyle: 'italic' }}>
+              {q.type}（オリジナル）
+            </span>
+          </div>
+          {/* 問題文 */}
+          <div className="p-3" style={{ background: '#fafaf9' }}>
+            <p style={{ fontSize: 12.5, lineHeight: 1.9, color: '#1c1917', fontWeight: 500 }}>
+              {q.question}
+            </p>
+            <button
+              onClick={() => toggleAnswer(i)}
+              style={{
+                marginTop: 12,
+                padding: '7px 16px',
+                borderRadius: 5,
+                fontSize: 11,
+                fontWeight: 700,
+                cursor: 'pointer',
+                background: openAnswers.has(i) ? '#e2e8f0' : '#0e7490',
+                color: openAnswers.has(i) ? '#475569' : 'white',
+                border: 'none',
+                letterSpacing: '0.04em',
+                transition: 'all 0.2s',
+              }}>
+              {openAnswers.has(i) ? '▲ 解答例を閉じる' : '▼ 解答例を見る（まず自分で考えてから！）'}
+            </button>
+            {openAnswers.has(i) && (
+              <div className="mt-3 rounded-md p-3"
+                style={{ background: '#f0fdfa', border: '1px solid #5eead4', borderLeft: '3px solid #0d9488' }}>
+                <div style={{ fontSize: 9, fontWeight: 700, color: '#0f766e', letterSpacing: '0.08em', marginBottom: 6 }}>
+                  解答例
+                </div>
+                <p style={{ fontSize: 12, lineHeight: 1.9, color: '#134e4a' }}>
+                  {q.answer}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -963,6 +1063,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
             {activeTab === 'structure'    && <StructureTab    data={content.structure} />}
             {activeTab === 'legacy'       && <LegacyTab       data={content.legacy} />}
             {activeTab === 'human'        && <HumanTab        data={HUMAN_LAYERS[war.id] ?? content.human} />}
+            {activeTab === 'exam'         && <ExamTab         warId={war.id} />}
             {activeTab === 'lessons'      && <LessonsTab      data={LESSONS[war.id] ?? content.lessons} />}
 
             {/* 考えてみよう：精緻化質問（ダイジェスト・構造・教訓タブで表示） */}
