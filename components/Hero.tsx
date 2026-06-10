@@ -7,9 +7,11 @@ import { useIsMobile } from '@/lib/useIsMobile';
 export default function Hero() {
   const isMobile = useIsMobile(768);
   // スマホ：画面幅にほぼフィット。PC/タブレット：横並びに収まる固定サイズ
+  // PCは .globe-zoom-fix (zoom:0.8) でhtmlのzoom:1.25を相殺するため、
+  // 実サイズを1.25倍にして見た目のサイズを維持する（520×1.25=650）
   const globeSize = isMobile
     ? (typeof window !== 'undefined' ? Math.min(window.innerWidth - 24, 380) : 340)
-    : 520;
+    : 650;
   return (
     <section style={{
       position: 'relative',
@@ -125,7 +127,7 @@ export default function Hero() {
             pointerEvents: 'none',
             zIndex: 0,
           }} />
-          <div style={{ position: 'relative', zIndex: 1 }}>
+          <div className="globe-zoom-fix" style={{ position: 'relative', zIndex: 1 }}>
             <RotatingGlobe size={globeSize} />
           </div>
           {/* キャプション */}

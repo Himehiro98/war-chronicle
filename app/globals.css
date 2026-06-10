@@ -27,6 +27,15 @@ body {
 /* スマホでタップ反応をよくする（iOS デフォルトの 300ms 遅延を排除） */
 button, a { touch-action: manipulation; }
 
+/* 地球儀のzoom相殺：html { zoom: 1.25 } はWebGL（three.js）の
+   レイキャスト座標を1.25倍ズラしてホバー/クリック判定を壊すため、
+   地球儀サブツリーだけ 0.8 (=1/1.25) で実質zoom=1.0に戻す */
+.globe-zoom-fix { zoom: 0.8; }
+@media (max-width: 768px) {
+  /* スマホは html 側が zoom:1 なので相殺不要 */
+  .globe-zoom-fix { zoom: 1; }
+}
+
 /* スマホ専用：縦長最適化＋可読性最大化（1.3倍フォント＋viewport完全フィット） */
 @media (max-width: 768px) {
   /* スマホは zoom 解除（既に1.3倍フォントで対応済み） */
