@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { War, TabContent, LessonsData, HumanLayerData } from '@/lib/types';
+import { useState, useCallback, useEffect } from 'react';
+import { War, TabContent, LessonsData, HumanLayerData, WarTag } from '@/lib/types';
 import { WANTA_COMMENTS } from '@/lib/wanta';
 import { LESSONS } from '@/lib/lessons';
 import { HUMAN_LAYERS } from '@/lib/human-layers';
+import { WARS } from '@/lib/wars';
 import WantaBubble from './WantaBubble';
 
 type TabId = 'digest' | 'detail' | 'perspectives' | 'structure' | 'legacy' | 'human' | 'lessons';
@@ -401,6 +402,225 @@ function ClaudeIcon({ size = 12 }: { size?: number }) {
   );
 }
 
+/* ════════════════════════════════════════════════
+   学習科学コンポーネント群
+   - QuickGrasp: 先行オーガナイザー（Ausubel）
+   - ThinkPrompt: 精緻化質問（Elaborative Interrogation）
+   - RelatedWarsNav: 足場かけ（Vygotsky ZPD）
+   - 学習モード切替: 認知負荷理論（Sweller）
+   ════════════════════════════════════════════════ */
+
+/* 学習モード */
+export type LearnMode = 'beginner' | 'standard' | 'deep';
+const MODE_OPTIONS: { id: LearnMode; label: string; emoji: string; title: string }[] = [
+  { id: 'beginner', label: '入門', emoji: '🌱', title: '要点・市民・教訓の3タブだけ表示（初学者向け）' },
+  { id: 'standard', label: '標準', emoji: '📖', title: '全7タブを表示' },
+  { id: 'deep',     label: '深掘', emoji: '🔬', title: '全タブ＋関連資料・外部リンクを表示' },
+];
+const BEGINNER_TABS: TabId[] = ['digest', 'human', 'lessons'];
+
+/* HTMLから最初の一文を抽出（先行オーガナイザー用） */
+function firstSentence(html: string | undefined, max = 95): string {
+  if (!html) return '';
+  const plain = html.replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim();
+  const idx = plain.indexOf('。');
+  if (idx > 0 && idx < max) return plain.slice(0, idx + 1);
+  return plain.length > max ? plain.slice(0, max) + '…' : plain;
+}
+
+/* ── 30秒でつかむ（先行オーガナイザー） ── */
+function QuickGrasp({ content, lessons }: { content: TabContent; lessons: LessonsData | undefined }) {
+  const items = [
+    { icon: '👥', label: '誰が',          text: firstSentence(content.digest?.actors) },
+    { icon: '❓', label: 'なぜ',          text: firstSentence(content.digest?.background) },
+    { icon: '🏁', label: '結果',          text: firstSentence(content.digest?.aftermath) },
+    { icon: '🔭', label: '現代との接点',  text: firstSentence(lessons?.modernLessons) },
+  ].filter(i => i.text);
+  if (items.length < 2) return null;
+  return (
+    <div className="mb-4 rounded-lg overflow-hidden"
+      style={{ border: '2px solid #0ea5e9', boxShadow: '0 2px 8px rgba(14,165,233,0.15)' }}>
+      <div className="px-3 py-2 flex items-center gap-2" style={{ background: '#0284c7' }}>
+        <span style={{ fontSize: 13 }}>⚡</span>
+        <span style={{ fontSize: 11, fontWeight: 700, color: 'white', letterSpacing: '0.05em' }}>
+          30秒でつかむ
+        </span>
+        <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.75)', marginLeft: 'auto', fontStyle: 'italic' }}>
+          まず全体像から（読む前の地図）
+        </span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2" style={{ background: '#f0f9ff' }}>
+        {items.map((i) => (
+          <div key={i.label} className="px-3 py-2.5 flex gap-2" style={{ borderBottom: '1px solid #e0f2fe' }}>
+            <span style={{ fontSize: 14, flexShrink: 0 }}>{i.icon}</span>
+            <div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: '#0369a1', letterSpacing: '0.08em', marginBottom: 2 }}>
+                {i.label}
+              </div>
+              <div style={{ fontSize: 11, lineHeight: 1.6, color: '#1e3a5f' }}>{i.text}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── 考えてみよう（精緻化質問） ── */
+const THINK_TEMPLATES: Partial<Record<WarTag, string>> = {
+  'ナショナリズム':       'もし「自分たちは特別な民族だ」という物語がなかったら、この戦争は起きたと思う？',
+  '経済危機':             '経済の苦しさは、なぜ「外の敵」への攻撃に転化したんだろう？',
+  '安全保障ジレンマ':     '「相手が攻めてくるかもしれないから先に備える」——この連鎖はどこで止められた？',
+  '資源争奪':             'もしこの資源が無価値だったら、この地域の歴史はどう変わっていた？',
+  '帝国衰退':             '衰退する大国は、なぜ「穏やかに退場」できないんだろう？',
+  '宗教対立':             '宗教の違いは原因？それとも対立を正当化する「道具」として使われた？',
+  '革命':                 '革命を起こした人々の理想と、その後の現実はなぜズレた？',
+  '情報戦・プロパガンダ': '当時の人々は何を信じさせられていた？今の自分なら見抜けると思う？',
+  '同盟暴走':             '味方を増やすための同盟が、なぜ戦争を拡大させる装置になった？',
+  '核抑止':               '核兵器は戦争を防いだのか、それとも別の形の危険を生んだのか？',
+  '冷戦構造':             '大国の対立は、なぜ遠く離れた小国の内戦として戦われた？',
+  '植民地解放':           '独立を勝ち取った後、なぜ多くの国で新たな苦難が始まった？',
+  '民族浄化':             '隣人同士だった人々が、なぜ殺し合うようになった？その転換点はどこ？',
+  '権力真空':             '強い支配者が消えた後の「空白」は、なぜ平和ではなく混乱を生む？',
+  '誤算・誤認知':         '開戦を決めた指導者は何を読み違えた？正しい情報があれば違ったと思う？',
+  '指導者個人要因':       'もし指導者が別の人物だったら、歴史は変わっていた？それとも構造は同じ結果を生んだ？',
+};
+const THINK_FALLBACK = 'この戦争と同じ条件が今の世界のどこかに揃いつつあるとしたら、どこだと思う？';
+
+function ThinkPrompt({ war, content }: { war: War; content: TabContent }) {
+  const [open, setOpen] = useState(false);
+  const tag = (war.tags ?? []).find(t => THINK_TEMPLATES[t]);
+  const question = tag ? THINK_TEMPLATES[tag]! : THINK_FALLBACK;
+  const hint = firstSentence(content.structure?.summary, 120);
+  return (
+    <div className="mt-5 rounded-lg overflow-hidden" style={{ border: '1px dashed #a78bfa', background: '#faf5ff' }}>
+      <div className="px-3 py-2.5">
+        <div className="flex items-center gap-2 mb-1.5">
+          <span style={{ fontSize: 13 }}>🤔</span>
+          <span style={{ fontSize: 10, fontWeight: 700, color: '#6d28d9', letterSpacing: '0.06em' }}>
+            考えてみよう{tag ? `（${tag}）` : ''}
+          </span>
+        </div>
+        <p style={{ fontSize: 12, lineHeight: 1.7, color: '#4c1d95', fontWeight: 500 }}>{question}</p>
+        {hint && (
+          <button onClick={() => setOpen(!open)}
+            style={{
+              marginTop: 8, fontSize: 10, color: '#7c3aed', background: 'none',
+              border: 'none', cursor: 'pointer', padding: 0, textDecoration: 'underline',
+            }}>
+            {open ? '▲ ヒントを閉じる' : '▼ 考えるヒントを見る'}
+          </button>
+        )}
+        {open && hint && (
+          <p style={{ marginTop: 6, fontSize: 11, lineHeight: 1.6, color: '#5b21b6', padding: '8px 10px', background: '#ede9fe', borderRadius: 6 }}>
+            💡 {hint}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── 前提知識・次に読むナビ（足場かけ） ── */
+function RelatedWarsNav({ war }: { war: War }) {
+  const resolve = (ids: string[] | undefined) =>
+    (ids ?? []).map(id => WARS.find(w => w.id === id)).filter((w): w is War => !!w);
+  const causes = resolve(war.causes);
+  const influences = resolve(war.influences);
+  if (causes.length === 0 && influences.length === 0) return null;
+
+  const Chip = ({ w, color }: { w: War; color: string }) => (
+    <a href={`/explore?war=${w.id}`}
+      style={{
+        display: 'inline-flex', alignItems: 'baseline', gap: 5,
+        padding: '4px 10px', borderRadius: 14, fontSize: 10, fontWeight: 600,
+        background: 'white', color, border: `1px solid ${color}50`,
+        textDecoration: 'none', whiteSpace: 'nowrap',
+        boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+      }}>
+      {w.name}
+      <span style={{ fontSize: 8, opacity: 0.65, fontWeight: 400 }}>{w.year}</span>
+    </a>
+  );
+
+  return (
+    <div className="mt-4 rounded-lg p-3" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+      {causes.length > 0 && (
+        <div className="mb-2.5">
+          <div style={{ fontSize: 9, fontWeight: 700, color: '#0f766e', letterSpacing: '0.08em', marginBottom: 6 }}>
+            📚 先に読むと理解が深まる（この戦争の原因となった戦争）
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {causes.map(w => <Chip key={w.id} w={w} color="#0f766e" />)}
+          </div>
+        </div>
+      )}
+      {influences.length > 0 && (
+        <div>
+          <div style={{ fontSize: 9, fontWeight: 700, color: '#9a3412', letterSpacing: '0.08em', marginBottom: 6 }}>
+            ➡️ 次に読む（この戦争が引き起こした戦争）
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {influences.map(w => <Chip key={w.id} w={w} color="#9a3412" />)}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── 深掘り資料パネル（深掘りモード専用） ── */
+function DeepDivePanel({ war }: { war: War }) {
+  const links = [
+    { label: 'Wikipedia で調べる', url: `https://ja.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(war.name)}`, emoji: '📖' },
+    { label: 'Google Scholar（学術論文）', url: `https://scholar.google.com/scholar?q=${encodeURIComponent(war.name)}`, emoji: '🎓' },
+    { label: '国立国会図書館サーチ', url: `https://ndlsearch.ndl.go.jp/search?cs=bib&keyword=${encodeURIComponent(war.name)}`, emoji: '🏛️' },
+  ];
+  return (
+    <div className="mt-4 rounded-lg overflow-hidden" style={{ border: '1px solid #334155' }}>
+      <div className="px-3 py-2 flex items-center gap-2" style={{ background: '#1e293b' }}>
+        <span style={{ fontSize: 12 }}>🔬</span>
+        <span style={{ fontSize: 10, fontWeight: 700, color: '#e2e8f0', letterSpacing: '0.06em' }}>深掘り資料</span>
+      </div>
+      <div className="p-3" style={{ background: '#f8fafc' }}>
+        {(war.ideologies?.length ?? 0) > 0 && (
+          <div className="mb-2.5">
+            <span style={{ fontSize: 9, fontWeight: 700, color: '#64748b', marginRight: 8 }}>関連イデオロギー：</span>
+            {war.ideologies!.map(i => (
+              <span key={i} style={{ fontSize: 10, padding: '2px 8px', borderRadius: 3, background: '#e2e8f0', color: '#334155', marginRight: 5 }}>
+                {i}
+              </span>
+            ))}
+          </div>
+        )}
+        {(war.tags?.length ?? 0) > 0 && (
+          <div className="mb-3">
+            <span style={{ fontSize: 9, fontWeight: 700, color: '#64748b', marginRight: 8 }}>構造タグ：</span>
+            {war.tags!.map(t => (
+              <a key={t} href={`/search`} style={{ fontSize: 10, padding: '2px 8px', borderRadius: 3, background: '#fef3c7', color: '#92400e', marginRight: 5, textDecoration: 'none' }}>
+                {t}
+              </a>
+            ))}
+          </div>
+        )}
+        <div className="flex flex-wrap gap-2">
+          {links.map(l => (
+            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 5,
+                padding: '5px 12px', borderRadius: 5, fontSize: 10, fontWeight: 600,
+                background: 'white', color: '#334155', border: '1px solid #cbd5e1',
+                textDecoration: 'none',
+              }}>
+              {l.emoji} {l.label} ↗
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── 音声ナレーターボタン ── */
 function NarratorButton({ text }: { text: string }) {
   const [speaking, setSpeaking] = useState(false);
@@ -475,6 +695,21 @@ function AskClaudeButton({ war }: { war: War }) {
 
 export default function DetailDrawer({ war, isOpen, onClose, content, isLoading, drawerHeight, onResizeStart, isMobile = false, fullscreen = false }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>('digest');
+  const [mode, setMode] = useState<LearnMode>('standard');
+
+  // 学習モードをlocalStorageから復元
+  useEffect(() => {
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('wc-learning-mode') : null;
+    if (saved === 'beginner' || saved === 'standard' || saved === 'deep') setMode(saved);
+  }, []);
+
+  const changeMode = useCallback((m: LearnMode) => {
+    setMode(m);
+    try { localStorage.setItem('wc-learning-mode', m); } catch { /* 続行 */ }
+    if (m === 'beginner' && !BEGINNER_TABS.includes(activeTab)) setActiveTab('digest');
+  }, [activeTab]);
+
+  const visibleTabs = mode === 'beginner' ? TABS.filter(t => BEGINNER_TABS.includes(t.id)) : TABS;
   const activeConfig = TABS.find(t => t.id === activeTab)!;
 
   if (!war) return null;
@@ -637,7 +872,30 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
           minWidth: 'max-content',
           width: 'max-content',
         }}>
-          {TABS.map((t) => {
+          {/* 学習モード切替（認知負荷理論：初学者は表示量を絞る） */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 2,
+            padding: '0 8px', borderRight: '1px solid rgba(255,255,255,0.1)',
+            flexShrink: 0,
+          }}>
+            {MODE_OPTIONS.map(m => (
+              <button key={m.id} onClick={() => changeMode(m.id)} title={m.title}
+                style={{
+                  padding: isMobile ? '6px 8px' : '4px 8px',
+                  fontSize: 9, fontWeight: mode === m.id ? 700 : 400,
+                  cursor: 'pointer', borderRadius: 3,
+                  background: mode === m.id ? 'rgba(255,255,255,0.15)' : 'transparent',
+                  color: mode === m.id ? '#fff' : '#7a6e5c',
+                  border: mode === m.id ? '1px solid rgba(255,255,255,0.3)' : '1px solid transparent',
+                  whiteSpace: 'nowrap', flexShrink: 0,
+                  display: 'inline-flex', alignItems: 'center', gap: 3,
+                  transition: 'all 0.15s',
+                }}>
+                <span>{m.emoji}</span>{m.label}
+              </button>
+            ))}
+          </div>
+          {visibleTabs.map((t) => {
             const isActive = t.id === activeTab;
             const isPinned = t.pinned;
             return (
@@ -695,6 +953,10 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
           <LoadingSkeleton />
         ) : content ? (
           <>
+            {/* 30秒でつかむ：読む前の全体像（先行オーガナイザー） */}
+            {activeTab === 'digest' && (
+              <QuickGrasp content={content} lessons={LESSONS[war.id] ?? content.lessons} />
+            )}
             {activeTab === 'digest'       && <DigestTab       data={content.digest} />}
             {activeTab === 'detail'       && <DetailTab       data={content.detail} />}
             {activeTab === 'perspectives' && <PerspectivesTab data={content.perspectives} />}
@@ -702,6 +964,18 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
             {activeTab === 'legacy'       && <LegacyTab       data={content.legacy} />}
             {activeTab === 'human'        && <HumanTab        data={HUMAN_LAYERS[war.id] ?? content.human} />}
             {activeTab === 'lessons'      && <LessonsTab      data={LESSONS[war.id] ?? content.lessons} />}
+
+            {/* 考えてみよう：精緻化質問（ダイジェスト・構造・教訓タブで表示） */}
+            {(activeTab === 'digest' || activeTab === 'structure' || activeTab === 'lessons') && (
+              <ThinkPrompt war={war} content={content} />
+            )}
+
+            {/* 前提知識・次に読むナビ（足場かけ） */}
+            <RelatedWarsNav war={war} />
+
+            {/* 深掘りモード専用：外部資料パネル */}
+            {mode === 'deep' && <DeepDivePanel war={war} />}
+
             <WantaBubble
               comment={WANTA_COMMENTS[war.id]?.[activeTab] ?? content.wanta?.[activeTab]}
               tabLabel={activeTab}
