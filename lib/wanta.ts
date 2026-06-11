@@ -864,8 +864,9 @@ const _WANTA_MERGED: Record<string, WantaComments> = {
 };
 
 export const WANTA_COMMENTS: Record<string, WantaComments> = Object.fromEntries(
-  Object.entries(_WANTA_MERGED).map(([id, c]) => [
+  // WANTA_HUMAN にしか存在しない戦争も落とさないよう、両方のキーの和集合でマージ
+  Array.from(new Set([...Object.keys(_WANTA_MERGED), ...Object.keys(WANTA_HUMAN)])).map((id) => [
     id,
-    { ...c, human: WANTA_HUMAN[id]?.human ?? c.human },
+    { ..._WANTA_MERGED[id], ...WANTA_HUMAN[id] },
   ])
 );
