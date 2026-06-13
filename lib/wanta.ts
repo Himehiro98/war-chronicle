@@ -3,6 +3,10 @@ import { WANTA_EXTRA } from './wanta-extra';
 import { WANTA_EXTRA2 } from './wanta-extra2';
 import { WANTA_EXTRA3 } from './wanta-extra3';
 import { WANTA_HUMAN } from './wanta-human';
+import { WANTA_HUMAN_EXTRA1 } from './wanta-human-extra1';
+import { WANTA_HUMAN_EXTRA2 } from './wanta-human-extra2';
+import { WANTA_EXAM1 } from './wanta-exam1';
+import { WANTA_EXAM2 } from './wanta-exam2';
 
 const _WANTA_INLINE: Record<string, WantaComments> = {
   'great-northern-war': {
@@ -863,10 +867,28 @@ const _WANTA_MERGED: Record<string, WantaComments> = {
   ...WANTA_EXTRA3,
 };
 
-export const WANTA_COMMENTS: Record<string, WantaComments> = Object.fromEntries(
-  // WANTA_HUMAN にしか存在しない戦争も落とさないよう、両方のキーの和集合でマージ
-  Array.from(new Set([...Object.keys(_WANTA_MERGED), ...Object.keys(WANTA_HUMAN)])).map((id) => [
-    id,
-    { ..._WANTA_MERGED[id], ...WANTA_HUMAN[id] },
-  ])
-);
+// human/exam 専用ファイル群（キーごとに合成する）
+const _WANTA_OVERLAYS: Record<string, WantaComments>[] = [
+  WANTA_HUMAN,
+  WANTA_HUMAN_EXTRA1,
+  WANTA_HUMAN_EXTRA2,
+  WANTA_EXAM1,
+  WANTA_EXAM2,
+];
+
+export const WANTA_COMMENTS: Record<string, WantaComments> = (() => {
+  // どのファイルにしか存在しない戦争も落とさないよう、全キーの和集合でマージ
+  const allIds = new Set<string>(Object.keys(_WANTA_MERGED));
+  for (const overlay of _WANTA_OVERLAYS) {
+    for (const id of Object.keys(overlay)) allIds.add(id);
+  }
+  const result: Record<string, WantaComments> = {};
+  for (const id of Array.from(allIds)) {
+    let merged: WantaComments = { ..._WANTA_MERGED[id] };
+    for (const overlay of _WANTA_OVERLAYS) {
+      if (overlay[id]) merged = { ...merged, ...overlay[id] };
+    }
+    result[id] = merged;
+  }
+  return result;
+})();
