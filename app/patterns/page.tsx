@@ -91,8 +91,8 @@ export default function PatternsEvolutionPage() {
           <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {[
               { label: '通史', href: '/chronicle', emoji: '📖' },
+              { label: '因果の大河', href: '/chains', emoji: '🌊' },
               { label: '探索', href: '/explore', emoji: '🗺️' },
-              { label: '教訓一覧', href: '/lessons', emoji: '💡' },
             ].map(({ label, href, emoji }) => (
               <Link key={label} href={href} style={{ fontSize: 10, padding: '4px 10px', borderRadius: 4, color: '#94a3b8', textDecoration: 'none', border: '1px solid rgba(148,163,184,0.2)' }}>{emoji} {label}</Link>
             ))}

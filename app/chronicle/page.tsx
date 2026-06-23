@@ -60,8 +60,8 @@ export default function ChroniclePage() {
           <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {[
               { label: 'パターン進化', href: '/patterns', emoji: '🧬' },
+              { label: '因果の大河', href: '/chains', emoji: '🌊' },
               { label: '探索', href: '/explore', emoji: '🗺️' },
-              { label: '教訓一覧', href: '/lessons', emoji: '💡' },
             ].map(({ label, href, emoji }) => (
               <Link key={label} href={href} style={{
                 fontSize: 10, padding: '4px 10px', borderRadius: 4,
