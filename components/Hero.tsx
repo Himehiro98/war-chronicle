@@ -80,14 +80,24 @@ export default function Hero() {
 
           {/* CTA */}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <Link href="#learning-paths" style={{
+            <Link href="/chronicle" style={{
               padding: '11px 22px', borderRadius: 4,
               background: '#fbbf24', color: '#0f172a',
               fontWeight: 700, fontSize: 12, letterSpacing: '0.05em',
               textDecoration: 'none', transition: 'all 0.2s',
               display: 'inline-flex', alignItems: 'center', gap: 8,
             }}>
-              🎓 歴史から学ぶ
+              📖 通史で全体像をつかむ
+            </Link>
+            <Link href="#learning-paths" style={{
+              padding: '11px 22px', borderRadius: 4,
+              background: 'transparent', color: '#f8fafc',
+              border: '1px solid rgba(248,250,252,0.3)',
+              fontWeight: 600, fontSize: 12, letterSpacing: '0.05em',
+              textDecoration: 'none', transition: 'all 0.2s',
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+            }}>
+              🎓 学習パスで辿る
             </Link>
             <Link href="#modern-themes" style={{
               padding: '11px 22px', borderRadius: 4,

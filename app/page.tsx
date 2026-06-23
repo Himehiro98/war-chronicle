@@ -38,6 +38,7 @@ export default function Home() {
           </Link>
           <nav className="wd-top-nav" style={{ display: 'flex', gap: 4, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             {[
+              { label: '通史',         href: '/chronicle',      emoji: '📖' },
               { label: '学ぶ',         href: '#learning-paths', emoji: '🎓' },
               { label: 'テーマ',       href: '#modern-themes',  emoji: '🌐' },
               { label: '宗教',         href: '#religions',      emoji: '🕊️' },

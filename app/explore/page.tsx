@@ -124,6 +124,7 @@ export default function Home() {
           {/* ページナビ（リンク） */}
           <nav className="flex gap-1 flex-wrap justify-end">
             {[
+              { label: '通史',       href: '/chronicle',       emoji: '📖' },
               { label: '学ぶ',       href: '/#learning-paths', emoji: '🎓' },
               { label: 'テーマ',     href: '/#modern-themes',  emoji: '🌐' },
               { label: '宗教',       href: '/#religions',      emoji: '🕊️' },
