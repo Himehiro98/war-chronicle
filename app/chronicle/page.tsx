@@ -59,9 +59,9 @@ export default function ChroniclePage() {
           </div>
           <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {[
+              { label: 'パターン進化', href: '/patterns', emoji: '🧬' },
               { label: '探索', href: '/explore', emoji: '🗺️' },
               { label: '教訓一覧', href: '/lessons', emoji: '💡' },
-              { label: '全文検索', href: '/search', emoji: '🔍' },
             ].map(({ label, href, emoji }) => (
               <Link key={label} href={href} style={{
                 fontSize: 10, padding: '4px 10px', borderRadius: 4,
@@ -186,7 +186,7 @@ export default function ChroniclePage() {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center', marginBottom: 28 }}>
               <span style={{ fontSize: 9, color: '#64748b', fontWeight: 700, letterSpacing: '0.08em' }}>この時代を動かした論理：</span>
               {act.logics.map((tag) => (
-                <Link key={tag} href={`/search?q=${encodeURIComponent(tag)}`} style={{
+                <Link key={tag} href={`/patterns?tag=${encodeURIComponent(tag)}`} style={{
                   fontSize: 10, padding: '2px 9px', borderRadius: 12, textDecoration: 'none',
                   background: 'rgba(248,250,252,0.06)', color: '#cbd5e1',
                   border: '1px solid rgba(248,250,252,0.12)',

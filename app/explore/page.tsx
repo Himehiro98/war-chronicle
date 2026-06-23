@@ -125,6 +125,7 @@ export default function Home() {
           <nav className="flex gap-1 flex-wrap justify-end">
             {[
               { label: '通史',       href: '/chronicle',       emoji: '📖' },
+              { label: 'パターン進化', href: '/patterns',      emoji: '🧬' },
               { label: '学ぶ',       href: '/#learning-paths', emoji: '🎓' },
               { label: 'テーマ',     href: '/#modern-themes',  emoji: '🌐' },
               { label: '宗教',       href: '/#religions',      emoji: '🕊️' },
