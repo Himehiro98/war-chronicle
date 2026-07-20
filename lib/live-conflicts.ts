@@ -189,7 +189,7 @@ export const LIVE_CONFLICTS: LiveConflictStats[] = [
   },
 ];
 
-export const LIVE_DATA_UPDATED = '2026-07-13';
+export const LIVE_DATA_UPDATED = '2026-07-20';
 export const LIVE_DATA_SOURCES = [
   { name: 'ACLED', url: 'https://acleddata.com', desc: '武力紛争の位置・事象データ' },
   { name: 'UNHCR', url: 'https://www.unhcr.org/refugee-statistics', desc: '難民・避難民統計' },
