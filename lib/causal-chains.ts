@@ -33,7 +33,7 @@ export const CAUSAL_CHAINS: CausalChain[] = [
     nodes: [
       { id: 'french-revolution', connector: '革命が生んだ国民軍と「自由の輸出」が、周辺の王政国家との全面戦争を不可避にした。' },
       { id: 'napoleonic-wars', connector: 'ナポレオンが各地に撒いたナショナリズムの種が、半世紀後に「国民国家の統一」運動として芽吹いた。' },
-      { id: 'italian-unification', connector: '統一の過程で台頭したプロイセンが、ドイツ統一の総仕上げにフランスとの対決を選んだ。' },
+      { id: 'italian-unification', connector: 'イタリア統一と並走した同じナショナリズムの波がドイツ統一を進め、ビスマルクはその総仕上げにフランスとの対決を選んだ。' },
       { id: 'franco-prussian-war', connector: 'ドイツ帝国の誕生とフランスの復讐心が、二大陣営の同盟対立を固定化した。' },
       { id: 'world-war-1', connector: '勝者が課したヴェルサイユ体制の屈辱と経済破綻が、次の独裁者を生む土壌になった。' },
       { id: 'world-war-2-europe', connector: '欧州での戦いがアジア・世界に波及し、戦後は米ソ二極の冷戦秩序へ再編された。' },
