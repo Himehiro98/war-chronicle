@@ -433,13 +433,13 @@ export default function CausalityGraph({ filterEra, filterTag, focusWarId }: Pro
         {([0, 1, 2, 3] as RegionId[]).map(r => (
           <div key={r} className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: REGION_COLORS[r] }} />
-            <span className="text-[10px] text-slate-500">{REGION_LABELS[r]}</span>
+            <span className="text-[12px] text-slate-500">{REGION_LABELS[r]}</span>
           </div>
         ))}
         <div className="ml-auto flex items-center gap-2 flex-shrink-0">
           <button
             onClick={() => setImportantOnly(v => !v)}
-            className={`text-[10px] px-2 py-0.5 rounded border transition-colors ${
+            className={`text-[12px] px-2 py-0.5 rounded border transition-colors ${
               importantOnly
                 ? 'bg-blue-500/20 border-blue-500/40 text-blue-300'
                 : 'bg-slate-800/60 border-slate-700/40 text-slate-600 hover:text-slate-400'
@@ -447,12 +447,12 @@ export default function CausalityGraph({ filterEra, filterTag, focusWarId }: Pro
           >
             重要のみ
           </button>
-          <span className="text-[10px] text-slate-700">{nodes.length}件・{edges.length}連鎖</span>
+          <span className="text-[12px] text-slate-700">{nodes.length}件・{edges.length}連鎖</span>
         </div>
       </div>
 
       {/* ── Bottom hint ── */}
-      <span className="absolute bottom-4 right-4 text-[10px] text-slate-800 z-10">
+      <span className="absolute bottom-4 right-4 text-[12px] text-slate-800 z-10">
         スクロール：ズーム　ドラッグ：移動
       </span>
     </div>

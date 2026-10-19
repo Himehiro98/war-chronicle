@@ -52,20 +52,6 @@ export default function ThemePage({ params }: { params: { themeId: string } }) {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      {/* Header bar */}
-      <header className="sticky top-0 z-30 bg-slate-900 text-white border-b border-slate-700">
-        <div className="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link href="/" className="font-serif font-bold text-lg tracking-wide hover:text-amber-300 transition">
-            War Chronicle
-          </Link>
-          <Link
-            href="/#modern-themes"
-            className="text-sm text-slate-300 hover:text-white transition"
-          >
-            ← テーマ一覧
-          </Link>
-        </div>
-      </header>
 
       {/* Hero */}
       <section
@@ -278,7 +264,7 @@ export default function ThemePage({ params }: { params: { themeId: string } }) {
         <section className="pt-8 border-t border-slate-200">
           <div className="grid sm:grid-cols-2 gap-4">
             <Link
-              href="/#modern-themes"
+              href="/themes"
               className="block bg-white border border-slate-300 rounded-lg p-6 hover:border-slate-900 hover:shadow-md transition group"
             >
               <div className="text-xs text-slate-500 mb-1 tracking-widest uppercase">
@@ -304,9 +290,6 @@ export default function ThemePage({ params }: { params: { themeId: string } }) {
         </section>
       </main>
 
-      <footer className="border-t border-slate-200 py-10 text-center text-sm text-slate-500">
-        <p>War Chronicle — 過去から現代を読み解く</p>
-      </footer>
     </div>
   );
 }

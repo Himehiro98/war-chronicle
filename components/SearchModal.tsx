@@ -160,7 +160,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
       className="rounded-full transition-colors"
       style={{
         padding: '4px 12px',
-        fontSize: 11,
+        fontSize: 13,
         fontWeight: 600,
         background: active ? COLORS.rust : 'transparent',
         color: active ? '#fff' : COLORS.text,
@@ -203,7 +203,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
         >
           <h2
             style={{
-              fontSize: 16,
+              fontSize: 19,
               fontWeight: 700,
               letterSpacing: '0.05em',
               color: COLORS.text,
@@ -216,7 +216,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
             onClick={onClose}
             aria-label="閉じる"
             style={{
-              fontSize: 22,
+              fontSize: 25,
               lineHeight: 1,
               color: COLORS.textSub,
               padding: '0 6px',
@@ -245,7 +245,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
             className="w-full rounded"
             style={{
               padding: '8px 12px',
-              fontSize: 13,
+              fontSize: 16,
               background: '#fff',
               border: `1px solid ${COLORS.border}`,
               color: COLORS.text,
@@ -254,7 +254,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
           />
 
           <div className="flex flex-wrap items-center gap-2">
-            <span style={{ fontSize: 10, color: COLORS.textSub, fontWeight: 700, width: 40 }}>
+            <span style={{ fontSize: 12, color: COLORS.textSub, fontWeight: 700, width: 40 }}>
               時代
             </span>
             {ERA_OPTIONS.map((o) => (
@@ -269,7 +269,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <span style={{ fontSize: 10, color: COLORS.textSub, fontWeight: 700, width: 40 }}>
+            <span style={{ fontSize: 12, color: COLORS.textSub, fontWeight: 700, width: 40 }}>
               地域
             </span>
             {REGION_OPTIONS.map((o) => (
@@ -284,7 +284,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <span style={{ fontSize: 10, color: COLORS.textSub, fontWeight: 700, width: 40 }}>
+            <span style={{ fontSize: 12, color: COLORS.textSub, fontWeight: 700, width: 40 }}>
               種類
             </span>
             {TYPE_OPTIONS.map((o) => (
@@ -299,7 +299,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
           </div>
 
           <div className="flex items-center gap-2">
-            <span style={{ fontSize: 10, color: COLORS.textSub, fontWeight: 700, width: 40 }}>
+            <span style={{ fontSize: 12, color: COLORS.textSub, fontWeight: 700, width: 40 }}>
               年代
             </span>
             <input
@@ -312,13 +312,13 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
               style={{
                 width: 80,
                 padding: '4px 8px',
-                fontSize: 12,
+                fontSize: 14,
                 background: '#fff',
                 border: `1px solid ${COLORS.border}`,
                 color: COLORS.text,
               }}
             />
-            <span style={{ fontSize: 11, color: COLORS.textSub }}>〜</span>
+            <span style={{ fontSize: 13, color: COLORS.textSub }}>〜</span>
             <input
               type="number"
               value={yearEnd}
@@ -329,13 +329,13 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
               style={{
                 width: 80,
                 padding: '4px 8px',
-                fontSize: 12,
+                fontSize: 14,
                 background: '#fff',
                 border: `1px solid ${COLORS.border}`,
                 color: COLORS.text,
               }}
             />
-            <span style={{ fontSize: 10, color: COLORS.textSub, marginLeft: 'auto' }}>
+            <span style={{ fontSize: 12, color: COLORS.textSub, marginLeft: 'auto' }}>
               {filtered.length}件ヒット
             </span>
           </div>
@@ -356,7 +356,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
                 padding: '40px 20px',
                 textAlign: 'center',
                 color: COLORS.textSub,
-                fontSize: 13,
+                fontSize: 16,
               }}
             >
               該当する戦争が見つからんかった
@@ -387,7 +387,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div
                       style={{
-                        fontSize: 13,
+                        fontSize: 16,
                         fontWeight: 700,
                         color: COLORS.text,
                         marginBottom: 3,
@@ -398,7 +398,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
                         <span
                           style={{
                             marginLeft: 8,
-                            fontSize: 10,
+                            fontSize: 12,
                             color: COLORS.gold,
                             fontWeight: 600,
                           }}
@@ -410,7 +410,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
                     </div>
                     <div
                       style={{
-                        fontSize: 10,
+                        fontSize: 12,
                         color: COLORS.textSub,
                       }}
                     >
@@ -420,7 +420,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
                   <div className="flex items-center gap-1.5 shrink-0">
                     <span
                       style={{
-                        fontSize: 10,
+                        fontSize: 12,
                         color: COLORS.text,
                         fontVariantNumeric: 'tabular-nums',
                         minWidth: 84,
@@ -431,7 +431,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
                     </span>
                     <span
                       style={{
-                        fontSize: 9,
+                        fontSize: 11,
                         fontWeight: 700,
                         padding: '2px 6px',
                         borderRadius: 3,
@@ -443,7 +443,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
                     </span>
                     <span
                       style={{
-                        fontSize: 9,
+                        fontSize: 11,
                         fontWeight: 700,
                         padding: '2px 6px',
                         borderRadius: 3,
@@ -465,7 +465,7 @@ export default function SearchModal({ isOpen, onClose, onSelect }: Props) {
           style={{
             padding: '8px 18px',
             borderTop: `1px solid ${COLORS.border}`,
-            fontSize: 10,
+            fontSize: 12,
             color: COLORS.textSub,
             display: 'flex',
             gap: 14,

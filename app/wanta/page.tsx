@@ -113,34 +113,6 @@ export default function WantaListPage() {
   return (
     <div style={{ background: COLORS.bg, minHeight: '100vh', color: COLORS.text }}>
 
-      {/* ヘッダー */}
-      <header style={{
-        background: '#0f172a', position: 'sticky', top: 0, zIndex: 50,
-        padding: '10px 24px',
-      }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-            <Link href="/" style={{ fontSize: 11, color: '#94a3b8', textDecoration: 'none', padding: '3px 8px', borderRadius: 3, border: '1px solid rgba(148,163,184,0.2)' }}>
-              ← ホーム
-            </Link>
-            <span className="font-serif" style={{ fontSize: 17, fontWeight: 700, color: '#f8fafc' }}>War Chronicle</span>
-            <span style={{ fontSize: 9, color: '#475569', letterSpacing: '0.12em' }}>わんたの解説一覧</span>
-          </div>
-          <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-            {[
-              { label: '探索', href: '/explore', emoji: '🗺️' },
-              { label: '教訓一覧', href: '/lessons', emoji: '💡' },
-              { label: '全文検索', href: '/search', emoji: '🔍' },
-            ].map(({ label, href, emoji }) => (
-              <Link key={label} href={href} style={{
-                fontSize: 10, padding: '4px 10px', borderRadius: 4,
-                color: '#94a3b8', textDecoration: 'none',
-                border: '1px solid rgba(148,163,184,0.2)',
-              }}>{emoji} {label}</Link>
-            ))}
-          </nav>
-        </div>
-      </header>
 
       <div style={{ maxWidth: 1000, margin: '0 auto', padding: '32px 20px' }}>
 
@@ -149,17 +121,17 @@ export default function WantaListPage() {
           <div style={{
             width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', flexShrink: 0,
             background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
-            border: '3px solid #f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30,
+            border: '3px solid #f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 35,
           }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/wanta.png" alt="わんた" style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; (e.target as HTMLImageElement).parentElement!.textContent = '🐕'; }} />
           </div>
           <div>
-            <h1 className="font-serif" style={{ fontSize: 24, fontWeight: 700, color: COLORS.text, marginBottom: 4 }}>
+            <h1 className="font-serif" style={{ fontSize: 28, fontWeight: 700, color: COLORS.text, marginBottom: 4 }}>
               わんたの解説 全集
             </h1>
-            <p style={{ fontSize: 12, color: COLORS.textSub }}>
+            <p style={{ fontSize: 14, color: COLORS.textSub }}>
               全戦争・全タブのわんたコメントを一覧化。気になる解説からその戦争のページに飛べるんだワン🐾
             </p>
           </div>
@@ -181,10 +153,10 @@ export default function WantaListPage() {
               alignItems: 'center',
               gap: 8,
             }}>
-              <span style={{ fontSize: 16 }}>{emoji}</span>
+              <span style={{ fontSize: 19 }}>{emoji}</span>
               <div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: '#d97706', lineHeight: 1.1 }}>{value}</div>
-                <div style={{ fontSize: 9, color: '#92400e', whiteSpace: 'nowrap' }}>{label}</div>
+                <div style={{ fontSize: 19, fontWeight: 700, color: '#d97706', lineHeight: 1.1 }}>{value}</div>
+                <div style={{ fontSize: 11, color: '#92400e', whiteSpace: 'nowrap' }}>{label}</div>
               </div>
             </div>
           ))}
@@ -194,7 +166,7 @@ export default function WantaListPage() {
         <div style={{
           background: COLORS.panel, border: `1px solid ${COLORS.border}`,
           borderRadius: 10, padding: '14px 16px', marginBottom: 20,
-          position: 'sticky', top: 54, zIndex: 40,
+          position: 'sticky', top: 'var(--header-h)', zIndex: 40,
           boxShadow: '0 2px 8px rgba(245,158,11,0.1)',
         }}>
           <input
@@ -203,7 +175,7 @@ export default function WantaListPage() {
             onChange={e => setQuery(e.target.value)}
             placeholder="戦争名・コメント内容で検索..."
             style={{
-              width: '100%', padding: '8px 12px', borderRadius: 6, fontSize: 13,
+              width: '100%', padding: '8px 12px', borderRadius: 6, fontSize: 16,
               background: '#fffbeb', border: `1px solid ${COLORS.border}`,
               color: COLORS.text, outline: 'none', marginBottom: 10, boxSizing: 'border-box',
             }}
@@ -211,7 +183,7 @@ export default function WantaListPage() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
             <button onClick={() => setTabFilter('all')}
               style={{
-                padding: '4px 12px', borderRadius: 20, fontSize: 10, fontWeight: 600, cursor: 'pointer',
+                padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: 'pointer',
                 background: tabFilter === 'all' ? COLORS.amberDark : 'transparent',
                 color: tabFilter === 'all' ? '#fff' : COLORS.textSub,
                 border: `1px solid ${tabFilter === 'all' ? COLORS.amberDark : COLORS.border}`,
@@ -221,7 +193,7 @@ export default function WantaListPage() {
             {TAB_META.map(m => (
               <button key={m.key} onClick={() => setTabFilter(tabFilter === m.key ? 'all' : m.key)}
                 style={{
-                  padding: '4px 12px', borderRadius: 20, fontSize: 10, fontWeight: 600, cursor: 'pointer',
+                  padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: 'pointer',
                   background: tabFilter === m.key ? m.color : 'transparent',
                   color: tabFilter === m.key ? '#fff' : COLORS.textSub,
                   border: `1px solid ${tabFilter === m.key ? m.color : COLORS.border}`,
@@ -230,7 +202,7 @@ export default function WantaListPage() {
                 {m.emoji} {m.label} {tabCounts[m.key]}
               </button>
             ))}
-            <span style={{ fontSize: 10, color: COLORS.textSub, marginLeft: 'auto' }}>
+            <span style={{ fontSize: 12, color: COLORS.textSub, marginLeft: 'auto' }}>
               {filtered.length} 件 / 全 {allEntries.length} 件
             </span>
           </div>
@@ -240,7 +212,7 @@ export default function WantaListPage() {
             <button
               onClick={() => setViewMode('flat')}
               style={{
-                padding: '4px 12px', borderRadius: 6, fontSize: 10, fontWeight: 600, cursor: 'pointer',
+                padding: '4px 12px', borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: 'pointer',
                 background: viewMode === 'flat' ? COLORS.amberDark : 'transparent',
                 color: viewMode === 'flat' ? '#fff' : COLORS.textSub,
                 border: `1px solid ${viewMode === 'flat' ? COLORS.amberDark : COLORS.border}`,
@@ -251,7 +223,7 @@ export default function WantaListPage() {
             <button
               onClick={() => setViewMode('grouped')}
               style={{
-                padding: '4px 12px', borderRadius: 6, fontSize: 10, fontWeight: 600, cursor: 'pointer',
+                padding: '4px 12px', borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: 'pointer',
                 background: viewMode === 'grouped' ? COLORS.amberDark : 'transparent',
                 color: viewMode === 'grouped' ? '#fff' : COLORS.textSub,
                 border: `1px solid ${viewMode === 'grouped' ? COLORS.amberDark : COLORS.border}`,
@@ -279,28 +251,28 @@ export default function WantaListPage() {
                 <div style={{ flex: 1, minWidth: 0 }}>
                   {/* 戦争名＋タブバッジ */}
                   <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 6 }}>
-                    <span className="font-serif" style={{ fontSize: 13, fontWeight: 700, color: COLORS.text }}>
+                    <span className="font-serif" style={{ fontSize: 16, fontWeight: 700, color: COLORS.text }}>
                       {e.warName}
                     </span>
-                    <span style={{ fontSize: 9, color: COLORS.textSub, fontVariantNumeric: 'tabular-nums' }}>
+                    <span style={{ fontSize: 11, color: COLORS.textSub, fontVariantNumeric: 'tabular-nums' }}>
                       {formatYear(e.year)}–{formatYear(e.endYear)}
                     </span>
                     <span style={{
-                      fontSize: 9, fontWeight: 700, padding: '2px 8px', borderRadius: 10,
+                      fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 10,
                       background: `${e.tabColor}15`, color: e.tabColor, border: `1px solid ${e.tabColor}40`,
                     }}>
                       {e.tabEmoji} {e.tabLabel}タブ
                     </span>
                   </div>
                   {/* コメント本文 */}
-                  <p style={{ fontSize: 12, lineHeight: 1.75, color: COLORS.text }}>
+                  <p style={{ fontSize: 14, lineHeight: 1.75, color: COLORS.text }}>
                     {e.comment}
                   </p>
                 </div>
                 {/* ジャンプボタン */}
                 <a href={`/explore?war=${e.warId}`} style={{
                   flexShrink: 0, alignSelf: 'center', marginLeft: 'auto',
-                  fontSize: 10, fontWeight: 700, padding: '7px 12px', borderRadius: 6,
+                  fontSize: 12, fontWeight: 700, padding: '7px 12px', borderRadius: 6,
                   background: COLORS.amberDark, color: '#fff', textDecoration: 'none',
                   whiteSpace: 'nowrap',
                 }}>
@@ -326,21 +298,21 @@ export default function WantaListPage() {
                   padding: '10px 16px',
                   display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap',
                 }}>
-                  <span className="font-serif" style={{ fontSize: 14, fontWeight: 700, color: COLORS.text, flex: 1, minWidth: 0 }}>
+                  <span className="font-serif" style={{ fontSize: 17, fontWeight: 700, color: COLORS.text, flex: 1, minWidth: 0 }}>
                     ⚔️ {group.warName}
                   </span>
-                  <span style={{ fontSize: 10, color: COLORS.textSub, whiteSpace: 'nowrap' }}>
+                  <span style={{ fontSize: 12, color: COLORS.textSub, whiteSpace: 'nowrap' }}>
                     {formatYear(group.year)}–{formatYear(group.endYear)}
                   </span>
                   <span style={{
-                    fontSize: 10, fontWeight: 700, padding: '2px 10px', borderRadius: 10,
+                    fontSize: 12, fontWeight: 700, padding: '2px 10px', borderRadius: 10,
                     background: `${COLORS.amberDark}20`, color: COLORS.amberDark,
                     border: `1px solid ${COLORS.border}`, whiteSpace: 'nowrap',
                   }}>
                     {group.entries.length} 件
                   </span>
                   <a href={`/explore?war=${group.warId}`} style={{
-                    fontSize: 10, fontWeight: 700, padding: '5px 10px', borderRadius: 6,
+                    fontSize: 12, fontWeight: 700, padding: '5px 10px', borderRadius: 6,
                     background: COLORS.amberDark, color: '#fff', textDecoration: 'none',
                     whiteSpace: 'nowrap', flexShrink: 0,
                   }}>
@@ -357,13 +329,13 @@ export default function WantaListPage() {
                     }}>
                       <span style={{
                         flexShrink: 0,
-                        fontSize: 9, fontWeight: 700, padding: '2px 8px', borderRadius: 10,
+                        fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 10,
                         background: `${e.tabColor}15`, color: e.tabColor, border: `1px solid ${e.tabColor}40`,
                         whiteSpace: 'nowrap', marginTop: 2,
                       }}>
                         {e.tabEmoji} {e.tabLabel}
                       </span>
-                      <p style={{ fontSize: 12, lineHeight: 1.75, color: COLORS.text, margin: 0, flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: 14, lineHeight: 1.75, color: COLORS.text, margin: 0, flex: 1, minWidth: 0 }}>
                         {e.comment}
                       </p>
                     </div>
@@ -376,8 +348,8 @@ export default function WantaListPage() {
 
         {filtered.length === 0 && (
           <div style={{ textAlign: 'center', padding: '48px 20px', color: COLORS.textSub }}>
-            <div style={{ fontSize: 36, marginBottom: 12 }}>🐕</div>
-            <div style={{ fontSize: 13 }}>該当する解説が見つからんかったワン</div>
+            <div style={{ fontSize: 41, marginBottom: 12 }}>🐕</div>
+            <div style={{ fontSize: 16 }}>該当する解説が見つからんかったワン</div>
           </div>
         )}
       </div>

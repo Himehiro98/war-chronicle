@@ -63,17 +63,6 @@ export default function NetworkPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      {/* Header */}
-      <header className="sticky top-0 z-30 bg-slate-900 text-slate-50 border-b border-slate-700 shadow">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="font-bold tracking-wide text-lg hover:text-amber-300 transition">
-            War Chronicle
-          </Link>
-          <Link href="/" className="text-sm text-slate-300 hover:text-amber-300 transition">
-            ← ホームへ
-          </Link>
-        </div>
-      </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Title & description */}

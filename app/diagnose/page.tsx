@@ -51,7 +51,7 @@ function RiskBadge({ risk }: { risk: 'high' | 'medium' | 'low' }) {
       display: 'inline-flex', alignItems: 'center', gap: 8,
       background: c.bg, border: `1px solid ${c.border}`,
       borderRadius: 8, padding: '10px 20px',
-      color: c.color, fontWeight: 700, fontSize: 18,
+      color: c.color, fontWeight: 700, fontSize: 22,
     }}>
       {c.label}
     </div>
@@ -78,7 +78,7 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
             width: 32, height: 32, borderRadius: '50%',
             background: C.rust, color: C.text,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: 700, fontSize: 14, flexShrink: 0,
+            fontWeight: 700, fontSize: 17, flexShrink: 0,
           }}>
             {index + 1}
           </div>
@@ -86,7 +86,7 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
             <Link
               href={`/explore?war=${match.warId}`}
               style={{
-                color: C.text, fontWeight: 700, fontSize: 20,
+                color: C.text, fontWeight: 700, fontSize: 24,
                 textDecoration: 'none', display: 'block',
               }}
               onMouseOver={e => (e.currentTarget.style.color = C.amber)}
@@ -100,7 +100,7 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
           background: 'rgba(248,250,252,0.05)',
           border: `1px solid ${color}40`,
           borderRadius: 8, padding: '6px 14px',
-          color: color, fontWeight: 700, fontSize: 20,
+          color: color, fontWeight: 700, fontSize: 24,
           flexShrink: 0,
         }}>
           {match.score}%
@@ -109,7 +109,7 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
 
       {/* スコアバー */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        <div style={{ fontSize: 11, color: C.textSub, letterSpacing: '0.05em' }}>類似度スコア</div>
+        <div style={{ fontSize: 13, color: C.textSub, letterSpacing: '0.05em' }}>類似度スコア</div>
         <div style={{
           height: 8, background: 'rgba(248,250,252,0.08)',
           borderRadius: 4, overflow: 'hidden',
@@ -132,7 +132,7 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
               border: `1px solid ${C.rust}60`,
               color: '#fca5a5',
               borderRadius: 6, padding: '3px 10px',
-              fontSize: 12, fontWeight: 500,
+              fontSize: 14, fontWeight: 500,
             }}>
               {factor}
             </span>
@@ -141,7 +141,7 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
       )}
 
       {/* 類似理由 */}
-      <p style={{ color: C.textSub, fontSize: 14, lineHeight: 1.7, margin: 0 }}>
+      <p style={{ color: C.textSub, fontSize: 17, lineHeight: 1.7, margin: 0 }}>
         {match.reasoning}
       </p>
 
@@ -152,12 +152,12 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
         borderRadius: 8, padding: '12px 16px',
         display: 'flex', gap: 10, alignItems: 'flex-start',
       }}>
-        <span style={{ fontSize: 16, flexShrink: 0 }}>⚡</span>
+        <span style={{ fontSize: 19, flexShrink: 0 }}>⚡</span>
         <div>
-          <div style={{ color: C.amber, fontWeight: 700, fontSize: 12, marginBottom: 4, letterSpacing: '0.05em' }}>
+          <div style={{ color: C.amber, fontWeight: 700, fontSize: 14, marginBottom: 4, letterSpacing: '0.05em' }}>
             最も注意すべき類似点
           </div>
-          <p style={{ color: '#fde68a', fontSize: 13, lineHeight: 1.6, margin: 0 }}>
+          <p style={{ color: '#fde68a', fontSize: 16, lineHeight: 1.6, margin: 0 }}>
             {match.warningSign}
           </p>
         </div>
@@ -168,7 +168,7 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
         <Link
           href={`/explore?war=${match.warId}`}
           style={{
-            color: C.amber, fontSize: 13, textDecoration: 'none',
+            color: C.amber, fontSize: 16, textDecoration: 'none',
             fontWeight: 500,
           }}
           onMouseOver={e => (e.currentTarget.style.textDecoration = 'underline')}
@@ -253,65 +253,13 @@ export default function DiagnosePage() {
   return (
     <div style={{ background: C.bg, minHeight: '100vh', color: C.text }}>
 
-      {/* ── ヘッダー ── */}
-      <header style={{
-        background: C.bg,
-        borderBottom: `1px solid ${C.border}`,
-        position: 'sticky', top: 0, zIndex: 50,
-      }}>
-        <div style={{
-          maxWidth: 1100, margin: '0 auto',
-          padding: '12px 24px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          flexWrap: 'wrap', gap: 8,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <Link href="/" style={{
-              color: C.textSub, fontSize: 13, textDecoration: 'none',
-              display: 'flex', alignItems: 'center', gap: 6,
-            }}
-              onMouseOver={e => (e.currentTarget.style.color = C.text)}
-              onMouseOut={e => (e.currentTarget.style.color = C.textSub)}
-            >
-              ← ホーム
-            </Link>
-            <span style={{ color: C.border }}>|</span>
-            <Link href="/" style={{
-              color: C.text, fontWeight: 700, fontSize: 16,
-              textDecoration: 'none', letterSpacing: '0.05em',
-            }}>
-              War Chronicle
-            </Link>
-          </div>
-          <nav style={{ display: 'flex', gap: 20 }}>
-            <Link href="/lessons" style={{
-              color: C.textSub, fontSize: 13, textDecoration: 'none',
-              fontWeight: 500,
-            }}
-              onMouseOver={e => (e.currentTarget.style.color = C.text)}
-              onMouseOut={e => (e.currentTarget.style.color = C.textSub)}
-            >
-              教訓
-            </Link>
-            <Link href="/search" style={{
-              color: C.textSub, fontSize: 13, textDecoration: 'none',
-              fontWeight: 500,
-            }}
-              onMouseOver={e => (e.currentTarget.style.color = C.text)}
-              onMouseOut={e => (e.currentTarget.style.color = C.textSub)}
-            >
-              検索
-            </Link>
-          </nav>
-        </div>
-      </header>
 
       {/* ── メインコンテンツ ── */}
       <main style={{ maxWidth: 860, margin: '0 auto', padding: '48px 24px 80px' }}>
 
         {/* タイトルセクション */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <div style={{ fontSize: 40, marginBottom: 12 }}>🔮</div>
+          <div style={{ fontSize: 46, marginBottom: 12 }}>🔮</div>
           <h1 style={{
             fontSize: 'clamp(22px, 4vw, 32px)',
             fontWeight: 800, margin: '0 0 12px',
@@ -326,7 +274,7 @@ export default function DiagnosePage() {
             今の世界は何番煎じ？
           </p>
           <p style={{
-            color: C.textSub, fontSize: 15, lineHeight: 1.7,
+            color: C.textSub, fontSize: 18, lineHeight: 1.7,
             maxWidth: 600, margin: '0 auto',
           }}>
             現在進行中の地政学的状況を入力すると、AIが歴史上の戦争との
@@ -343,7 +291,7 @@ export default function DiagnosePage() {
         }}>
           {/* クイックフィルボタン */}
           <div style={{ marginBottom: 16 }}>
-            <div style={{ color: C.textSub, fontSize: 12, marginBottom: 8, letterSpacing: '0.05em', fontWeight: 500 }}>
+            <div style={{ color: C.textSub, fontSize: 14, marginBottom: 8, letterSpacing: '0.05em', fontWeight: 500 }}>
               例から選ぶ：
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -358,7 +306,7 @@ export default function DiagnosePage() {
                     border: `1px solid ${situation === ex ? C.rust : C.border}`,
                     color: situation === ex ? '#fca5a5' : C.textSub,
                     borderRadius: 8, padding: '6px 14px',
-                    fontSize: 13, cursor: 'pointer',
+                    fontSize: 16, cursor: 'pointer',
                     transition: 'all 0.15s',
                     fontWeight: 500,
                   }}
@@ -393,7 +341,7 @@ export default function DiagnosePage() {
               background: 'rgba(248,250,252,0.04)',
               border: `1px solid ${C.border}`,
               borderRadius: 10, padding: '14px 16px',
-              color: C.text, fontSize: 14, lineHeight: 1.7,
+              color: C.text, fontSize: 17, lineHeight: 1.7,
               resize: 'vertical', outline: 'none',
               fontFamily: 'inherit',
               transition: 'border-color 0.15s',
@@ -405,7 +353,7 @@ export default function DiagnosePage() {
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             marginTop: 12, flexWrap: 'wrap', gap: 8,
           }}>
-            <span style={{ color: C.textSub, fontSize: 12 }}>
+            <span style={{ color: C.textSub, fontSize: 14 }}>
               Ctrl + Enter でも送信できます
             </span>
             <button
@@ -418,7 +366,7 @@ export default function DiagnosePage() {
                 border: 'none',
                 color: loading || !situation.trim() ? C.textSub : C.text,
                 borderRadius: 10, padding: '12px 28px',
-                fontSize: 15, fontWeight: 700, cursor: loading || !situation.trim() ? 'not-allowed' : 'pointer',
+                fontSize: 18, fontWeight: 700, cursor: loading || !situation.trim() ? 'not-allowed' : 'pointer',
                 display: 'flex', alignItems: 'center', gap: 10,
                 transition: 'all 0.15s',
               }}
@@ -441,7 +389,7 @@ export default function DiagnosePage() {
             background: 'rgba(239,68,68,0.1)',
             border: '1px solid rgba(239,68,68,0.3)',
             borderRadius: 10, padding: '14px 18px',
-            color: '#fca5a5', fontSize: 14,
+            color: '#fca5a5', fontSize: 17,
             marginBottom: 24,
           }}>
             ⚠️ {error}
@@ -460,7 +408,7 @@ export default function DiagnosePage() {
             }}>
               <div style={{ marginBottom: 16 }}>
                 <h2 style={{
-                  color: C.textSub, fontSize: 12, fontWeight: 600,
+                  color: C.textSub, fontSize: 14, fontWeight: 600,
                   letterSpacing: '0.1em', textTransform: 'uppercase',
                   margin: '0 0 12px',
                 }}>
@@ -469,7 +417,7 @@ export default function DiagnosePage() {
                 <RiskBadge risk={result.overallRisk} />
               </div>
               <p style={{
-                color: C.textSub, fontSize: 15, lineHeight: 1.8, margin: 0,
+                color: C.textSub, fontSize: 18, lineHeight: 1.8, margin: 0,
               }}>
                 {result.summary}
               </p>
@@ -478,7 +426,7 @@ export default function DiagnosePage() {
             {/* マッチした戦争一覧 */}
             <div>
               <h2 style={{
-                color: C.textSub, fontSize: 12, fontWeight: 600,
+                color: C.textSub, fontSize: 14, fontWeight: 600,
                 letterSpacing: '0.1em', textTransform: 'uppercase',
                 margin: '0 0 16px',
               }}>
@@ -502,7 +450,7 @@ export default function DiagnosePage() {
                   background: 'transparent',
                   border: `1px solid ${C.border}`,
                   color: C.textSub, borderRadius: 10,
-                  padding: '12px 28px', fontSize: 14, cursor: 'pointer',
+                  padding: '12px 28px', fontSize: 17, cursor: 'pointer',
                   transition: 'all 0.15s',
                 }}
                 onMouseOver={e => {

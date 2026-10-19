@@ -146,7 +146,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
         <div style={{
           position: 'absolute', inset: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: 'rgba(248,250,252,0.4)', fontSize: 11,
+          color: 'rgba(248,250,252,0.4)', fontSize: 13,
         }}>
           地球を読み込み中…
         </div>
@@ -183,7 +183,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
               background: 'rgba(255,255,255,0.06)',
               border: '1px solid rgba(255,255,255,0.15)',
               borderRadius: 4, cursor: 'pointer',
-              color: '#94a3b8', fontSize: 12,
+              color: '#94a3b8', fontSize: 14,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
             aria-label="閉じる"
@@ -198,7 +198,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
             borderRadius: 3,
             background: `${REGION_COLORS[selected.region] ?? '#fbbf24'}30`,
             border: `1px solid ${REGION_COLORS[selected.region] ?? '#fbbf24'}60`,
-            fontSize: 9,
+            fontSize: 11,
             color: REGION_COLORS[selected.region] ?? '#fbbf24',
             fontWeight: 700,
             letterSpacing: '0.05em',
@@ -209,7 +209,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
 
           {/* 戦争名 */}
           <div className="font-serif" style={{
-            fontSize: 16,
+            fontSize: 19,
             fontWeight: 700,
             color: '#f8fafc',
             lineHeight: 1.35,
@@ -221,7 +221,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
 
           {/* 年代 */}
           <div style={{
-            fontSize: 11,
+            fontSize: 13,
             color: '#cbd5e1',
             marginBottom: 12,
             letterSpacing: '0.04em',
@@ -242,7 +242,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
               color: '#0f172a',
               border: 'none',
               borderRadius: 4,
-              fontSize: 11,
+              fontSize: 13,
               fontWeight: 700,
               letterSpacing: '0.05em',
               cursor: 'pointer',
@@ -255,7 +255,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
             🔍 詳細ページへ →
           </button>
           <div style={{
-            fontSize: 8,
+            fontSize: 11,
             color: '#64748b',
             marginTop: 6,
             textAlign: 'center',

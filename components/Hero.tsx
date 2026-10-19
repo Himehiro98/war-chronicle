@@ -7,11 +7,9 @@ import { useIsMobile } from '@/lib/useIsMobile';
 export default function Hero() {
   const isMobile = useIsMobile(768);
   // スマホ：画面幅にほぼフィット。PC/タブレット：横並びに収まる固定サイズ
-  // PCは .globe-zoom-fix (zoom:0.8) でhtmlのzoom:1.25を相殺するため、
-  // 実サイズを1.25倍にして見た目のサイズを維持する（520×1.25=650）
   const globeSize = isMobile
     ? (typeof window !== 'undefined' ? Math.min(window.innerWidth - 24, 380) : 340)
-    : 650;
+    : 520;
   return (
     <section style={{
       position: 'relative',
@@ -49,7 +47,7 @@ export default function Hero() {
         <div className="hero-text" style={{ flex: '1 1 420px', minWidth: 280 }}>
           {/* タグライン */}
           <div style={{
-            fontSize: 11, letterSpacing: '0.2em',
+            fontSize: 13, letterSpacing: '0.2em',
             color: '#94a3b8', textTransform: 'uppercase',
             marginBottom: 20, fontWeight: 600,
           }}>
@@ -71,7 +69,7 @@ export default function Hero() {
           </h1>
 
           <p style={{
-            fontSize: 13, lineHeight: 1.85, color: '#cbd5e1',
+            fontSize: 16, lineHeight: 1.85, color: '#cbd5e1',
             marginTop: 20, marginBottom: 28,
           }}>
             100以上の戦争を、<strong style={{ color: '#fbbf24' }}>時系列・地理・因果・構造</strong>で横断する。
@@ -83,7 +81,7 @@ export default function Hero() {
             <Link href="/chronicle" style={{
               padding: '11px 22px', borderRadius: 4,
               background: '#fbbf24', color: '#0f172a',
-              fontWeight: 700, fontSize: 12, letterSpacing: '0.05em',
+              fontWeight: 700, fontSize: 14, letterSpacing: '0.05em',
               textDecoration: 'none', transition: 'all 0.2s',
               display: 'inline-flex', alignItems: 'center', gap: 8,
             }}>
@@ -93,7 +91,7 @@ export default function Hero() {
               padding: '11px 22px', borderRadius: 4,
               background: 'transparent', color: '#f8fafc',
               border: '1px solid rgba(248,250,252,0.3)',
-              fontWeight: 600, fontSize: 12, letterSpacing: '0.05em',
+              fontWeight: 600, fontSize: 14, letterSpacing: '0.05em',
               textDecoration: 'none', transition: 'all 0.2s',
               display: 'inline-flex', alignItems: 'center', gap: 8,
             }}>
@@ -103,7 +101,7 @@ export default function Hero() {
               padding: '11px 22px', borderRadius: 4,
               background: 'transparent', color: '#f8fafc',
               border: '1px solid rgba(248,250,252,0.3)',
-              fontWeight: 600, fontSize: 12, letterSpacing: '0.05em',
+              fontWeight: 600, fontSize: 14, letterSpacing: '0.05em',
               textDecoration: 'none', transition: 'all 0.2s',
               display: 'inline-flex', alignItems: 'center', gap: 8,
             }}>
@@ -113,7 +111,7 @@ export default function Hero() {
               padding: '11px 22px', borderRadius: 4,
               background: 'transparent', color: '#94a3b8',
               border: '1px solid rgba(148,163,184,0.3)',
-              fontWeight: 600, fontSize: 12, letterSpacing: '0.05em',
+              fontWeight: 600, fontSize: 14, letterSpacing: '0.05em',
               textDecoration: 'none', transition: 'all 0.2s',
               display: 'inline-flex', alignItems: 'center', gap: 8,
             }}>
@@ -137,7 +135,7 @@ export default function Hero() {
             pointerEvents: 'none',
             zIndex: 0,
           }} />
-          <div className="globe-zoom-fix" style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ position: 'relative', zIndex: 1 }}>
             <RotatingGlobe size={globeSize} />
           </div>
           {/* キャプション */}
@@ -146,7 +144,7 @@ export default function Hero() {
             bottom: -4,
             left: '50%',
             transform: 'translateX(-50%)',
-            fontSize: 9,
+            fontSize: 11,
             color: '#94a3b8',
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
@@ -178,13 +176,13 @@ export default function Hero() {
             { num: '4+5', label: 'テーマ＋宗教', sub: '現代の問い4本＋主要宗教5本で歴史を読む' },
           ].map((m) => (
             <div key={m.label}>
-              <div style={{ fontSize: 28, fontWeight: 700, color: '#fbbf24', lineHeight: 1, marginBottom: 4, fontFamily: 'serif' }}>
+              <div style={{ fontSize: 32, fontWeight: 700, color: '#fbbf24', lineHeight: 1, marginBottom: 4, fontFamily: 'serif' }}>
                 {m.num}
               </div>
-              <div style={{ fontSize: 11, fontWeight: 600, color: '#f8fafc', marginBottom: 2, letterSpacing: '0.05em' }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#f8fafc', marginBottom: 2, letterSpacing: '0.05em' }}>
                 {m.label}
               </div>
-              <div style={{ fontSize: 9, color: '#94a3b8', lineHeight: 1.5 }}>
+              <div style={{ fontSize: 11, color: '#94a3b8', lineHeight: 1.5 }}>
                 {m.sub}
               </div>
             </div>

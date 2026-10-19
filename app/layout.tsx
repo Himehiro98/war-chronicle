@@ -1,26 +1,56 @@
 import type { Metadata, Viewport } from "next";
+import { Noto_Sans_JP, Noto_Serif_JP, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, WAR_COUNT, YEAR_RANGE_LABEL } from "@/lib/site";
+
+const sans = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-sans",
+  display: "swap",
+  preload: false,
+});
+const serif = Noto_Serif_JP({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  variable: "--font-serif-jp",
+  display: "swap",
+  preload: false,
+});
+const display = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "War Chronicle — 多角的戦争史データベース",
-  description: "戦争は突然起きない。人類は似た条件で何度も衝突してきた。BC1457から2025まで175戦争を時系列・地理・因果・構造で横断する、戦争防止のための知的教養プラットフォーム。",
-  keywords: ["戦争史", "歴史", "教育", "因果関係", "現代史", "国際関係", "地政学", "戦争防止"],
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — 戦争は突然起きない`,
+    template: `%s｜${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  keywords: ["戦争史", "世界史", "歴史学習", "因果関係", "現代史", "国際関係", "地政学", "戦争防止"],
   appleWebApp: {
     capable: true,
-    title: "War Chronicle",
+    title: SITE_NAME,
     statusBarStyle: "black-translucent",
   },
   openGraph: {
-    title: "War Chronicle — 戦争は突然起きない",
-    description: "BC1457〜2025、175戦争を時系列・地理・因果・構造で横断する知的教養プラットフォーム",
+    title: `${SITE_NAME} — 戦争は突然起きない`,
+    description: SITE_DESCRIPTION,
     type: "website",
     locale: "ja_JP",
+    siteName: SITE_NAME,
     images: ["/icon.png"],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "War Chronicle — 戦争は突然起きない",
-    description: "人類は似た条件で何度も衝突してきた。175戦争を多角的に分析。",
+    card: "summary",
+    title: `${SITE_NAME} — 戦争は突然起きない`,
+    description: SITE_DESCRIPTION,
     images: ["/icon.png"],
   },
 };
@@ -38,14 +68,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body>{children}</body>
+    <html lang="ja" className={`${sans.variable} ${serif.variable} ${display.variable}`}>
+      <body>
+        <a href="#main" className="skip-link">本文へスキップ</a>
+        <SiteHeader />
+        <div id="main">{children}</div>
+        <SiteFooter warCount={WAR_COUNT} yearRange={YEAR_RANGE_LABEL} />
+      </body>
     </html>
   );
 }

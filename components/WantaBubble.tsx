@@ -44,7 +44,7 @@ export default function WantaBubble({ comment, tabLabel }: Props) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: 40,
+        fontSize: 46,
       }}>
         {!imgError ? (
           <img
@@ -99,9 +99,9 @@ export default function WantaBubble({ comment, tabLabel }: Props) {
           paddingBottom: 5,
           borderBottom: '1px solid rgba(245,158,11,0.2)',
         }}>
-          <span style={{ fontSize: 11 }}>🐾</span>
+          <span style={{ fontSize: 13 }}>🐾</span>
           <span style={{
-            fontSize: 9,
+            fontSize: 11,
             fontWeight: 700,
             color: '#92400e',
             letterSpacing: '0.08em',
@@ -110,7 +110,7 @@ export default function WantaBubble({ comment, tabLabel }: Props) {
           </span>
           {prompt && (
             <span style={{
-              fontSize: 9,
+              fontSize: 11,
               color: '#d97706',
               fontStyle: 'italic',
               marginLeft: 'auto',
@@ -122,7 +122,7 @@ export default function WantaBubble({ comment, tabLabel }: Props) {
 
         {/* 本文 */}
         <div style={{
-          fontSize: 11.5,
+          fontSize: 14,
           lineHeight: 1.75,
           color: '#451a03',
         }}>

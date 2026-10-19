@@ -214,7 +214,7 @@ export default function CompareModal({ isOpen, onClose }: Props) {
                 }}
               >
                 <span
-                  className="text-[10px] font-bold uppercase tracking-wider"
+                  className="text-[12px] font-bold uppercase tracking-wider"
                   style={{ color: accent.label }}
                 >
                   #{idx + 1}
@@ -326,7 +326,7 @@ export default function CompareModal({ isOpen, onClose }: Props) {
                         <div className="flex flex-col">
                           <span className="text-base">{w.name}</span>
                           <span
-                            className="text-[11px] font-normal opacity-70"
+                            className="text-[13px] font-normal opacity-70"
                             style={{ color: '#6b5a4a' }}
                           >
                             {w.year}〜{w.endYear}
@@ -366,7 +366,7 @@ export default function CompareModal({ isOpen, onClose }: Props) {
                         {row.label}
                         {highlight && (
                           <span
-                            className="ml-1 text-[9px]"
+                            className="ml-1 text-[11px]"
                             style={{ color: '#b8860b' }}
                             title="値が異なる"
                           >
@@ -470,14 +470,14 @@ export default function CompareModal({ isOpen, onClose }: Props) {
                             </span>
                             <span className="text-sm flex-1">{w.name}</span>
                             <span
-                              className="text-[10px]"
+                              className="text-[12px]"
                               style={{ color: '#6b5a4a' }}
                             >
                               {REGIONS[w.region]}
                             </span>
                             {alreadyPicked && (
                               <span
-                                className="text-[10px] ml-1"
+                                className="text-[12px] ml-1"
                                 style={{ color: '#1a4a42' }}
                               >
                                 選択済
@@ -491,7 +491,7 @@ export default function CompareModal({ isOpen, onClose }: Props) {
                 )}
               </div>
               <div
-                className="px-4 py-2 text-[10px] border-t flex justify-between"
+                className="px-4 py-2 text-[12px] border-t flex justify-between"
                 style={{
                   borderColor: 'rgba(26, 74, 66, 0.15)',
                   color: '#6b5a4a',

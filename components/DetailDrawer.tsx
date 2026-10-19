@@ -50,12 +50,12 @@ function DigestTab({ data }: { data: TabContent['digest'] }) {
           style={{ border: `1px solid ${b.border}`, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
           <div className="flex items-center gap-2 px-3 py-2"
             style={{ background: b.header }}>
-            <span style={{ fontSize: 13 }}>{b.icon}</span>
-            <span style={{ fontSize: 10, fontWeight: 700, color: 'white', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: 16 }}>{b.icon}</span>
+            <span style={{ fontSize: 12, fontWeight: 700, color: 'white', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
               {b.title}
             </span>
           </div>
-          <div className="p-3" style={{ background: b.bg, fontSize: 11, lineHeight: 1.7, color: '#374151' }}
+          <div className="p-3" style={{ background: b.bg, fontSize: 13, lineHeight: 1.7, color: '#374151' }}
             dangerouslySetInnerHTML={{ __html: b.body }} />
         </div>
       ))}
@@ -68,24 +68,24 @@ function DetailTab({ data }: { data: TabContent['detail'] }) {
   return (
     <div>
       <div className="mb-4 pb-3" style={{ borderBottom: '2px solid #d97706' }}>
-        <h2 style={{ fontSize: 18, fontWeight: 700, color: '#1c1917', fontFamily: 'serif', marginBottom: 4 }}>
+        <h2 style={{ fontSize: 22, fontWeight: 700, color: '#1c1917', fontFamily: 'serif', marginBottom: 4 }}>
           {data.title}
         </h2>
-        <p style={{ fontSize: 10, color: '#78716c', letterSpacing: '0.06em' }}>{data.kicker}</p>
+        <p style={{ fontSize: 12, color: '#78716c', letterSpacing: '0.06em' }}>{data.kicker}</p>
       </div>
       <div className="mb-4 px-3 py-2.5 rounded-lg"
-        style={{ background: '#fffbeb', borderLeft: '4px solid #f59e0b', fontSize: 12, lineHeight: 1.8, color: '#44403c', fontStyle: 'italic' }}>
+        style={{ background: '#fffbeb', borderLeft: '4px solid #f59e0b', fontSize: 14, lineHeight: 1.8, color: '#44403c', fontStyle: 'italic' }}>
         {data.lead}
       </div>
       {data.sections.map((s, i) => (
         <div key={i} className="mb-4">
           <div className="flex items-center gap-2 mb-2">
             <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontSize: 10, color: 'white', fontWeight: 700 }}>{i + 1}</span>
+              <span style={{ fontSize: 12, color: 'white', fontWeight: 700 }}>{i + 1}</span>
             </div>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#92400e', letterSpacing: '0.04em' }}>{s.heading}</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: '#92400e', letterSpacing: '0.04em' }}>{s.heading}</span>
           </div>
-          <p style={{ fontSize: 11, lineHeight: 1.8, color: '#44403c', paddingLeft: 32 }}>{s.body}</p>
+          <p style={{ fontSize: 13, lineHeight: 1.8, color: '#44403c', paddingLeft: 32 }}>{s.body}</p>
         </div>
       ))}
     </div>
@@ -99,8 +99,8 @@ function PerspectivesTab({ data }: { data: TabContent['perspectives'] }) {
   return (
     <div>
       <div className="flex items-center gap-2 mb-3 pb-2" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
-        <span style={{ fontSize: 13 }}>🌍</span>
-        <span style={{ fontSize: 11, fontWeight: 700, color: '#374151', letterSpacing: '0.04em' }}>
+        <span style={{ fontSize: 16 }}>🌍</span>
+        <span style={{ fontSize: 13, fontWeight: 700, color: '#374151', letterSpacing: '0.04em' }}>
           この戦争を各国はどう語るか
         </span>
       </div>
@@ -116,13 +116,13 @@ function PerspectivesTab({ data }: { data: TabContent['perspectives'] }) {
               }}>
               <div className="px-3 py-2 flex items-center gap-2"
                 style={{ background: color }}>
-                <span style={{ fontSize: 14 }}>{p.flag}</span>
-                <span style={{ fontSize: 10, fontWeight: 700, color: 'white', letterSpacing: '0.04em' }}>
+                <span style={{ fontSize: 17 }}>{p.flag}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: 'white', letterSpacing: '0.04em' }}>
                   {p.nation}
                 </span>
               </div>
               <div className="p-3"
-                style={{ background: '#fafaf9', fontSize: 10.5, lineHeight: 1.7, color: '#44403c' }}>
+                style={{ background: '#fafaf9', fontSize: 13, lineHeight: 1.7, color: '#44403c' }}>
                 {p.text}
               </div>
             </div>
@@ -142,15 +142,15 @@ function StructureTab({ data }: { data: TabContent['structure'] }) {
       <div className="mb-4 rounded-lg p-3"
         style={{ background: '#f5f3ff', border: '1px solid #8b5cf6', borderLeft: '4px solid #7c3aed' }}>
         <div className="flex items-center gap-2 mb-1.5">
-          <span style={{ fontSize: 13 }}>🔍</span>
-          <span style={{ fontSize: 10, fontWeight: 700, color: '#5b21b6', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: 16 }}>🔍</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: '#5b21b6', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
             構造的必然性の評価
           </span>
         </div>
-        <p style={{ fontSize: 11, lineHeight: 1.7, color: '#3730a3' }}>{data.summary}</p>
+        <p style={{ fontSize: 13, lineHeight: 1.7, color: '#3730a3' }}>{data.summary}</p>
       </div>
 
-      <div style={{ fontSize: 10, fontWeight: 700, color: '#6b7280', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 12 }}>
+      <div style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 12 }}>
         主要因子の影響度分析
       </div>
 
@@ -158,11 +158,11 @@ function StructureTab({ data }: { data: TabContent['structure'] }) {
         {data.factors.map((f, i) => (
           <div key={i}>
             <div className="flex justify-between items-baseline mb-1">
-              <span style={{ fontSize: 11, fontWeight: 600, color: '#374151' }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: '#374151' }}>
                 {f.title}
               </span>
             </div>
-            <p style={{ fontSize: 10, lineHeight: 1.6, color: '#6b7280', marginBottom: 6 }}>{f.body}</p>
+            <p style={{ fontSize: 12, lineHeight: 1.6, color: '#6b7280', marginBottom: 6 }}>{f.body}</p>
             <div className="rounded-full overflow-hidden" style={{ height: 8, background: '#e5e7eb' }}>
               <div className="rounded-full h-full"
                 style={{
@@ -189,8 +189,8 @@ function LegacyTab({ data }: { data: TabContent['legacy'] }) {
   return (
     <div>
       <div className="flex items-center gap-2 mb-3 pb-2" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
-        <span style={{ fontSize: 13 }}>🔗</span>
-        <span style={{ fontSize: 11, fontWeight: 700, color: '#374151' }}>歴史的連鎖と長期的影響</span>
+        <span style={{ fontSize: 16 }}>🔗</span>
+        <span style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>歴史的連鎖と長期的影響</span>
       </div>
       <div style={{ position: 'relative' }}>
         <div style={{ position: 'absolute', left: 10, top: 8, bottom: 8, width: 2, background: 'linear-gradient(180deg, #f43f5e, #10b981, #f59e0b)', borderRadius: 1 }} />
@@ -207,12 +207,12 @@ function LegacyTab({ data }: { data: TabContent['legacy'] }) {
                 style={{ border: `1px solid ${c.dot}20`, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
                 <div className="px-3 py-1.5 flex items-center gap-1.5"
                   style={{ background: c.bg, borderBottom: `1px solid ${c.dot}30` }}>
-                  <span style={{ fontSize: 9, fontWeight: 700, color: c.text, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: c.text, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                     {l.label}
                   </span>
                 </div>
                 <div className="px-3 py-2"
-                  style={{ background: 'white', fontSize: 10.5, lineHeight: 1.7, color: '#44403c' }}>
+                  style={{ background: 'white', fontSize: 13, lineHeight: 1.7, color: '#44403c' }}>
                   {l.text}
                 </div>
               </div>
@@ -238,8 +238,8 @@ function HumanTab({ data }: { data: HumanLayerData | undefined }) {
   if (!data) {
     return (
       <div style={{ padding: 24, textAlign: 'center' }}>
-        <div style={{ fontSize: 36, marginBottom: 12 }}>🕊️</div>
-        <div style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.7 }}>
+        <div style={{ fontSize: 41, marginBottom: 12 }}>🕊️</div>
+        <div style={{ fontSize: 14, color: '#6b7280', lineHeight: 1.7 }}>
           この戦争の市民視点データは現在準備中だワン。<br />
           戦争を「地図ゲーム」化しないため、市民生活・難民・PTSD・子ども・都市破壊の記録を執筆中。
         </div>
@@ -256,12 +256,12 @@ function HumanTab({ data }: { data: HumanLayerData | undefined }) {
           borderLeft: '6px solid #0891b2',
         }}>
         <div className="flex items-center gap-2 mb-1.5">
-          <span style={{ fontSize: 16 }}>🕊️</span>
-          <span style={{ fontSize: 11, fontWeight: 800, color: '#155e75', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: 19 }}>🕊️</span>
+          <span style={{ fontSize: 13, fontWeight: 800, color: '#155e75', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
             人間視点 — 戦争を「地図ゲーム」化しない
           </span>
         </div>
-        <p style={{ fontSize: 11, lineHeight: 1.7, color: '#164e63' }}>
+        <p style={{ fontSize: 13, lineHeight: 1.7, color: '#164e63' }}>
           数字や戦略の影に、必ず<strong>市民</strong>がいた。難民・飢餓・PTSD・子どもへの影響——
           英雄譚として消費するのではなく、戦争の<strong>本当のコスト</strong>を記憶する。
         </p>
@@ -274,16 +274,16 @@ function HumanTab({ data }: { data: HumanLayerData | undefined }) {
             style={{ border: `1px solid ${b.color}30`, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
             <div className="px-3 py-2 flex items-center gap-2"
               style={{ background: b.color, color: 'white' }}>
-              <span style={{ fontSize: 13 }}>{b.icon}</span>
-              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: 16 }}>{b.icon}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.05em' }}>
                 {b.title}
               </span>
-              <span style={{ fontSize: 9, opacity: 0.85, marginLeft: 'auto', fontStyle: 'italic' }}>
+              <span style={{ fontSize: 11, opacity: 0.85, marginLeft: 'auto', fontStyle: 'italic' }}>
                 {b.desc}
               </span>
             </div>
             <div className="p-3"
-              style={{ background: b.bg, fontSize: 11, lineHeight: 1.7, color: '#374151' }}
+              style={{ background: b.bg, fontSize: 13, lineHeight: 1.7, color: '#374151' }}
               dangerouslySetInnerHTML={{ __html: data[b.key] }} />
           </div>
         ))}
@@ -297,16 +297,16 @@ function HumanTab({ data }: { data: HumanLayerData | undefined }) {
         }}>
         <div className="px-4 py-2.5 flex items-center gap-2"
           style={{ background: '#155e75', color: 'white' }}>
-          <span style={{ fontSize: 14 }}>📖</span>
-          <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em' }}>
+          <span style={{ fontSize: 17 }}>📖</span>
+          <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.06em' }}>
             ある市民の一日
           </span>
-          <span style={{ fontSize: 9, marginLeft: 'auto', opacity: 0.8, fontStyle: 'italic' }}>
+          <span style={{ fontSize: 11, marginLeft: 'auto', opacity: 0.8, fontStyle: 'italic' }}>
             没入型ストーリー
           </span>
         </div>
         <div className="p-4"
-          style={{ fontSize: 12, lineHeight: 1.85, color: '#0c4a6e' }}
+          style={{ fontSize: 14, lineHeight: 1.85, color: '#0c4a6e' }}
           dangerouslySetInnerHTML={{ __html: data.oneDayStory }} />
       </div>
     </div>
@@ -326,8 +326,8 @@ function LessonsTab({ data }: { data: LessonsData | undefined }) {
   if (!data) {
     return (
       <div style={{ padding: 24, textAlign: 'center' }}>
-        <div style={{ fontSize: 36, marginBottom: 12 }}>💡</div>
-        <div style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.7 }}>
+        <div style={{ fontSize: 41, marginBottom: 12 }}>💡</div>
+        <div style={{ fontSize: 14, color: '#6b7280', lineHeight: 1.7 }}>
           この戦争の教訓データは現在準備中だワン。<br />
           歴史的パターンと現代への示唆を執筆中やけん、もう少し待っててだワン🐾
         </div>
@@ -343,16 +343,16 @@ function LessonsTab({ data }: { data: LessonsData | undefined }) {
             style={{ border: `1px solid ${b.color}40`, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
             <div className="px-3 py-2 flex items-center gap-2"
               style={{ background: b.color, color: 'white' }}>
-              <span style={{ fontSize: 13 }}>{b.icon}</span>
-              <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: 16 }}>{b.icon}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.05em' }}>
                 {b.title}
               </span>
-              <span style={{ fontSize: 9, opacity: 0.85, marginLeft: 'auto', fontStyle: 'italic' }}>
+              <span style={{ fontSize: 11, opacity: 0.85, marginLeft: 'auto', fontStyle: 'italic' }}>
                 {b.desc}
               </span>
             </div>
             <div className="p-3"
-              style={{ background: b.bg, fontSize: 11.5, lineHeight: 1.75, color: '#374151' }}
+              style={{ background: b.bg, fontSize: 14, lineHeight: 1.75, color: '#374151' }}
               dangerouslySetInnerHTML={{ __html: data[b.key] }} />
           </div>
         ))}
@@ -394,8 +394,8 @@ function ExamTab({ warId }: { warId: string }) {
   if (!questions || questions.length === 0) {
     return (
       <div style={{ padding: 24, textAlign: 'center' }}>
-        <div style={{ fontSize: 36, marginBottom: 12 }}>🎓</div>
-        <div style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.7 }}>
+        <div style={{ fontSize: 41, marginBottom: 12 }}>🎓</div>
+        <div style={{ fontSize: 14, color: '#6b7280', lineHeight: 1.7 }}>
           この戦争の論述問題は準備中やけん。<br />
           もうしばらく待っちょってな。
         </div>
@@ -418,17 +418,17 @@ function ExamTab({ warId }: { warId: string }) {
       <div className="mb-4 rounded-lg p-3"
         style={{ background: '#ecfeff', border: '1px solid #06b6d4', borderLeft: '4px solid #0e7490' }}>
         <div className="flex items-center gap-2 mb-1.5">
-          <span style={{ fontSize: 13 }}>🎓</span>
-          <span style={{ fontSize: 10, fontWeight: 700, color: '#155e75', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: 16 }}>🎓</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: '#155e75', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
             論述チャレンジ
           </span>
         </div>
-        <p style={{ fontSize: 11, lineHeight: 1.7, color: '#164e63' }}>
+        <p style={{ fontSize: 13, lineHeight: 1.7, color: '#164e63' }}>
           国公立二次試験の出題形式を踏襲した<strong>本サイトオリジナル問題</strong>。
           まず自分の言葉で答えを組み立ててから、解答例と比べてみよう。
           「自分で思い出して書く」ことが、読むだけの何倍も記憶に残る（テスト効果）。
         </p>
-        <p style={{ fontSize: 9, color: '#0e7490', marginTop: 6 }}>
+        <p style={{ fontSize: 11, color: '#0e7490', marginTop: 6 }}>
           ※実在の大学入試問題の転載ではありません（著作権保護のため）。内容は本サイトのファクトチェック済みコンテンツに基づきます。
         </p>
       </div>
@@ -439,14 +439,14 @@ function ExamTab({ warId }: { warId: string }) {
           style={{ border: '1px solid #67e8f9', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
           {/* 問題ヘッダー */}
           <div className="px-3 py-2 flex items-center gap-2" style={{ background: '#0e7490' }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: 'white' }}>問{questions.length > 1 ? i + 1 : ''}</span>
-            <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.8)', marginLeft: 'auto', fontStyle: 'italic' }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: 'white' }}>問{questions.length > 1 ? i + 1 : ''}</span>
+            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.8)', marginLeft: 'auto', fontStyle: 'italic' }}>
               {q.type}（オリジナル）
             </span>
           </div>
           {/* 問題文 */}
           <div className="p-3" style={{ background: '#fafaf9' }}>
-            <p style={{ fontSize: 12.5, lineHeight: 1.9, color: '#1c1917', fontWeight: 500 }}>
+            <p style={{ fontSize: 15, lineHeight: 1.9, color: '#1c1917', fontWeight: 500 }}>
               {q.question}
             </p>
             <button
@@ -455,7 +455,7 @@ function ExamTab({ warId }: { warId: string }) {
                 marginTop: 12,
                 padding: '7px 16px',
                 borderRadius: 5,
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 700,
                 cursor: 'pointer',
                 background: openAnswers.has(i) ? '#e2e8f0' : '#0e7490',
@@ -469,10 +469,10 @@ function ExamTab({ warId }: { warId: string }) {
             {openAnswers.has(i) && (
               <div className="mt-3 rounded-md p-3"
                 style={{ background: '#f0fdfa', border: '1px solid #5eead4', borderLeft: '3px solid #0d9488' }}>
-                <div style={{ fontSize: 9, fontWeight: 700, color: '#0f766e', letterSpacing: '0.08em', marginBottom: 6 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#0f766e', letterSpacing: '0.08em', marginBottom: 6 }}>
                   解答例
                 </div>
-                <p style={{ fontSize: 12, lineHeight: 1.9, color: '#134e4a' }}>
+                <p style={{ fontSize: 14, lineHeight: 1.9, color: '#134e4a' }}>
                   {q.answer}
                 </p>
               </div>
@@ -526,23 +526,23 @@ function QuickGrasp({ content, lessons }: { content: TabContent; lessons: Lesson
     <div className="mb-4 rounded-lg overflow-hidden"
       style={{ border: '2px solid #0ea5e9', boxShadow: '0 2px 8px rgba(14,165,233,0.15)' }}>
       <div className="px-3 py-2 flex items-center gap-2" style={{ background: '#0284c7' }}>
-        <span style={{ fontSize: 13 }}>⚡</span>
-        <span style={{ fontSize: 11, fontWeight: 700, color: 'white', letterSpacing: '0.05em' }}>
+        <span style={{ fontSize: 16 }}>⚡</span>
+        <span style={{ fontSize: 13, fontWeight: 700, color: 'white', letterSpacing: '0.05em' }}>
           30秒でつかむ
         </span>
-        <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.75)', marginLeft: 'auto', fontStyle: 'italic' }}>
+        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.75)', marginLeft: 'auto', fontStyle: 'italic' }}>
           まず全体像から（読む前の地図）
         </span>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2" style={{ background: '#f0f9ff' }}>
         {items.map((i) => (
           <div key={i.label} className="px-3 py-2.5 flex gap-2" style={{ borderBottom: '1px solid #e0f2fe' }}>
-            <span style={{ fontSize: 14, flexShrink: 0 }}>{i.icon}</span>
+            <span style={{ fontSize: 17, flexShrink: 0 }}>{i.icon}</span>
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: '#0369a1', letterSpacing: '0.08em', marginBottom: 2 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#0369a1', letterSpacing: '0.08em', marginBottom: 2 }}>
                 {i.label}
               </div>
-              <div style={{ fontSize: 11, lineHeight: 1.6, color: '#1e3a5f' }}>{i.text}</div>
+              <div style={{ fontSize: 13, lineHeight: 1.6, color: '#1e3a5f' }}>{i.text}</div>
             </div>
           </div>
         ))}
@@ -583,23 +583,23 @@ function ThinkPrompt({ war, content }: { war: War; content: TabContent }) {
     <div className="mt-5 rounded-lg overflow-hidden" style={{ border: '1px dashed #a78bfa', background: '#faf5ff' }}>
       <div className="px-3 py-2.5">
         <div className="flex items-center gap-2 mb-1.5">
-          <span style={{ fontSize: 13 }}>🤔</span>
-          <span style={{ fontSize: 10, fontWeight: 700, color: '#6d28d9', letterSpacing: '0.06em' }}>
+          <span style={{ fontSize: 16 }}>🤔</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: '#6d28d9', letterSpacing: '0.06em' }}>
             考えてみよう
           </span>
         </div>
-        <p style={{ fontSize: 12, lineHeight: 1.7, color: '#4c1d95', fontWeight: 500 }}>{question}</p>
+        <p style={{ fontSize: 14, lineHeight: 1.7, color: '#4c1d95', fontWeight: 500 }}>{question}</p>
         {hint && (
           <button onClick={() => setOpen(!open)}
             style={{
-              marginTop: 8, fontSize: 10, color: '#7c3aed', background: 'none',
+              marginTop: 8, fontSize: 12, color: '#7c3aed', background: 'none',
               border: 'none', cursor: 'pointer', padding: 0, textDecoration: 'underline',
             }}>
             {open ? '▲ ヒントを閉じる' : '▼ 考えるヒントを見る'}
           </button>
         )}
         {open && hint && (
-          <p style={{ marginTop: 6, fontSize: 11, lineHeight: 1.6, color: '#5b21b6', padding: '8px 10px', background: '#ede9fe', borderRadius: 6 }}>
+          <p style={{ marginTop: 6, fontSize: 13, lineHeight: 1.6, color: '#5b21b6', padding: '8px 10px', background: '#ede9fe', borderRadius: 6 }}>
             💡 {hint}
           </p>
         )}
@@ -620,13 +620,13 @@ function RelatedWarsNav({ war }: { war: War }) {
     <a href={`/explore?war=${w.id}`}
       style={{
         display: 'inline-flex', alignItems: 'baseline', gap: 5,
-        padding: '4px 10px', borderRadius: 14, fontSize: 10, fontWeight: 600,
+        padding: '4px 10px', borderRadius: 14, fontSize: 12, fontWeight: 600,
         background: 'white', color, border: `1px solid ${color}50`,
         textDecoration: 'none', whiteSpace: 'nowrap',
         boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
       }}>
       {w.name}
-      <span style={{ fontSize: 8, opacity: 0.65, fontWeight: 400 }}>{w.year}</span>
+      <span style={{ fontSize: 11, opacity: 0.65, fontWeight: 400 }}>{w.year}</span>
     </a>
   );
 
@@ -634,7 +634,7 @@ function RelatedWarsNav({ war }: { war: War }) {
     <div className="mt-4 rounded-lg p-3" style={{ background: '#f8fafc', border: '1px solid #e2e8f0' }}>
       {causes.length > 0 && (
         <div className="mb-2.5">
-          <div style={{ fontSize: 9, fontWeight: 700, color: '#0f766e', letterSpacing: '0.08em', marginBottom: 6 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#0f766e', letterSpacing: '0.08em', marginBottom: 6 }}>
             📚 先に読むと理解が深まる（この戦争の原因となった戦争）
           </div>
           <div className="flex flex-wrap gap-1.5">
@@ -644,7 +644,7 @@ function RelatedWarsNav({ war }: { war: War }) {
       )}
       {influences.length > 0 && (
         <div>
-          <div style={{ fontSize: 9, fontWeight: 700, color: '#9a3412', letterSpacing: '0.08em', marginBottom: 6 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#9a3412', letterSpacing: '0.08em', marginBottom: 6 }}>
             ➡️ 次に読む（この戦争が引き起こした戦争）
           </div>
           <div className="flex flex-wrap gap-1.5">
@@ -683,7 +683,7 @@ function NarratorButton({ text }: { text: string }) {
       title={speaking ? '読み上げを停止' : '音声で読み上げ'}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 4,
-        padding: '4px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600,
+        padding: '4px 8px', borderRadius: 4, fontSize: 12, fontWeight: 600,
         background: speaking ? 'rgba(34,197,94,0.2)' : 'rgba(148,163,184,0.1)',
         color: speaking ? '#4ade80' : '#94a3b8',
         border: `1px solid ${speaking ? 'rgba(74,222,128,0.4)' : 'rgba(148,163,184,0.2)'}`,
@@ -713,7 +713,7 @@ function AskClaudeButton({ war }: { war: War }) {
       title="質問テンプレートをコピーしてClaudeを開く"
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 5,
-        padding: '4px 10px', borderRadius: 4, fontSize: 10, fontWeight: 600,
+        padding: '4px 10px', borderRadius: 4, fontSize: 12, fontWeight: 600,
         background: copied ? '#cc785c' : 'rgba(204,120,92,0.15)',
         color: copied ? '#fff' : '#cc785c',
         border: `1px solid ${copied ? '#cc785c' : 'rgba(204,120,92,0.45)'}`,
@@ -789,7 +789,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
           <>
             {/* モバイル：1行目に閉じるボタン+メタ、2行目に戦争名、3行目にCOTEN */}
             <div className="flex items-center justify-between mb-1.5">
-              <div className="wd-war-meta" style={{ fontSize: 11, color: '#9a8f7a', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div className="wd-war-meta" style={{ fontSize: 13, color: '#9a8f7a', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {war.year} – {war.endYear} ／ {war.theater}
               </div>
               <div style={{ display: 'flex', gap: 6, flexShrink: 0, marginLeft: 8 }}>
@@ -797,7 +797,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
                 <AskClaudeButton war={war} />
                 <button onClick={onClose}
                   style={{
-                    fontSize: 12, padding: '6px 12px', borderRadius: 4,
+                    fontSize: 14, padding: '6px 12px', borderRadius: 4,
                     background: 'rgba(255,255,255,0.08)', color: '#f0d5c8',
                     border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer',
                     letterSpacing: '0.04em', flexShrink: 0,
@@ -806,7 +806,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
                 </button>
               </div>
             </div>
-            <div className="font-serif wd-war-title" style={{ fontSize: 17, color: '#faf7f0', fontWeight: 600, lineHeight: 1.35 }}>
+            <div className="font-serif wd-war-title" style={{ fontSize: 20, color: '#faf7f0', fontWeight: 600, lineHeight: 1.35 }}>
               {war.name}
             </div>
             {war.cotenLinks && war.cotenLinks.length > 0 && (
@@ -815,7 +815,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
                   <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
                     style={{
                       display: 'inline-flex', alignItems: 'center', gap: 4,
-                      padding: '4px 10px', borderRadius: 12, fontSize: 11, fontWeight: 600,
+                      padding: '4px 10px', borderRadius: 12, fontSize: 13, fontWeight: 600,
                       background: 'linear-gradient(135deg, #e8611a, #c84b0a)',
                       color: 'white', textDecoration: 'none', letterSpacing: '0.03em',
                       boxShadow: '0 1px 3px rgba(232,97,26,0.4)',
@@ -833,10 +833,10 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
             <div className="flex items-center gap-3">
               <div>
                 <div className="flex items-baseline gap-2">
-                  <span className="font-serif" style={{ fontSize: 15, color: '#faf7f0', fontWeight: 600 }}>{war.name}</span>
-                  <span style={{ fontSize: 10, color: '#9a8f7a' }}>{war.year} – {war.endYear}</span>
+                  <span className="font-serif" style={{ fontSize: 18, color: '#faf7f0', fontWeight: 600 }}>{war.name}</span>
+                  <span style={{ fontSize: 12, color: '#9a8f7a' }}>{war.year} – {war.endYear}</span>
                 </div>
-                <span style={{ fontSize: 9, color: '#7a6e5c', letterSpacing: '0.05em' }}>{war.theater}</span>
+                <span style={{ fontSize: 11, color: '#7a6e5c', letterSpacing: '0.05em' }}>{war.theater}</span>
               </div>
               {war.cotenLinks && war.cotenLinks.length > 0 && (
                 <div className="flex gap-1.5 flex-wrap">
@@ -844,7 +844,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
                     <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
                       style={{
                         display: 'inline-flex', alignItems: 'center', gap: 4,
-                        padding: '3px 8px', borderRadius: 12, fontSize: 9, fontWeight: 600,
+                        padding: '3px 8px', borderRadius: 12, fontSize: 11, fontWeight: 600,
                         background: 'linear-gradient(135deg, #e8611a, #c84b0a)',
                         color: 'white', textDecoration: 'none', letterSpacing: '0.03em',
                         boxShadow: '0 1px 3px rgba(232,97,26,0.4)',
@@ -862,7 +862,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
               <AskClaudeButton war={war} />
               <button onClick={onClose}
                 style={{
-                  fontSize: 10, padding: '3px 10px', borderRadius: 4,
+                  fontSize: 12, padding: '3px 10px', borderRadius: 4,
                   background: 'rgba(255,255,255,0.08)', color: '#c8bfb0',
                   border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer',
                   letterSpacing: '0.04em',
@@ -899,7 +899,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
               <button key={t.id} onClick={() => setActiveTab(t.id)}
                 style={{
                   padding: isMobile ? '10px 12px' : '8px 16px',
-                  fontSize: isMobile ? 11 : 10,
+                  fontSize: isMobile ? 13 : 12,
                   cursor: 'pointer',
                   fontFamily: 'inherit', letterSpacing: '0.04em',
                   background: isActive ? t.accent : (isPinned ? `${t.accent}25` : 'transparent'),
@@ -977,7 +977,7 @@ export default function DetailDrawer({ war, isOpen, onClose, content, isLoading,
             />
           </>
         ) : (
-          <p style={{ fontSize: 12, color: '#9ca3af' }}>コンテンツを読み込んでいます…</p>
+          <p style={{ fontSize: 14, color: '#9ca3af' }}>コンテンツを読み込んでいます…</p>
         )}
       </div>
     </div>

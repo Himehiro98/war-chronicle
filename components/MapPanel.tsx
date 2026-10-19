@@ -38,10 +38,10 @@ export default function MapPanel({ selectedWar }: Props) {
       <div className="flex-shrink-0 px-3.5 py-2.5 flex items-start justify-between"
         style={{ borderBottom: '1px solid rgba(42,34,24,0.15)', background: '#e8e0cc' }}>
         <div>
-          <div className="font-serif text-ink" style={{ fontSize: 13 }}>
+          <div className="font-serif text-ink" style={{ fontSize: 16 }}>
             {selectedWar ? selectedWar.name : '戦争を選択してください'}
           </div>
-          <div className="text-ink-light mt-0.5" style={{ fontSize: 10 }}>
+          <div className="text-ink-light mt-0.5" style={{ fontSize: 12 }}>
             {selectedWar
               ? `${selectedWar.year}–${selectedWar.endYear} ／ ${selectedWar.theater}`
               : 'タイムラインのカードをクリック'}
@@ -51,7 +51,7 @@ export default function MapPanel({ selectedWar }: Props) {
           <button onClick={resetZoom}
             title="ズームリセット"
             style={{
-              fontSize: 9, padding: '2px 7px', borderRadius: 3, cursor: 'pointer',
+              fontSize: 11, padding: '2px 7px', borderRadius: 3, cursor: 'pointer',
               background: '#8b3a1e', color: 'white', border: 'none',
               fontFamily: 'inherit', letterSpacing: '0.04em', flexShrink: 0,
             }}>
@@ -65,11 +65,11 @@ export default function MapPanel({ selectedWar }: Props) {
         onWheel={handleWheel}>
         <div style={{ position: 'absolute', bottom: 8, right: 8, zIndex: 5, display: 'flex', flexDirection: 'column', gap: 2 }}>
           <button onClick={() => setZoom(z => Math.min(12, z * 1.3))}
-            style={{ width: 24, height: 24, borderRadius: 4, border: '1px solid rgba(42,34,24,0.3)', background: '#f5f0e8', cursor: 'pointer', fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+            style={{ width: 24, height: 24, borderRadius: 4, border: '1px solid rgba(42,34,24,0.3)', background: '#f5f0e8', cursor: 'pointer', fontSize: 17, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
           <button onClick={() => setZoom(z => Math.max(1, z / 1.3))}
-            style={{ width: 24, height: 24, borderRadius: 4, border: '1px solid rgba(42,34,24,0.3)', background: '#f5f0e8', cursor: 'pointer', fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
+            style={{ width: 24, height: 24, borderRadius: 4, border: '1px solid rgba(42,34,24,0.3)', background: '#f5f0e8', cursor: 'pointer', fontSize: 17, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
         </div>
-        <div style={{ position: 'absolute', bottom: 8, left: 8, zIndex: 5, fontSize: 8, color: 'rgba(42,34,24,0.4)', pointerEvents: 'none' }}>
+        <div style={{ position: 'absolute', bottom: 8, left: 8, zIndex: 5, fontSize: 11, color: 'rgba(42,34,24,0.4)', pointerEvents: 'none' }}>
           スクロールで拡大・ドラッグで移動
         </div>
         <ComposableMap
@@ -138,7 +138,7 @@ export default function MapPanel({ selectedWar }: Props) {
         ].map((l) => (
           <div key={l.label} className="flex items-center gap-1.5">
             <div className="w-2.5 h-2.5 rounded-sm" style={{ background: l.color }} />
-            <span className="text-ink-light" style={{ fontSize: 9, letterSpacing: '0.05em' }}>{l.label}</span>
+            <span className="text-ink-light" style={{ fontSize: 11, letterSpacing: '0.05em' }}>{l.label}</span>
           </div>
         ))}
       </div>

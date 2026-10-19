@@ -35,7 +35,7 @@ export default function TagCloud() {
                 background: isActive ? t.accent : 'white',
                 color: isActive ? 'white' : '#1e293b',
                 border: `1px solid ${isActive ? t.accent : 'rgba(15,23,42,0.12)'}`,
-                fontSize: 12, fontWeight: 600, letterSpacing: '0.02em',
+                fontSize: 14, fontWeight: 600, letterSpacing: '0.02em',
                 cursor: 'pointer', transition: 'all 0.15s',
                 fontFamily: 'inherit',
                 display: 'flex', alignItems: 'center', gap: 6,
@@ -46,7 +46,7 @@ export default function TagCloud() {
               <span>{t.emoji}</span>
               <span>{tag}</span>
               <span style={{
-                fontSize: 10, padding: '1px 6px', borderRadius: 8,
+                fontSize: 12, padding: '1px 6px', borderRadius: 8,
                 background: isActive ? 'rgba(255,255,255,0.2)' : 'rgba(15,23,42,0.08)',
                 color: isActive ? 'white' : '#475569',
                 fontWeight: 700,
@@ -67,12 +67,12 @@ export default function TagCloud() {
           {/* タグ解説 */}
           <div style={{ marginBottom: 18 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-              <span style={{ fontSize: 24 }}>{TAGS[selected].emoji}</span>
-              <h3 style={{ fontSize: 18, fontWeight: 700, color: '#0f172a', fontFamily: 'serif' }}>
+              <span style={{ fontSize: 28 }}>{TAGS[selected].emoji}</span>
+              <h3 style={{ fontSize: 22, fontWeight: 700, color: '#0f172a', fontFamily: 'serif' }}>
                 {selected}
               </h3>
             </div>
-            <p style={{ fontSize: 12, color: '#475569', lineHeight: 1.7, marginBottom: 14, fontStyle: 'italic' }}>
+            <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.7, marginBottom: 14, fontStyle: 'italic' }}>
               {TAGS[selected].shortDesc}
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
@@ -86,10 +86,10 @@ export default function TagCloud() {
                   borderLeft: `3px solid ${b.color}`,
                 }}>
                   <div style={{
-                    fontSize: 9, fontWeight: 700, color: '#64748b',
+                    fontSize: 11, fontWeight: 700, color: '#64748b',
                     letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6,
                   }}>{b.label}</div>
-                  <div style={{ fontSize: 11, lineHeight: 1.65, color: '#1e293b' }}>{b.body}</div>
+                  <div style={{ fontSize: 13, lineHeight: 1.65, color: '#1e293b' }}>{b.body}</div>
                 </div>
               ))}
             </div>
@@ -99,7 +99,7 @@ export default function TagCloud() {
           {matched.length > 0 && (
             <div>
               <div style={{
-                fontSize: 10, fontWeight: 700, color: '#64748b',
+                fontSize: 12, fontWeight: 700, color: '#64748b',
                 letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 10,
               }}>
                 このパターンを示す戦争（{matched.length}件）
@@ -107,7 +107,7 @@ export default function TagCloud() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {matched.map((w) => (
                   <a key={w.id} href={`/explore?war=${w.id}`} style={{
-                    fontSize: 11, padding: '5px 10px', borderRadius: 4,
+                    fontSize: 13, padding: '5px 10px', borderRadius: 4,
                     background: '#f1f5f9', color: '#1e293b',
                     border: '1px solid rgba(15,23,42,0.08)',
                     textDecoration: 'none', transition: 'all 0.15s',
@@ -125,7 +125,7 @@ export default function TagCloud() {
       )}
 
       {!selected && (
-        <p style={{ fontSize: 11, color: '#64748b', textAlign: 'center', padding: '20px 0' }}>
+        <p style={{ fontSize: 13, color: '#64748b', textAlign: 'center', padding: '20px 0' }}>
           ↑ タグをクリックすると、構造解説と該当戦争一覧が表示されるばい
         </p>
       )}

@@ -310,33 +310,22 @@ export default function LearnPathPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900" style={{ scrollBehavior: 'smooth' }}>
-      {/* ───────── Header ───────── */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-slate-200">
-        <div className="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link
-            href="/"
-            className="font-serif text-lg tracking-tight text-slate-900 hover:text-slate-600 transition-colors"
-          >
-            War Chronicle
+      {/* ───────── 進捗バー ───────── */}
+      <div className="sticky z-40 bg-white/95 backdrop-blur border-b border-slate-200" style={{ top: 'var(--header-h)' }}>
+        <div className="max-w-5xl mx-auto px-6 py-2 flex items-center justify-between gap-4">
+          <Link href="/learn" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+            ← 学習パス一覧
           </Link>
-          <div className="flex items-center gap-4">
-            {/* 進捗バー */}
-            <div className="hidden sm:flex items-center gap-2">
-              <div className="w-28 h-2 rounded-full bg-slate-200 overflow-hidden">
-                <div className="h-full rounded-full transition-all duration-500"
-                  style={{ width: `${total > 0 ? (passedCount / total) * 100 : 0}%`, background: accent }} />
-              </div>
-              <span className="text-xs text-slate-500 font-mono">{passedCount}/{total}</span>
+          <div className="flex items-center gap-2" aria-label={`進捗 ${passedCount}/${total}`}>
+            <span className="text-xs text-slate-500">理解度チェック</span>
+            <div className="w-28 h-2 rounded-full bg-slate-200 overflow-hidden">
+              <div className="h-full rounded-full transition-all duration-500"
+                style={{ width: `${total > 0 ? (passedCount / total) * 100 : 0}%`, background: accent }} />
             </div>
-            <Link
-              href="/#learning-paths"
-              className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
-            >
-              ← パス一覧
-            </Link>
+            <span className="text-xs text-slate-500 font-mono">{passedCount}/{total}</span>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* ───────── Hero ───────── */}
       <section
@@ -628,7 +617,7 @@ export default function LearnPathPage() {
             </Link>
 
             <Link
-              href="/#learning-paths"
+              href="/learn"
               className="group block p-6 rounded-lg hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 border"
               style={{
                 background: `${accent}08`,

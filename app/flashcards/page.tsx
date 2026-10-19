@@ -335,91 +335,6 @@ export default function FlashcardsPage() {
 
   return (
     <div style={{ background: C.bg, minHeight: '100vh', color: C.text }}>
-      {/* ── ヘッダー ── */}
-      <header
-        style={{
-          background: C.bg,
-          borderBottom: `1px solid ${C.border}`,
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1280,
-            margin: '0 auto',
-            padding: '12px 32px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: 8,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <Link
-              href="/"
-              style={{
-                textDecoration: 'none',
-                color: C.textSub,
-                fontSize: 13,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 4,
-              }}
-            >
-              ← ホーム
-            </Link>
-            <Link
-              href="/"
-              style={{
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'baseline',
-                gap: 8,
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 18,
-                  fontWeight: 700,
-                  color: C.text,
-                  letterSpacing: '0.02em',
-                }}
-              >
-                War Chronicle
-              </span>
-              <span
-                style={{ fontSize: 9, color: '#64748b', letterSpacing: '0.15em' }}
-              >
-                多角的戦争史データベース
-              </span>
-            </Link>
-          </div>
-          <nav style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-            {[
-              { label: '教訓一覧', href: '/lessons' },
-              { label: '全文検索', href: '/search' },
-            ].map((n) => (
-              <Link
-                key={n.label}
-                href={n.href}
-                style={{
-                  padding: '6px 14px',
-                  borderRadius: 4,
-                  fontSize: 12,
-                  color: C.textSub,
-                  textDecoration: 'none',
-                  border: `1px solid ${C.border}`,
-                }}
-              >
-                {n.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
 
       {/* ── メインコンテンツ ── */}
       <main style={{ maxWidth: 860, margin: '0 auto', padding: '32px 20px' }}>
@@ -427,7 +342,7 @@ export default function FlashcardsPage() {
         <div style={{ marginBottom: 28, textAlign: 'center' }}>
           <h1
             style={{
-              fontSize: 26,
+              fontSize: 30,
               fontWeight: 700,
               color: C.text,
               margin: 0,
@@ -436,7 +351,7 @@ export default function FlashcardsPage() {
           >
             🃏 フラッシュカード学習
           </h1>
-          <p style={{ color: C.textSub, fontSize: 13, margin: 0 }}>
+          <p style={{ color: C.textSub, fontSize: 16, margin: 0 }}>
             スペース：答えを見る　← →：移動　1：わかった　2：もう一度
           </p>
         </div>
@@ -447,7 +362,7 @@ export default function FlashcardsPage() {
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              fontSize: 12,
+              fontSize: 14,
               color: C.textSub,
               marginBottom: 6,
             }}
@@ -500,7 +415,7 @@ export default function FlashcardsPage() {
                   background:
                     filter === key ? 'rgba(217,119,6,0.15)' : 'transparent',
                   color: filter === key ? C.amber : C.textSub,
-                  fontSize: 13,
+                  fontSize: 16,
                   cursor: 'pointer',
                   fontWeight: filter === key ? 600 : 400,
                 }}
@@ -521,7 +436,7 @@ export default function FlashcardsPage() {
                 background:
                   eraFilter === 'all' ? 'rgba(125,211,252,0.12)' : 'transparent',
                 color: eraFilter === 'all' ? '#7dd3fc' : C.textSub,
-                fontSize: 12,
+                fontSize: 14,
                 cursor: 'pointer',
               }}
             >
@@ -542,7 +457,7 @@ export default function FlashcardsPage() {
                       ? 'rgba(125,211,252,0.12)'
                       : 'transparent',
                   color: eraFilter === era ? '#7dd3fc' : C.textSub,
-                  fontSize: 12,
+                  fontSize: 14,
                   cursor: 'pointer',
                 }}
               >
@@ -563,7 +478,7 @@ export default function FlashcardsPage() {
               color: C.textSub,
             }}
           >
-            <div style={{ fontSize: 40, marginBottom: 12 }}>📭</div>
+            <div style={{ fontSize: 46, marginBottom: 12 }}>📭</div>
             <p style={{ margin: 0 }}>
               このフィルターに該当するカードがないばい
             </p>
@@ -590,12 +505,12 @@ export default function FlashcardsPage() {
                   background: 'transparent',
                   color: currentIndex === 0 ? '#334155' : C.textSub,
                   cursor: currentIndex === 0 ? 'not-allowed' : 'pointer',
-                  fontSize: 16,
+                  fontSize: 19,
                 }}
               >
                 ←
               </button>
-              <span style={{ color: C.textSub, fontSize: 14 }}>
+              <span style={{ color: C.textSub, fontSize: 17 }}>
                 {currentIndex + 1} / {filteredCards.length}
               </span>
               <button
@@ -614,7 +529,7 @@ export default function FlashcardsPage() {
                     currentIndex === filteredCards.length - 1
                       ? 'not-allowed'
                       : 'pointer',
-                  fontSize: 16,
+                  fontSize: 19,
                 }}
               >
                 →
@@ -645,7 +560,7 @@ export default function FlashcardsPage() {
               >
                 <span
                   style={{
-                    fontSize: 11,
+                    fontSize: 13,
                     padding: '3px 10px',
                     borderRadius: 12,
                     background: 'rgba(217,119,6,0.15)',
@@ -657,7 +572,7 @@ export default function FlashcardsPage() {
                 </span>
                 <span
                   style={{
-                    fontSize: 11,
+                    fontSize: 13,
                     padding: '3px 10px',
                     borderRadius: 12,
                     background: 'rgba(125,211,252,0.08)',
@@ -673,7 +588,7 @@ export default function FlashcardsPage() {
                   return (
                     <span
                       style={{
-                        fontSize: 11,
+                        fontSize: 13,
                         padding: '3px 10px',
                         borderRadius: 12,
                         background: p.known
@@ -696,7 +611,7 @@ export default function FlashcardsPage() {
               {/* 戦争名 */}
               <div
                 style={{
-                  fontSize: 13,
+                  fontSize: 16,
                   color: C.textSub,
                   borderLeft: `3px solid ${C.amber}`,
                   paddingLeft: 12,
@@ -708,7 +623,7 @@ export default function FlashcardsPage() {
               {/* 問題文 */}
               <div
                 style={{
-                  fontSize: 20,
+                  fontSize: 24,
                   fontWeight: 600,
                   color: C.text,
                   lineHeight: 1.6,
@@ -728,7 +643,7 @@ export default function FlashcardsPage() {
                     border: `1px solid ${C.amber}`,
                     background: 'rgba(217,119,6,0.1)',
                     color: C.amber,
-                    fontSize: 15,
+                    fontSize: 18,
                     fontWeight: 600,
                     cursor: 'pointer',
                     alignSelf: 'center',
@@ -759,7 +674,7 @@ export default function FlashcardsPage() {
                   >
                     <div
                       style={{
-                        fontSize: 11,
+                        fontSize: 13,
                         color: C.green,
                         marginBottom: 8,
                         fontWeight: 600,
@@ -770,7 +685,7 @@ export default function FlashcardsPage() {
                     </div>
                     <div
                       style={{
-                        fontSize: 17,
+                        fontSize: 20,
                         color: C.text,
                         lineHeight: 1.7,
                         fontWeight: 500,
@@ -798,7 +713,7 @@ export default function FlashcardsPage() {
                         border: `1px solid ${C.green}`,
                         background: 'rgba(34,197,94,0.12)',
                         color: C.green,
-                        fontSize: 15,
+                        fontSize: 18,
                         fontWeight: 600,
                         cursor: 'pointer',
                         transition: 'background 0.2s',
@@ -826,7 +741,7 @@ export default function FlashcardsPage() {
                         border: `1px solid ${C.amber}`,
                         background: 'rgba(217,119,6,0.12)',
                         color: C.amber,
-                        fontSize: 15,
+                        fontSize: 18,
                         fontWeight: 600,
                         cursor: 'pointer',
                         transition: 'background 0.2s',
@@ -869,7 +784,7 @@ export default function FlashcardsPage() {
               border: `1px solid ${C.border}`,
               background: 'transparent',
               color: C.textSub,
-              fontSize: 13,
+              fontSize: 16,
               cursor: 'pointer',
             }}
           >
@@ -883,7 +798,7 @@ export default function FlashcardsPage() {
               border: `1px solid ${resetConfirm ? C.red : C.border}`,
               background: resetConfirm ? 'rgba(239,68,68,0.12)' : 'transparent',
               color: resetConfirm ? C.red : C.textSub,
-              fontSize: 13,
+              fontSize: 16,
               cursor: 'pointer',
             }}
           >
@@ -898,7 +813,7 @@ export default function FlashcardsPage() {
                 border: `1px solid ${C.border}`,
                 background: 'transparent',
                 color: C.textSub,
-                fontSize: 13,
+                fontSize: 16,
                 cursor: 'pointer',
               }}
             >
@@ -943,8 +858,8 @@ function StatBadge({
 }) {
   return (
     <div style={{ textAlign: 'center', minWidth: 72 }}>
-      <div style={{ fontSize: 22, fontWeight: 700, color }}>{count}</div>
-      <div style={{ fontSize: 11, color: '#64748b', marginTop: 2 }}>{label}</div>
+      <div style={{ fontSize: 25, fontWeight: 700, color }}>{count}</div>
+      <div style={{ fontSize: 13, color: '#64748b', marginTop: 2 }}>{label}</div>
     </div>
   );
 }

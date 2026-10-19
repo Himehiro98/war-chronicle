@@ -79,7 +79,7 @@ function getRiskLevel(score: number) {
 function TagChip({ tag, highlight }: { tag: string; highlight?: boolean }) {
   return (
     <span style={{
-      padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600,
+      padding: '2px 8px', borderRadius: 4, fontSize: 13, fontWeight: 600,
       background: highlight ? 'rgba(139,58,30,0.35)' : 'rgba(248,250,252,0.08)',
       color: highlight ? '#fca5a5' : '#94a3b8',
       border: `1px solid ${highlight ? 'rgba(239,68,68,0.4)' : 'rgba(248,250,252,0.1)'}`,
@@ -149,54 +149,13 @@ export default function RiskCheckPage() {
   return (
     <div style={{ background: C.bg, minHeight: '100vh', color: C.text }}>
 
-      {/* ── ヘッダー ── */}
-      <header style={{
-        background: C.bg,
-        borderBottom: `1px solid ${C.border}`,
-        position: 'sticky', top: 0, zIndex: 50,
-      }}>
-        <div style={{
-          maxWidth: 1100, margin: '0 auto',
-          padding: '12px 24px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          flexWrap: 'wrap' as const, gap: 8,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <Link href="/" style={{
-              textDecoration: 'none', fontSize: 13, color: '#94a3b8',
-              display: 'flex', alignItems: 'center', gap: 6,
-            }}>
-              ← ホーム
-            </Link>
-            <Link href="/" style={{ textDecoration: 'none' }}>
-              <span style={{ fontSize: 17, fontWeight: 700, color: C.text, letterSpacing: '0.02em' }}>
-                War Chronicle
-              </span>
-            </Link>
-          </div>
-          <nav style={{ display: 'flex', gap: 4, flexWrap: 'wrap' as const }}>
-            {[
-              { label: '教訓一覧', href: '/lessons' },
-              { label: '全文検索', href: '/search' },
-              { label: '診断',     href: '/diagnose' },
-            ].map(n => (
-              <Link key={n.label} href={n.href} style={{
-                padding: '5px 13px', borderRadius: 4, fontSize: 12,
-                color: '#cbd5e1', textDecoration: 'none', fontWeight: 500,
-              }}>
-                {n.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
 
       {/* ── タイトル ── */}
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 24px 0' }}>
-        <h1 style={{ fontSize: 26, fontWeight: 800, color: C.text, marginBottom: 8, lineHeight: 1.3 }}>
+        <h1 style={{ fontSize: 30, fontWeight: 800, color: C.text, marginBottom: 8, lineHeight: 1.3 }}>
           🔍 戦争構造チェッカー — 危機はどう始まるか
         </h1>
-        <p style={{ fontSize: 14, color: C.textSub, maxWidth: 640, lineHeight: 1.7 }}>
+        <p style={{ fontSize: 17, color: C.textSub, maxWidth: 640, lineHeight: 1.7 }}>
           現在の状況に当てはまる条件にチェックを入れると、歴史的パターンと照合します
         </p>
       </div>
@@ -214,7 +173,7 @@ export default function RiskCheckPage() {
               <div style={{
                 padding: '12px 18px',
                 borderBottom: `1px solid ${C.border}`,
-                fontSize: 13, fontWeight: 700, color: C.text,
+                fontSize: 16, fontWeight: 700, color: C.text,
               }}>
                 {cat.emoji} {cat.title}
               </div>
@@ -236,11 +195,11 @@ export default function RiskCheckPage() {
                         style={{ marginTop: 2, accentColor: '#ef4444', flexShrink: 0, width: 16, height: 16 }}
                       />
                       <div>
-                        <span style={{ fontSize: 13, color: isChecked ? '#fca5a5' : C.text, lineHeight: 1.5 }}>
+                        <span style={{ fontSize: 16, color: isChecked ? '#fca5a5' : C.text, lineHeight: 1.5 }}>
                           {item.label}
                         </span>
                         <span style={{
-                          marginLeft: 8, fontSize: 10, color: '#64748b',
+                          marginLeft: 8, fontSize: 12, color: '#64748b',
                           fontStyle: 'italic',
                         }}>
                           （{item.tag}）
@@ -259,7 +218,7 @@ export default function RiskCheckPage() {
               onClick={() => setShowResults(true)}
               disabled={checked.size === 0}
               style={{
-                padding: '11px 28px', borderRadius: 6, fontSize: 14, fontWeight: 700,
+                padding: '11px 28px', borderRadius: 6, fontSize: 17, fontWeight: 700,
                 background: checked.size > 0 ? '#8b3a1e' : '#374151',
                 color: checked.size > 0 ? '#fff' : '#6b7280',
                 border: 'none', cursor: checked.size > 0 ? 'pointer' : 'not-allowed',
@@ -271,7 +230,7 @@ export default function RiskCheckPage() {
             <button
               onClick={reset}
               style={{
-                padding: '11px 20px', borderRadius: 6, fontSize: 13,
+                padding: '11px 20px', borderRadius: 6, fontSize: 16,
                 background: 'transparent', color: C.textSub,
                 border: `1px solid ${C.border}`, cursor: 'pointer',
               }}
@@ -289,7 +248,7 @@ export default function RiskCheckPage() {
             background: C.panel, border: `1px solid ${C.border}`,
             borderRadius: 10, padding: 24, marginBottom: 16,
           }}>
-            <div style={{ fontSize: 11, color: C.textSub, letterSpacing: '0.1em', marginBottom: 12 }}>
+            <div style={{ fontSize: 13, color: C.textSub, letterSpacing: '0.1em', marginBottom: 12 }}>
               リスクスコア
             </div>
             {/* バーゲージ */}
@@ -305,15 +264,15 @@ export default function RiskCheckPage() {
               }} />
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-              <span style={{ fontSize: 44, fontWeight: 800, color: risk.color, lineHeight: 1 }}>
+              <span style={{ fontSize: 51, fontWeight: 800, color: risk.color, lineHeight: 1 }}>
                 {score}
               </span>
-              <span style={{ fontSize: 16, color: C.textSub }}>%</span>
+              <span style={{ fontSize: 19, color: C.textSub }}>%</span>
             </div>
             <div style={{
               marginTop: 10, padding: '8px 14px', borderRadius: 6,
               background: risk.bg, border: `1px solid ${risk.color}40`,
-              fontSize: 13, fontWeight: 600, color: risk.color,
+              fontSize: 16, fontWeight: 600, color: risk.color,
             }}>
               {risk.emoji} {risk.label}
             </div>
@@ -329,15 +288,15 @@ export default function RiskCheckPage() {
                   border: '1px solid rgba(239,68,68,0.3)',
                   borderRadius: 10, padding: 18, marginBottom: 16,
                 }}>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: '#fca5a5', marginBottom: 12 }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#fca5a5', marginBottom: 12 }}>
                     ⚠️ 最も危険な条件
                   </div>
                   {topDangers.map(d => (
                     <div key={d.id} style={{ marginBottom: 12 }}>
-                      <div style={{ fontSize: 12, fontWeight: 600, color: '#fca5a5', marginBottom: 4 }}>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: '#fca5a5', marginBottom: 4 }}>
                         {d.tag}
                       </div>
-                      <p style={{ fontSize: 12, color: '#fecaca', lineHeight: 1.6, margin: 0 }}>
+                      <p style={{ fontSize: 14, color: '#fecaca', lineHeight: 1.6, margin: 0 }}>
                         {DANGER_EXPLANATIONS[d.tag] ?? '歴史的に繰り返された危険な構造条件です。'}
                       </p>
                     </div>
@@ -348,7 +307,7 @@ export default function RiskCheckPage() {
               {/* マッチした歴史的戦争 */}
               {matchedWars.length > 0 && (
                 <div style={{ marginBottom: 16 }}>
-                  <div style={{ fontSize: 11, color: C.textSub, letterSpacing: '0.1em', marginBottom: 10 }}>
+                  <div style={{ fontSize: 13, color: C.textSub, letterSpacing: '0.1em', marginBottom: 10 }}>
                     🏛️ 歴史的パターンとの照合（上位{matchedWars.length}件）
                   </div>
                   {matchedWars.map(({ war, matchCount, matchTags }) => (
@@ -358,17 +317,17 @@ export default function RiskCheckPage() {
                     }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
                         <div>
-                          <div style={{ fontSize: 13, fontWeight: 700, color: C.text }}>
+                          <div style={{ fontSize: 16, fontWeight: 700, color: C.text }}>
                             {war.name}
                           </div>
-                          <div style={{ fontSize: 11, color: C.textSub, marginTop: 2 }}>
+                          <div style={{ fontSize: 13, color: C.textSub, marginTop: 2 }}>
                             {war.year > 0 ? war.year : `BC${Math.abs(war.year)}`}–{war.endYear > 0 ? war.endYear : `BC${Math.abs(war.endYear)}`} | {war.theater}
                           </div>
                         </div>
                         <span style={{
                           padding: '3px 9px', borderRadius: 4,
                           background: 'rgba(139,58,30,0.3)',
-                          color: '#fca5a5', fontSize: 12, fontWeight: 700,
+                          color: '#fca5a5', fontSize: 14, fontWeight: 700,
                           flexShrink: 0, marginLeft: 8,
                         }}>
                           {matchCount}条件一致
@@ -381,7 +340,7 @@ export default function RiskCheckPage() {
                         ))}
                       </div>
                       <Link href={`/explore?war=${war.id}`} style={{
-                        fontSize: 11, color: '#64748b', textDecoration: 'none',
+                        fontSize: 13, color: '#64748b', textDecoration: 'none',
                       }}>
                         詳細を見る →
                       </Link>
@@ -396,16 +355,16 @@ export default function RiskCheckPage() {
                   background: C.panel, border: `1px solid ${C.border}`,
                   borderRadius: 10, padding: 18,
                 }}>
-                  <div style={{ fontSize: 11, color: C.textSub, letterSpacing: '0.1em', marginBottom: 10 }}>
+                  <div style={{ fontSize: 13, color: C.textSub, letterSpacing: '0.1em', marginBottom: 10 }}>
                     💡 最もパターンが近い戦争からの教訓
                   </div>
-                  <div style={{ fontSize: 12, color: '#cbd5e1', lineHeight: 1.7 }}>
+                  <div style={{ fontSize: 14, color: '#cbd5e1', lineHeight: 1.7 }}>
                     {topLesson.modernLessons.replace(/<[^>]*>/g, '').substring(0, 300)}
                     {topLesson.modernLessons.length > 300 && '…'}
                   </div>
                   <Link href={`/explore?war=${matchedWars[0].war.id}`} style={{
                     display: 'inline-block', marginTop: 10,
-                    fontSize: 11, color: '#8b3a1e', textDecoration: 'none', fontWeight: 600,
+                    fontSize: 13, color: '#8b3a1e', textDecoration: 'none', fontWeight: 600,
                   }}>
                     全教訓を読む →
                   </Link>
@@ -416,7 +375,7 @@ export default function RiskCheckPage() {
                 <div style={{
                   background: C.panel, border: `1px solid ${C.border}`,
                   borderRadius: 10, padding: 24, textAlign: 'center' as const,
-                  color: C.textSub, fontSize: 13,
+                  color: C.textSub, fontSize: 16,
                 }}>
                   選択した条件に合致する歴史的戦争が見つかりませんでした
                 </div>
@@ -428,7 +387,7 @@ export default function RiskCheckPage() {
             <div style={{
               background: C.panel, border: `1px solid ${C.border}`,
               borderRadius: 10, padding: 24, color: C.textSub,
-              fontSize: 13, lineHeight: 1.7,
+              fontSize: 16, lineHeight: 1.7,
             }}>
               <p style={{ margin: '0 0 8px' }}>← 左のチェックリストで当てはまる条件を選んでください。</p>
               <p style={{ margin: 0 }}>チェック後に「分析する」を押すと、歴史的パターンと照合します。</p>

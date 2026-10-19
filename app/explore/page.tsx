@@ -98,55 +98,11 @@ export default function Home() {
   const content = selectedWar ? (WAR_CONTENT[selectedWar.id] ?? null) : null;
 
   return (
-    <div className="flex flex-col h-screen" style={{ background: '#f1f5f9', minHeight: 600, maxWidth: '100vw', overflowX: 'hidden' }}>
+    <div className="flex flex-col" style={{ height: 'calc(100dvh - var(--header-h))', background: '#f1f5f9', minHeight: 520, maxWidth: '100vw', overflowX: 'hidden' }}>
 
       {/* ── ヘッダー ── */}
       <header className="flex-shrink-0"
         style={{ background: '#0f172a', borderBottom: '2px solid #1e40af', maxWidth: '100vw' }}>
-        {/* 上段：ロゴ + ページナビ */}
-        <div className="flex items-center justify-between px-5 py-2 flex-wrap gap-y-1"
-          style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-          <div className="flex items-baseline gap-2.5">
-            <Link href="/" style={{
-              fontSize: 11, color: '#94a3b8', textDecoration: 'none',
-              padding: '3px 8px', borderRadius: 3, marginRight: 4,
-              border: '1px solid rgba(148,163,184,0.2)', transition: 'all 0.15s',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.color = '#f8fafc'; e.currentTarget.style.borderColor = 'rgba(248,250,252,0.4)'; }}
-            onMouseLeave={e => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.borderColor = 'rgba(148,163,184,0.2)'; }}>
-              ← ホーム
-            </Link>
-            <span className="font-serif" style={{ fontSize: 17, color: '#f8fafc', letterSpacing: '0.03em' }}>
-              War Chronicle
-            </span>
-            <span style={{ fontSize: 9, color: '#64748b', letterSpacing: '0.1em' }}>探索モード</span>
-          </div>
-          {/* ページナビ（リンク） */}
-          <nav className="flex gap-1 flex-wrap justify-end">
-            {[
-              { label: '通史',       href: '/chronicle',       emoji: '📖' },
-              { label: 'パターン進化', href: '/patterns',      emoji: '🧬' },
-              { label: '因果の大河', href: '/chains',          emoji: '🌊' },
-              { label: '学ぶ',       href: '/#learning-paths', emoji: '🎓' },
-              { label: 'テーマ',     href: '/#modern-themes',  emoji: '🌐' },
-              { label: '宗教',       href: '/#religions',      emoji: '🕊️' },
-              { label: 'パターン',   href: '/#patterns',       emoji: '🧬' },
-              { label: '教訓一覧',   href: '/lessons',         emoji: '💡' },
-              { label: '全文検索',   href: '/search',          emoji: '🔍' },
-            ].map(({ label, href, emoji }) => (
-              <Link key={label} href={href} style={{
-                padding: '3px 10px', borderRadius: 3, fontSize: 10,
-                color: '#cbd5e1', textDecoration: 'none', letterSpacing: '0.04em',
-                border: '1px solid transparent', display: 'flex', alignItems: 'center', gap: 3,
-                transition: 'all 0.15s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'transparent'; }}>
-                <span>{emoji}</span>{label}
-              </Link>
-            ))}
-          </nav>
-        </div>
         {/* 下段：探索内アクション */}
         <div className="flex items-center justify-end px-5 py-1.5 gap-1.5">
           {[
@@ -155,7 +111,7 @@ export default function Home() {
             { label: '検索',  emoji: '🔍', active: false, onClick: () => setSearchOpen(true) },
           ].map(({ label, emoji, active, onClick }) => (
             <button key={label} onClick={onClick} style={{
-              padding: '3px 10px', borderRadius: 3, fontSize: 10,
+              padding: '3px 10px', borderRadius: 3, fontSize: 12,
               fontFamily: 'inherit', cursor: 'pointer', letterSpacing: '0.05em',
               display: 'flex', alignItems: 'center', gap: 3,
               border: active ? '1px solid #1e40af' : '1px solid rgba(148,163,184,0.2)',
@@ -175,13 +131,13 @@ export default function Home() {
       <div className="wd-toolbar flex items-center gap-3 px-4 py-2 flex-shrink-0 flex-wrap"
         style={{ background: '#ede6d6', borderBottom: '1px solid rgba(42,34,24,0.15)', maxWidth: '100vw' }}>
         <span className="wd-toolbar-label text-ink-light"
-          style={{ fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase' }}>時代</span>
+          style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>時代</span>
         <div className="wd-chip-group flex gap-1 flex-wrap">
           {ERA_ORDER.map((era) => (
             <button key={era} onClick={() => { setActiveEra(era); setSelectedWar(null); setDrawerOpen(false); }}
               className="wd-chip"
               style={{
-                padding: '3px 10px', borderRadius: 20, fontSize: 10, cursor: 'pointer',
+                padding: '3px 10px', borderRadius: 20, fontSize: 12, cursor: 'pointer',
                 fontFamily: 'inherit', transition: 'all 0.2s', whiteSpace: 'nowrap',
                 border: `1px solid ${activeEra === era ? '#8b3a1e' : 'rgba(42,34,24,0.3)'}`,
                 background: activeEra === era ? '#8b3a1e' : 'transparent',
@@ -193,13 +149,13 @@ export default function Home() {
         </div>
         <div className="wd-toolbar-sep" style={{ width: 1, height: 20, background: 'rgba(42,34,24,0.15)' }} />
         <span className="wd-toolbar-label text-ink-light"
-          style={{ fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase' }}>地域</span>
+          style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>地域</span>
         <div className="wd-chip-group flex gap-1 flex-wrap">
           {REGIONS.map((region) => (
             <button key={region} onClick={() => setActiveRegion(region)}
               className="wd-chip"
               style={{
-                padding: '3px 8px', borderRadius: 3, fontSize: 10, cursor: 'pointer',
+                padding: '3px 8px', borderRadius: 3, fontSize: 12, cursor: 'pointer',
                 fontFamily: 'inherit', transition: 'all 0.2s',
                 border: `1px solid ${activeRegion === region ? '#1a4a42' : 'rgba(42,34,24,0.15)'}`,
                 background: activeRegion === region ? '#1a4a42' : 'transparent',
@@ -273,7 +229,7 @@ export default function Home() {
               color: 'white',
               border: '2px solid rgba(255,255,255,0.2)',
               boxShadow: '0 6px 16px rgba(0,0,0,0.35)',
-              fontSize: 22, cursor: 'pointer',
+              fontSize: 25, cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               transition: 'all 0.2s',
             }}

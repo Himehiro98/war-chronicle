@@ -44,44 +44,23 @@ export default function ChroniclePage() {
     <div style={{ background: '#0f172a', minHeight: '100vh', color: '#f8fafc' }}>
 
       {/* ───── ヘッダー ───── */}
-      <header style={{
-        background: 'rgba(15,23,42,0.92)', backdropFilter: 'blur(8px)',
-        position: 'sticky', top: 0, zIndex: 50,
+      <nav aria-label="幕の目次" style={{
+        background: 'rgba(15,23,42,0.94)', backdropFilter: 'blur(8px)',
+        position: 'sticky', top: 'var(--header-h)', zIndex: 50,
         borderBottom: '1px solid rgba(248,250,252,0.08)',
       }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '10px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-            <Link href="/" style={{ fontSize: 11, color: '#94a3b8', textDecoration: 'none', padding: '3px 8px', borderRadius: 3, border: '1px solid rgba(148,163,184,0.2)' }}>
-              ← ホーム
-            </Link>
-            <span className="font-serif" style={{ fontSize: 17, fontWeight: 700, color: '#f8fafc' }}>War Chronicle</span>
-            <span style={{ fontSize: 9, color: '#64748b', letterSpacing: '0.12em' }}>通史モード</span>
-          </div>
-          <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-            {[
-              { label: 'パターン進化', href: '/patterns', emoji: '🧬' },
-              { label: '因果の大河', href: '/chains', emoji: '🌊' },
-              { label: '探索', href: '/explore', emoji: '🗺️' },
-            ].map(({ label, href, emoji }) => (
-              <Link key={label} href={href} style={{
-                fontSize: 10, padding: '4px 10px', borderRadius: 4,
-                color: '#94a3b8', textDecoration: 'none', border: '1px solid rgba(148,163,184,0.2)',
-              }}>{emoji} {label}</Link>
-            ))}
-          </nav>
-        </div>
         {/* 幕ジャンプナビ */}
         <div style={{
-          maxWidth: 1100, margin: '0 auto', padding: '0 24px 8px',
-          display: 'flex', gap: 4, flexWrap: 'wrap',
+          maxWidth: 1100, margin: '0 auto', padding: '8px 24px',
+          display: 'flex', gap: 4, overflowX: 'auto',
         }}>
           {GRAND_NARRATIVE.map((act) => {
             const active = act.id === activeAct;
             return (
               <button key={act.id} onClick={() => scrollToAct(act.id)}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: 5,
-                  padding: '4px 11px', borderRadius: 20, fontSize: 10, cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0, whiteSpace: 'nowrap',
+                  padding: '5px 12px', borderRadius: 20, fontSize: 13, cursor: 'pointer',
                   fontWeight: active ? 700 : 500, letterSpacing: '0.02em',
                   background: active ? act.accent : 'transparent',
                   color: active ? '#fff' : '#94a3b8',
@@ -94,23 +73,23 @@ export default function ChroniclePage() {
             );
           })}
         </div>
-      </header>
+      </nav>
 
       {/* ───── イントロ ───── */}
       <section style={{ maxWidth: 760, margin: '0 auto', padding: '64px 24px 40px', textAlign: 'center' }}>
-        <div style={{ fontSize: 11, letterSpacing: '0.25em', color: '#64748b', textTransform: 'uppercase', marginBottom: 18 }}>
+        <div style={{ fontSize: 13, letterSpacing: '0.25em', color: '#64748b', textTransform: 'uppercase', marginBottom: 18 }}>
           The Grand Narrative
         </div>
         <h1 className="font-serif" style={{ fontSize: 'clamp(30px, 5vw, 52px)', lineHeight: 1.3, fontWeight: 700, marginBottom: 20 }}>
           人類戦争の<br />大きな物語
         </h1>
-        <p style={{ fontSize: 14, lineHeight: 2, color: '#cbd5e1', maxWidth: 600, margin: '0 auto' }}>
+        <p style={{ fontSize: 17, lineHeight: 2, color: '#cbd5e1', maxWidth: 600, margin: '0 auto' }}>
           これは176の独立した「点」ではない。<br />
           BC1457から現在まで、戦争は<strong style={{ color: '#fbbf24' }}>形を変えながら一本に繋がっている</strong>。
           帝国の威信から、神の意志へ。国家の利益から、国民の総動員へ——
           6つの幕を通れば、なぜ戦争の「かたち」が変わってきたのか、その背骨が見えるばい。
         </p>
-        <div style={{ marginTop: 32, fontSize: 22, color: '#475569', animation: 'cn-bounce 2s infinite' }}>↓</div>
+        <div style={{ marginTop: 32, fontSize: 25, color: '#475569', animation: 'cn-bounce 2s infinite' }}>↓</div>
       </section>
 
       {/* ───── 各幕 ───── */}
@@ -123,7 +102,7 @@ export default function ChroniclePage() {
             position: 'relative',
             borderTop: `1px solid rgba(248,250,252,0.06)`,
             background: actIdx % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)',
-            scrollMarginTop: 96,
+            scrollMarginTop: 120,
           }}
         >
           {/* 左の時代帯 */}
@@ -147,15 +126,15 @@ export default function ChroniclePage() {
             {/* ヘッダー */}
             <div style={{ position: 'relative', marginBottom: 24 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                <span style={{ fontSize: 26 }}>{act.emoji}</span>
+                <span style={{ fontSize: 30 }}>{act.emoji}</span>
                 <span style={{
-                  fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
+                  fontSize: 13, fontWeight: 700, letterSpacing: '0.1em',
                   color: act.accent, padding: '3px 10px', borderRadius: 4,
                   background: `${act.accent}1f`, border: `1px solid ${act.accent}55`,
                 }}>
                   第{act.roman}幕 ／ {act.era}
                 </span>
-                <span style={{ fontSize: 11, color: '#64748b', fontVariantNumeric: 'tabular-nums' }}>{act.period}</span>
+                <span style={{ fontSize: 13, color: '#64748b', fontVariantNumeric: 'tabular-nums' }}>{act.period}</span>
               </div>
               <h2 className="font-serif" style={{ fontSize: 'clamp(24px, 4vw, 38px)', fontWeight: 700, lineHeight: 1.35, color: '#f8fafc' }}>
                 {act.thesis}
@@ -168,26 +147,26 @@ export default function ChroniclePage() {
               padding: '12px 16px', borderRadius: 8, marginBottom: 18,
               background: `${act.accent}12`, border: `1px solid ${act.accent}33`,
             }}>
-              <span style={{ fontSize: 15, flexShrink: 0 }}>⟳</span>
+              <span style={{ fontSize: 18, flexShrink: 0 }}>⟳</span>
               <div>
-                <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', color: act.accent, marginBottom: 3 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: act.accent, marginBottom: 3 }}>
                   前の時代から、何が変わったか
                 </div>
-                <div style={{ fontSize: 12.5, lineHeight: 1.7, color: '#e2e8f0' }}>{act.transition}</div>
+                <div style={{ fontSize: 15, lineHeight: 1.7, color: '#e2e8f0' }}>{act.transition}</div>
               </div>
             </div>
 
             {/* リード文 */}
-            <p style={{ fontSize: 14, lineHeight: 2, color: '#cbd5e1', marginBottom: 18, maxWidth: 720 }}>
+            <p style={{ fontSize: 17, lineHeight: 2, color: '#cbd5e1', marginBottom: 18, maxWidth: 720 }}>
               {act.lead}
             </p>
 
             {/* この時代を動かした論理（タグ） */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center', marginBottom: 28 }}>
-              <span style={{ fontSize: 9, color: '#64748b', fontWeight: 700, letterSpacing: '0.08em' }}>この時代を動かした論理：</span>
+              <span style={{ fontSize: 11, color: '#64748b', fontWeight: 700, letterSpacing: '0.08em' }}>この時代を動かした論理：</span>
               {act.logics.map((tag) => (
                 <Link key={tag} href={`/patterns?tag=${encodeURIComponent(tag)}`} style={{
-                  fontSize: 10, padding: '2px 9px', borderRadius: 12, textDecoration: 'none',
+                  fontSize: 12, padding: '2px 9px', borderRadius: 12, textDecoration: 'none',
                   background: 'rgba(248,250,252,0.06)', color: '#cbd5e1',
                   border: '1px solid rgba(248,250,252,0.12)',
                 }}>
@@ -225,20 +204,20 @@ export default function ChroniclePage() {
                       flexShrink: 0, width: 28, height: 28, borderRadius: '50%',
                       background: act.accent, color: '#fff',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: 12, fontWeight: 700, marginTop: 2,
+                      fontSize: 14, fontWeight: 700, marginTop: 2,
                     }}>
                       {i + 1}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap', marginBottom: 4 }}>
-                        <span className="font-serif" style={{ fontSize: 15, fontWeight: 700, color: '#f8fafc' }}>{info.name}</span>
-                        <span style={{ fontSize: 10, color: '#64748b', fontVariantNumeric: 'tabular-nums' }}>
+                        <span className="font-serif" style={{ fontSize: 18, fontWeight: 700, color: '#f8fafc' }}>{info.name}</span>
+                        <span style={{ fontSize: 12, color: '#64748b', fontVariantNumeric: 'tabular-nums' }}>
                           {formatYear(info.year)}–{formatYear(info.endYear)}
                         </span>
                       </div>
-                      <div style={{ fontSize: 12, lineHeight: 1.7, color: '#cbd5e1' }}>{kw.why}</div>
+                      <div style={{ fontSize: 14, lineHeight: 1.7, color: '#cbd5e1' }}>{kw.why}</div>
                     </div>
-                    <span style={{ flexShrink: 0, color: act.accent, fontSize: 16, alignSelf: 'center' }}>→</span>
+                    <span style={{ flexShrink: 0, color: act.accent, fontSize: 19, alignSelf: 'center' }}>→</span>
                   </Link>
                 );
               })}
@@ -247,8 +226,8 @@ export default function ChroniclePage() {
             {/* throughline（次の幕への接続） */}
             <div style={{ marginTop: 28, paddingTop: 22, borderTop: '1px dashed rgba(248,250,252,0.12)' }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>🧵</span>
-                <p style={{ fontSize: 13, lineHeight: 1.85, color: '#e2e8f0', fontStyle: 'italic', margin: 0 }}>
+                <span style={{ fontSize: 17, flexShrink: 0, marginTop: 1 }}>🧵</span>
+                <p style={{ fontSize: 16, lineHeight: 1.85, color: '#e2e8f0', fontStyle: 'italic', margin: 0 }}>
                   {act.throughline}
                 </p>
               </div>
@@ -256,7 +235,7 @@ export default function ChroniclePage() {
                 <div style={{ textAlign: 'center', marginTop: 18 }}>
                   <button onClick={() => scrollToAct(GRAND_NARRATIVE[actIdx + 1].id)}
                     style={{
-                      fontSize: 11, color: '#94a3b8', background: 'transparent',
+                      fontSize: 13, color: '#94a3b8', background: 'transparent',
                       border: 'none', cursor: 'pointer', letterSpacing: '0.05em',
                     }}>
                     第{GRAND_NARRATIVE[actIdx + 1].roman}幕「{GRAND_NARRATIVE[actIdx + 1].era}」へ ↓
@@ -274,11 +253,11 @@ export default function ChroniclePage() {
         background: 'linear-gradient(180deg, transparent, rgba(251,191,36,0.04))',
       }}>
         <div style={{ maxWidth: 700, margin: '0 auto', padding: '64px 24px', textAlign: 'center' }}>
-          <div style={{ fontSize: 36, marginBottom: 16 }}>🐾</div>
-          <h2 className="font-serif" style={{ fontSize: 24, fontWeight: 700, marginBottom: 12 }}>
+          <div style={{ fontSize: 41, marginBottom: 16 }}>🐾</div>
+          <h2 className="font-serif" style={{ fontSize: 28, fontWeight: 700, marginBottom: 12 }}>
             背骨は、つかめたかな？
           </h2>
-          <p style={{ fontSize: 13, lineHeight: 1.9, color: '#cbd5e1', marginBottom: 28 }}>
+          <p style={{ fontSize: 16, lineHeight: 1.9, color: '#cbd5e1', marginBottom: 28 }}>
             6つの幕を通って、戦争が「点」じゃなく「一本の物語」だと分かったはずだワン。
             ここから先は、気になった戦争を深く掘ったり、同じ構造が繰り返す「教訓」を確かめたりして、
             自分の「次の戦争を読む目」を鍛えるばい。
@@ -286,13 +265,13 @@ export default function ChroniclePage() {
           <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/explore" style={{
               padding: '11px 22px', borderRadius: 6, background: '#fbbf24', color: '#0f172a',
-              fontWeight: 700, fontSize: 12, textDecoration: 'none',
+              fontWeight: 700, fontSize: 14, textDecoration: 'none',
             }}>
               🗺️ 戦争を探索する
             </Link>
             <Link href="/lessons" style={{
               padding: '11px 22px', borderRadius: 6, background: 'transparent', color: '#f8fafc',
-              fontWeight: 600, fontSize: 12, textDecoration: 'none', border: '1px solid rgba(248,250,252,0.3)',
+              fontWeight: 600, fontSize: 14, textDecoration: 'none', border: '1px solid rgba(248,250,252,0.3)',
             }}>
               💡 教訓を横断する
             </Link>

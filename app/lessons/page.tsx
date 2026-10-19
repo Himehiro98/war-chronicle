@@ -113,42 +113,15 @@ export default function LessonsPage() {
   return (
     <div style={{ background: COLORS.bg, minHeight: '100vh', color: COLORS.text }}>
 
-      {/* ヘッダー */}
-      <header style={{
-        background: '#0f172a',
-        borderBottom: `1px solid ${COLORS.border}`,
-        position: 'sticky', top: 0, zIndex: 50,
-        padding: '12px 24px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        flexWrap: 'wrap', gap: 8,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-          <Link href="/" style={{ fontSize: 11, color: '#94a3b8', textDecoration: 'none', padding: '4px 8px', borderRadius: 3, border: '1px solid rgba(148,163,184,0.2)' }}>
-            ← ホーム
-          </Link>
-          <span className="font-serif" style={{ fontSize: 18, fontWeight: 700, color: '#f8fafc' }}>
-            War Chronicle
-          </span>
-          <span style={{ fontSize: 9, color: '#475569', letterSpacing: '0.12em' }}>教訓データベース</span>
-        </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <Link href="/search" style={{ fontSize: 11, color: '#94a3b8', textDecoration: 'none', padding: '5px 12px', borderRadius: 4, border: '1px solid rgba(148,163,184,0.2)' }}>
-            🔍 全文検索
-          </Link>
-          <Link href="/explore" style={{ fontSize: 11, color: '#94a3b8', textDecoration: 'none', padding: '5px 12px', borderRadius: 4, border: '1px solid rgba(148,163,184,0.2)' }}>
-            🗺️ 探索
-          </Link>
-        </div>
-      </header>
 
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 20px' }}>
 
         {/* タイトル */}
         <div style={{ marginBottom: 32 }}>
-          <h1 className="font-serif" style={{ fontSize: 28, fontWeight: 700, color: '#f8fafc', marginBottom: 8 }}>
+          <h1 className="font-serif" style={{ fontSize: 32, fontWeight: 700, color: '#f8fafc', marginBottom: 8 }}>
             💡 戦争の教訓：全戦争横断データベース
           </h1>
-          <p style={{ fontSize: 13, color: COLORS.textSub, lineHeight: 1.7, maxWidth: 700 }}>
+          <p style={{ fontSize: 16, color: COLORS.textSub, lineHeight: 1.7, maxWidth: 700 }}>
             人類は似た条件で何度も衝突してきた。過去の戦争を科学的に分析し、パターンを発見し、現代における戦争防止のヒントを探す。
             <br />「再現性：高・確実」の戦争は、今この瞬間も同じ条件が世界のどこかで揃いつつある。
           </p>
@@ -164,8 +137,8 @@ export default function LessonsPage() {
             { label: '再現性：低', count: reproCount['低'] ?? 0, color: '#86efac', bg: 'rgba(134,239,172,0.1)' },
           ].map(({ label, count, color, bg }) => (
             <div key={label} style={{ background: bg, border: `1px solid ${color}30`, borderRadius: 8, padding: '12px 14px', textAlign: 'center' }}>
-              <div style={{ fontSize: 22, fontWeight: 700, color, fontVariantNumeric: 'tabular-nums' }}>{count}</div>
-              <div style={{ fontSize: 9, color: COLORS.textSub, marginTop: 3 }}>{label}</div>
+              <div style={{ fontSize: 25, fontWeight: 700, color, fontVariantNumeric: 'tabular-nums' }}>{count}</div>
+              <div style={{ fontSize: 11, color: COLORS.textSub, marginTop: 3 }}>{label}</div>
             </div>
           ))}
         </div>
@@ -178,14 +151,14 @@ export default function LessonsPage() {
             onChange={e => setQuery(e.target.value)}
             placeholder="キーワードで検索（例：ナショナリズム、核、民族浄化、現代への教訓...）"
             style={{
-              width: '100%', padding: '9px 14px', borderRadius: 6, fontSize: 13,
+              width: '100%', padding: '9px 14px', borderRadius: 6, fontSize: 16,
               background: COLORS.card, border: `1px solid ${COLORS.border}`,
               color: COLORS.text, outline: 'none', marginBottom: 14, boxSizing: 'border-box',
             }}
           />
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
-            <span style={{ fontSize: 9, color: COLORS.textSub, alignSelf: 'center', marginRight: 4, fontWeight: 700, letterSpacing: '0.1em' }}>再現性</span>
+            <span style={{ fontSize: 11, color: COLORS.textSub, alignSelf: 'center', marginRight: 4, fontWeight: 700, letterSpacing: '0.1em' }}>再現性</span>
             {[
               { id: 'all', label: '全て' },
               { id: '確実', label: '確実 🔴' },
@@ -195,7 +168,7 @@ export default function LessonsPage() {
             ].map(o => (
               <button key={o.id} onClick={() => setReproFilter(o.id)}
                 style={{
-                  padding: '4px 10px', borderRadius: 20, fontSize: 10, fontWeight: 600, cursor: 'pointer',
+                  padding: '4px 10px', borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: 'pointer',
                   background: reproFilter === o.id ? COLORS.rust : 'transparent',
                   color: reproFilter === o.id ? '#fff' : COLORS.textSub,
                   border: `1px solid ${reproFilter === o.id ? COLORS.rust : COLORS.border}`,
@@ -207,10 +180,10 @@ export default function LessonsPage() {
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
-            <span style={{ fontSize: 9, color: COLORS.textSub, alignSelf: 'center', marginRight: 4, fontWeight: 700, letterSpacing: '0.1em' }}>タグ</span>
+            <span style={{ fontSize: 11, color: COLORS.textSub, alignSelf: 'center', marginRight: 4, fontWeight: 700, letterSpacing: '0.1em' }}>タグ</span>
             <button onClick={() => setTagFilter('all')}
               style={{
-                padding: '4px 10px', borderRadius: 20, fontSize: 10, fontWeight: 600, cursor: 'pointer',
+                padding: '4px 10px', borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: 'pointer',
                 background: tagFilter === 'all' ? COLORS.teal : 'transparent',
                 color: tagFilter === 'all' ? '#fff' : COLORS.textSub,
                 border: `1px solid ${tagFilter === 'all' ? COLORS.teal : COLORS.border}`,
@@ -220,7 +193,7 @@ export default function LessonsPage() {
             {ALL_TAGS.map(tag => (
               <button key={tag} onClick={() => setTagFilter(tagFilter === tag ? 'all' : tag)}
                 style={{
-                  padding: '3px 9px', borderRadius: 20, fontSize: 9, cursor: 'pointer',
+                  padding: '3px 9px', borderRadius: 20, fontSize: 11, cursor: 'pointer',
                   background: tagFilter === tag ? COLORS.teal : 'transparent',
                   color: tagFilter === tag ? '#fff' : COLORS.textSub,
                   border: `1px solid ${tagFilter === tag ? COLORS.teal : COLORS.border}`,
@@ -233,7 +206,7 @@ export default function LessonsPage() {
         </div>
 
         {/* 結果数 */}
-        <div style={{ fontSize: 11, color: COLORS.textSub, marginBottom: 16 }}>
+        <div style={{ fontSize: 13, color: COLORS.textSub, marginBottom: 16 }}>
           {sorted.length} 件 / {items.length} 件 表示中
         </div>
 
@@ -261,15 +234,15 @@ export default function LessonsPage() {
                   }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 4 }}>
-                      <span className="font-serif" style={{ fontSize: 14, fontWeight: 700, color: COLORS.text }}>
+                      <span className="font-serif" style={{ fontSize: 17, fontWeight: 700, color: COLORS.text }}>
                         {war.name}
                       </span>
-                      <span style={{ fontSize: 10, color: COLORS.textSub, fontVariantNumeric: 'tabular-nums' }}>
+                      <span style={{ fontSize: 12, color: COLORS.textSub, fontVariantNumeric: 'tabular-nums' }}>
                         {war.year}–{war.endYear}
                       </span>
                       {badge && (
                         <span style={{
-                          fontSize: 9, fontWeight: 700, padding: '2px 7px', borderRadius: 10,
+                          fontSize: 11, fontWeight: 700, padding: '2px 7px', borderRadius: 10,
                           background: badge.bg, color: badge.color, border: `1px solid ${badge.color}40`,
                         }}>
                           {badge.label}
@@ -279,7 +252,7 @@ export default function LessonsPage() {
                     <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
                       {(war.tags ?? []).slice(0, 5).map(tag => (
                         <span key={tag} style={{
-                          fontSize: 9, padding: '1px 6px', borderRadius: 3,
+                          fontSize: 11, padding: '1px 6px', borderRadius: 3,
                           background: 'rgba(148,163,184,0.08)', color: COLORS.textSub,
                           border: '1px solid rgba(148,163,184,0.15)',
                         }}>
@@ -290,12 +263,12 @@ export default function LessonsPage() {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
                     <div style={{
-                      fontSize: 9, color: COLORS.textSub, maxWidth: 200, overflow: 'hidden',
+                      fontSize: 11, color: COLORS.textSub, maxWidth: 200, overflow: 'hidden',
                       textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'none',
                     }}>
                       {stripHtml(lessons.modernLessons).slice(0, 60)}
                     </div>
-                    <span style={{ fontSize: 12, color: COLORS.textSub, transform: isExpanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                    <span style={{ fontSize: 14, color: COLORS.textSub, transform: isExpanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
                       ▼
                     </span>
                   </div>
@@ -312,17 +285,17 @@ export default function LessonsPage() {
                       { key: 'reproducibility' as const, label: '⚠️ 再現性・再発リスク', color: '#dc2626' },
                     ].map(({ key, label, color }) => (
                       <div key={key} style={{ marginBottom: 12 }}>
-                        <div style={{ fontSize: 9, fontWeight: 700, color, letterSpacing: '0.08em', marginBottom: 4 }}>
+                        <div style={{ fontSize: 11, fontWeight: 700, color, letterSpacing: '0.08em', marginBottom: 4 }}>
                           {label}
                         </div>
-                        <div style={{ fontSize: 11, lineHeight: 1.7, color: '#cbd5e1' }}
+                        <div style={{ fontSize: 13, lineHeight: 1.7, color: '#cbd5e1' }}
                           dangerouslySetInnerHTML={{ __html: lessons[key] }} />
                       </div>
                     ))}
                     <div style={{ marginTop: 12, paddingTop: 10, borderTop: `1px solid ${COLORS.border}`, display: 'flex', gap: 8 }}>
                       <Link href={`/explore?war=${war.id}`}
                         style={{
-                          fontSize: 10, padding: '5px 12px', borderRadius: 4,
+                          fontSize: 12, padding: '5px 12px', borderRadius: 4,
                           background: COLORS.rust, color: '#fff', textDecoration: 'none', fontWeight: 600,
                         }}>
                         📖 詳細を読む
@@ -337,8 +310,8 @@ export default function LessonsPage() {
 
         {sorted.length === 0 && (
           <div style={{ textAlign: 'center', padding: '60px 20px', color: COLORS.textSub }}>
-            <div style={{ fontSize: 36, marginBottom: 12 }}>🔍</div>
-            <div style={{ fontSize: 13 }}>該当する教訓が見つからんかった</div>
+            <div style={{ fontSize: 41, marginBottom: 12 }}>🔍</div>
+            <div style={{ fontSize: 16 }}>該当する教訓が見つからんかった</div>
           </div>
         )}
       </div>
