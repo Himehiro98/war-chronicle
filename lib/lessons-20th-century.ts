@@ -257,15 +257,15 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
   'chechen-wars': {
     commonalities: '<strong>第一次ナゴルノ・カラバフ戦争</strong>系譜のソ連崩壊後紛争、<strong>ボスニア戦争</strong>と類似。<strong>ロシア内戦</strong>と類似の中央集権問題。',
     universality: '<strong>帝国崩壊と分離独立</strong>の典型。<strong>都市戦の蹂躙</strong>（グロズヌイ）。研究者アナトール・リーブンの『チェチェン：ロシア権力の墓石』は第一次戦争の象徴性を分析。',
-    modernLessons: '<strong>ロシア・ウクライナ戦争(2022-)</strong>のロシア軍ドクトリンの直接的源流。プーチン政権の権力基盤形成過程。',
+    modernLessons: '<strong>ロシア・ウクライナ戦争(2022-)</strong>のロシア軍の戦い方の源流の一つ。プーチン政権の権力基盤形成過程。',
     preventable: 'エリツィン政権の初期軍事介入決定が分岐点。連邦制度内で自治を拡大していれば独立要求を緩和できた。',
     reproducibility: '危ないサイン：帝国崩壊×中央集権の再強化×武力解決優先。多民族大国で反復リスク。',
   },
   'rwandan-genocide': {
     commonalities: '<strong>カンボジア虐殺</strong>・<strong>ボスニア戦争</strong>と並ぶ20世紀末ジェノサイド。<strong>ビアフラ戦争</strong>と類似の植民地民族分断遺産。',
-    universality: '<strong>ジェノサイドの先行指標</strong>——研究者グレゴリー・スタントンの8段階モデルが実証された。<strong>傍観者問題</strong>（国連と米国が動かなかった）。フィリップ・グレゴワッチの古典ルポがある。',
+    universality: '<strong>ジェノサイドの先行指標</strong>——研究者グレゴリー・スタントンの8段階モデルが実証された。<strong>傍観者問題</strong>（国連と米国が動かなかった）。フィリップ・ゴーレイヴィッチの古典的ルポがある。',
     modernLessons: '<strong>R2P原則</strong>の起源、<strong>ミャンマー・スーダン</strong>での国際社会対応の参照点。SNSによる扇動と虐殺の関係。',
-    preventable: '現地国連軍ロメオ・ダレール将軍の警告が無視されたのが国際社会最大の失敗。研究者サマンサ・パワーは政治的意思の欠如を主因と分析。早期介入で防止できた代表例。',
+    preventable: '現地国連軍ロメオ・ダレール将軍の警告が無視されたのが国際社会最大の失敗。研究者サマンサ・パワーは政治的意思の欠如を主因と分析。早期介入で被害を大きく減らせた可能性が高いとされる（ただし、殺害の速さから、防げた規模には議論がある）。',
     reproducibility: '危ないサイン：民族の二項対立扇動×ヘイトメディア×武器配布×国際社会の傍観。SNS時代に再発リスクはむしろ増大している。',
   },
   'kosovo-war': {
@@ -284,7 +284,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
   },
   'second-congo-war': {
     commonalities: '<strong>アンゴラ内戦</strong>系譜のアフリカ大戦、<strong>ルワンダ虐殺</strong>の波及。<strong>ソマリア内戦</strong>と類似の国家崩壊。',
-    universality: '<strong>アフリカ世界大戦</strong>と呼ばれる、9カ国が関与した紛争。<strong>資源呪い</strong>（コルタンなどスマホ部品の鉱物）が長期化要因。研究者ジェイソン・スターンズの『怪物の栄光のなかで踊る』が分析。',
+    universality: '<strong>アフリカ世界大戦</strong>と呼ばれる、9カ国が関与した紛争。<strong>資源呪い</strong>（コルタンなどスマホ部品の鉱物）が長期化要因。研究者ジェイソン・スターンズの『Dancing in the Glory of Monsters』が分析。',
     modernLessons: '<strong>サヘル諸国紛争</strong>分析の参照点、<strong>中露のアフリカ進出</strong>の前史。',
     preventable: 'モブツ末期の国家崩壊管理失敗が起点。冷戦後にアフリカへの国際関心が下がったことも主因。',
     reproducibility: '危ないサイン：国家崩壊×資源収奪×近隣国介入。脆弱国家で反復可能。',
@@ -307,7 +307,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
     commonalities: '<strong>コソボ戦争</strong>と並ぶユーゴ崩壊紛争、<strong>ルワンダ虐殺</strong>と並ぶ民族浄化。<strong>バルカン戦争</strong>系譜のバルカン民族紛争。',
     universality: '<strong>民族浄化</strong>概念の確立。研究者バリー・ポーゼン「民族紛争におけるセキュリティ・ジレンマ」の典型適用。スレブレニツァは国連保護地域で起きた虐殺だった。',
     modernLessons: '<strong>ウクライナ・シリア</strong>紛争での民族浄化分析の参照点。NATOの役割転換の起点。',
-    preventable: 'デヴィッド・オーウェンらの分割案を早期に受け入れていれば限定できた。リチャード・ホルブルックの『戦争を終わらせるために』はデイトン合意までの遅延を批判。',
+    preventable: 'ヴァンス・オーウェン和平案（1993年）などを早期に実現できていれば、被害を限定できたという見方がある。リチャード・ホルブルックの『戦争を終わらせるために』はデイトン合意までの遅延を批判。',
     reproducibility: '危ないサイン：多民族連邦の解体×民族別の領土主張×外部承認競争。継続的リスク。',
   },
   'balkan-wars': {
