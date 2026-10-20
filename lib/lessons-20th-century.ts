@@ -39,9 +39,9 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
   },
   'gulf-war': {
     commonalities: '<strong>イラン・イラク戦争</strong>でイラクが疲弊し、誤算でクウェートに侵攻——という連鎖。<strong>フォークランド戦争</strong>と並ぶ「明らかな侵略に国際社会がどう応えたか」の事例。後の<strong>イラク戦争</strong>の前段階。',
-    universality: '<strong>誤算（読み違い）</strong>の古典例。米国大使グラスピーが「イラクとクウェートのもめごとに米国は関心がない」と発言したのを、イラクのフセイン大統領が「米国は介入しない」と都合よく解釈した。一方、米国は冷戦終結直後の混乱期に「新しい世界秩序」を作るチャンスだと考え、多国籍軍を組織。集団安全保障（みんなで侵略を止める仕組み）が珍しくちゃんと働いた事例。',
+    universality: '<strong>誤算（読み違い）</strong>の古典例。米国大使グラスピーが「クウェートとの国境問題のようなアラブ同士の対立について、米国は意見を持たない」と発言したのを、イラクのフセイン大統領が「米国は介入しない」と都合よく解釈した。一方、米国は冷戦終結直後の混乱期に「新しい世界秩序」を作るチャンスだと考え、多国籍軍を組織。集団安全保障（みんなで侵略を止める仕組み）が珍しくちゃんと働いた事例。',
     modernLessons: '<strong>ロシア・ウクライナ戦争(2022-)</strong>で「国際法を破った侵略にどう応えるか」のモデルとして参照される。一方で、勝ち過ぎた成功体験が後の<strong>イラク戦争</strong>での過信を生んだ。<strong>米中対立</strong>でも勝利の後の振る舞いが大事。',
-    preventable: '研究者ローレンス・フリードマンは「外交シグナルの曖昧さ」を批判した。米国が最初から「クウェート侵攻は絶対許さない」とハッキリ言っていれば、フセインは攻めなかった可能性が高い。<strong>レッドライン（ここを越えたらダメというライン）</strong>を明示することの大事さ。',
+    preventable: '研究者ローレンス・フリードマンは「外交シグナルの曖昧さ」を批判した。米国が最初から「クウェート侵攻は絶対許さない」とハッキリ言っていれば、フセインは攻めなかった可能性がある。<strong>レッドライン（ここを越えたらダメというライン）</strong>を明示することの大事さ。',
     reproducibility: '危ないサイン：独裁者の財政危機×領土主張×大国のシグナルを読み違える。資源紛争、国境の曖昧さ、お金の貸し借りを巡る対立は今でも揃いやすい条件。',
   },
   'russian-civil-war': {
@@ -221,7 +221,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
   },
   'first-nagorno-karabakh-war': {
     commonalities: '<strong>チェチェン戦争</strong>・<strong>ボスニア戦争</strong>と並ぶソ連崩壊後の民族紛争。<strong>ナゴルノ・カラバフ戦争(2020)</strong>に直結。',
-    universality: '<strong>ソ連民族政策</strong>の遺産——人為的に引かれた境界線が崩壊で爆発。<strong>権力真空</strong>と民族動員の組み合わせ。研究者トーマス・デ・ワールの『黒い庭』が古典分析。',
+    universality: '<strong>ソ連民族政策</strong>の遺産——人為的に引かれた境界線が崩壊で爆発。<strong>権力真空</strong>と民族動員の組み合わせ。研究者トーマス・デ・ヴァールの『Black Garden』が古典的な分析。',
     modernLessons: '<strong>ロシア・ウクライナ戦争(2022-)</strong>のドンバス問題と構造が類似。凍結紛争（凍りついて止まっている紛争）の再燃リスク（2020年・2023年）が実証された。',
     preventable: 'ソ連末期の民族政策再考があれば回避できたとの見方。アゼルバイジャンの改革遅延も主因。',
     reproducibility: '危ないサイン：多民族帝国の崩壊×飛び地×大国の保証なし。ポストソビエト空間で継続的リスク。',
@@ -279,7 +279,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
     commonalities: '<strong>バングラデシュ独立戦争</strong>と類似の民族独立運動、<strong>コロンビア紛争</strong>と類似のテロ含む長期内戦。',
     universality: '<strong>多数派暴政</strong>（シンハラ仏教ナショナリズムによる少数派タミルの疎外）。LTTEの自爆テロは現代テロリズムの原型。',
     modernLessons: '<strong>ミャンマー・カシミール</strong>での民族紛争分析の参照点。<strong>中印対立</strong>下のスリランカの戦略的位置。',
-    preventable: 'バンダラナイケ首相の「シンハラ・オンリー」政策(1956)が起点。1957年の連邦制度提案を受け入れていれば民族統合できた。',
+    preventable: 'バンダラナイケ首相の「シンハラ・オンリー」政策(1956)が起点。1957年にバンダラナイケとタミル側指導者チェルヴァナヤカムが結んだ地方分権の協定が、仏教僧らの反対で破棄されていなければ、という見方がある。',
     reproducibility: '危ないサイン：言語・宗教ナショナリズム×憲法による少数派保護の欠如。多民族国家で構造的リスク。',
   },
   'second-congo-war': {
@@ -291,7 +291,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
   },
   'somali-civil-war': {
     commonalities: '<strong>第二次コンゴ戦争</strong>と類似の国家崩壊、<strong>レバノン内戦</strong>と類似の長期混戦。',
-    universality: '<strong>失敗国家</strong>概念の原型（研究者ロバート・ロットバーグが提唱）。<strong>氏族主義</strong>動員。米軍の介入失敗（モガディシュの戦闘）は対反乱戦の限界事例。',
+    universality: '<strong>失敗国家</strong>概念の原型（「失敗国家」という言葉はヘルマンとラトナーの1992年の論文で広まり、ロトバーグらが理論化した）。<strong>氏族主義</strong>動員。米軍の介入失敗（モガディシュの戦闘）は対反乱戦の限界事例。',
     modernLessons: '<strong>アフリカの角の海賊問題</strong>、<strong>アル・シャバブ</strong>テロの根源。<strong>イエメン内戦</strong>と類似の地域不安定化。',
     preventable: 'バーレ政権崩壊管理失敗が起点。冷戦終結後、ソマリアの戦略的価値が下がったことも主因。',
     reproducibility: '危ないサイン：冷戦後の支援打ち切り×氏族動員×武器流入。失敗国家化リスクは現存。',
@@ -356,7 +356,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
     commonalities: '<strong>湾岸戦争</strong>と並ぶ「明確な侵略」事例、<strong>日露戦争</strong>と類似の遠征戦争。',
     universality: '<strong>転換戦争</strong>（diversionary war、国内危機を戦争で逸らす理論）の典型。アルゼンチン軍政の国内危機転嫁の誤算。研究者ローレンス・フリードマンの『戦争のシグナル』はシグナル誤読を分析。',
     modernLessons: '<strong>ロシア・ウクライナ戦争(2022-)</strong>でプーチン政権の国内危機転嫁要素分析の参照点。',
-    preventable: '英国の防衛コミットメントを明示していれば（南極観測船エンデュアランス号の撤退見直しなど）抑止できた。シグナル管理失敗の典型。',
+    preventable: '英国が防衛の意思を明確に示していれば（南大西洋の巡視船エンデュアランス号の退役計画の見直しなど）、抑止できた可能性がある。シグナル管理失敗の典型。',
     reproducibility: '危ないサイン：独裁国の国内危機×領土回復主義×大国コミットメントの曖昧さ。継続的リスク。',
   },
   'cambodian-genocide': {
