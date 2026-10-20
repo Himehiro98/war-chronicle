@@ -24,11 +24,11 @@ dev server: `C:\Users\user\Desktop\.claude\launch.json` の "war-chronicle"（po
 - [x] P5 内容是正：ライブデータを2026年10月時点に更新（イラン戦争2026を追加）、lib/content-updates-2026.ts で継続中戦争の本文に最新状況を重ねる、ongoing フラグ（11件）、ビルマ独立戦争の終了年修正、日付だけ更新するActionを廃止→鮮度チェックIssue方式、/live を出典・基準時点つきで作り直し（根拠のない世界合計の数字を削除）、学習パス内容修正、件数表記の統一
   - 残り（P6で各ページ作業時に対応）：C4 教訓一覧の再現性統計撤去 / C5 宗教ページの生HTML / C7 地の文の方言（わんたの台詞以外は標準語に）/ chronicle の「176」直書き / 各ページの年表示を formatPeriod に
 - [x] P6 各ページ磨き込み：全ページをサーバー描画＋共通デザインに作り直し（chronicle/patterns/chains/lessons/search/learn/themes/religions/wanta/flashcards/diagnose/risk-check/live）、/compare 新設、/network 廃止（→/chains へ308）、/api/generate 削除、診断APIは構造化出力＋収録戦争IDに限定（ローカルのAPIキーが無効で実呼び出しは未検証）
-- [ ] P7 SEO：ページ別 metadata（route layout.tsx）、sitemap.ts、robots.ts
-- [ ] P8 QA：build、モバイル、全ルート確認、master merge、ユーザーへ報告、Cron削除
+- [x] P7 SEO：全ページ metadata、sitemap.ts、robots.ts、not-found.tsx
+- [x] P8 QA：npm run build 成功（217ページ）、全ルート smoke test、モバイル確認、master に新規コミットなし（merge不要）、Cron削除
 
 ## 次にやること
-P7 SEO（sitemap.ts / robots.ts / OG、SITE_URL を Vercel の実ドメインに）→ P8 QA（npm run build はプレビュー停止後に）。※スクショは Browser pane が隠れていると失敗するので javascript_tool で検証する。
+全フェーズ完了。ユーザーの承認待ち：master への merge と push（= Vercel 本番デプロイ）。
 
 ## ログ
 - 2026-10-20 開始。master を pull（timestamp commit 17件）、ブランチ作成。lib/causal-chains.ts の未コミット修正（イタリア→ドイツ統一の接続文の史実修正）は妥当なので維持。
