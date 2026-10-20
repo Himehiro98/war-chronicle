@@ -156,7 +156,7 @@ export const LESSONS_EARLY_MODERN: Record<string, LessonsData> = {
   'american-civil-war': {
     commonalities: '<strong>奴隷制＋地域経済構造の分裂</strong>。<strong>ハイチ革命</strong>と奴隷制論争でつながる。塹壕戦・産業戦争という近代総力戦の予兆として<strong>第一次世界大戦</strong>を先取りした。',
     universality: '<strong>「資本主義民主化のための内戦」</strong>の典型。北部の工業資本主義が南部の奴隷制プランテーションを潰したことで、アメリカが近代国家として完成した。<strong>過去の決定が未来を縛る現象</strong>（ジム・クロウ法→公民権運動）も顕著。',
-    modernLessons: 'アメリカの分極化（2020年〜）を「第二次内戦」と呼ぶ論者もいる。BLM運動や南軍像撤去論争は、内戦の決着が150年経ってもついていない証拠。<strong>香港・台湾</strong>の中国本土からの分離志向と地域経済構造の論理も通じる。',
+    modernLessons: 'アメリカの分極化（2020年〜）を「第二次内戦」と呼ぶ論者もいる。BLM運動や南軍像撤去論争は、内戦の決着が150年経ってもついていない証拠。',
     preventable: '1850年の妥協・1854年のカンザス・ネブラスカ法の運用次第で、内戦は段階的に防げた可能性が高い。<strong>ドレッド・スコット判決（1857年）</strong>——黒人は市民ではないとした最高裁判決——が決定的な分岐点だった。',
     reproducibility: '危険サイン：(1)地域経済構造が根本的に違う、(2)憲法解釈が真っ二つに、(3)選挙制度への信頼喪失、(4)武装した分離主義。',
   },
@@ -179,7 +179,7 @@ export const LESSONS_EARLY_MODERN: Record<string, LessonsData> = {
 
   'boshin-war': {
     commonalities: '<strong>体制移行の内戦</strong>。同時代の<strong>南北戦争</strong>・<strong>アメリカ独立戦争</strong>と違って比較的死傷者が少ない。<strong>明治維新</strong>を完成させた革命戦争として<strong>フランス革命</strong>と比べられる。',
-    universality: '<strong>「上からの革命」</strong>（明治型）の典型。エリート武士が主導して、農民革命を起こさずに近代化を実現した。後のスペインや東欧の民主化の先駆け。',
+    universality: '<strong>「上からの革命」</strong>（明治型）の典型。エリート武士が主導して、農民革命を起こさずに近代化を実現した。',
     modernLessons: '<strong>体制移行の「比較的低暴力」</strong>パターン。スペイン民主化（1975年）・東欧革命（1989年）など、内戦を避ける移行のモデル。新政府軍が<strong>「天皇の軍隊」</strong>として正統性を確保したのが鍵だった。',
     preventable: '<strong>大政奉還（1867年10月）</strong>後に徳川を寛大に処遇していれば、武力衝突は最小化できた。<strong>小御所会議</strong>での薩長強硬派の主導が決定的。',
     reproducibility: '危険サイン：(1)外圧下で体制の正統性が危機、(2)若手改革派の蜂起、(3)地方軍閥の同盟化、(4)伝統的権威（天皇）の活用。',
@@ -194,7 +194,7 @@ export const LESSONS_EARLY_MODERN: Record<string, LessonsData> = {
   },
 
   'paraguayan-war': {
-    commonalities: '<strong>三国同盟による単独国包囲</strong>。<strong>スペイン継承戦争</strong>・<strong>第二次世界大戦</strong>の対日包囲と同型。パラグアイの人口60-70%が消失したのは近代戦最悪の被害（<strong>第一次世界大戦</strong>の比率を超える）。',
+    commonalities: '<strong>三国同盟による単独国包囲</strong>。<strong>スペイン継承戦争</strong>・<strong>第二次世界大戦</strong>の対日包囲と同型。パラグアイの人口の6割以上が失われたとする研究もあり（推計には大きな幅がある）、人口比では近代戦で最悪級の被害。',
     universality: 'カリスマ独裁者ソラーノ・ロペスの<strong>過剰拡張</strong>。独裁＋ナショナリズム動員＋包囲下でも戦争を続ける姿勢は、<strong>現代的「全体主義戦争」</strong>の南米版を先取りした。',
     modernLessons: '<strong>北朝鮮型「玉砕国家」</strong>の歴史的先例。指導者個人の判断に国家の運命が依存し、降伏の選択肢が排除される独裁戦争の典型。21世紀の<strong>包囲制裁戦争</strong>（イラン・ロシア）の極端版。',
     preventable: '1864年のウルグアイ介入で、ロペスがブラジルと直接交渉していれば、三国同盟結成は防げた。',
