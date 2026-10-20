@@ -71,18 +71,33 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '入力が長すぎます（5000文字以内）' }, { status: 400 });
     }
 
-    const response = await client.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 4096,
-      system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
-      output_config: { format: { type: 'json_schema', schema: OUTPUT_SCHEMA } },
-      messages: [
-        {
-          role: 'user',
-          content: `次の状況を分析し、構造的に似ている過去の戦争を挙げてください。\n\n${situation.trim()}`,
-        },
-      ],
-    });
+    const userContent = `次の状況を分析し、構造的に似ている過去の戦争を挙げてください。
+
+${situation.trim()}`;
+    let response: Anthropic.Message;
+    try {
+      // 構造化出力（JSONスキーマでIDを収録戦争に限定）
+      response = await client.messages.create({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 4096,
+        system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
+        output_config: { format: { type: 'json_schema', schema: OUTPUT_SCHEMA } },
+        messages: [{ role: 'user', content: userContent }],
+      });
+    } catch (e) {
+      if (!(e instanceof Anthropic.BadRequestError)) throw e;
+      // スキーマ指定が受け付けられない場合は、プロンプトでJSONを指示する方式にフォールバック
+      console.error('Diagnose: structured output rejected, falling back', e.message);
+      response = await client.messages.create({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 4096,
+        system: `${SYSTEM_PROMPT}
+
+回答は次の形のJSONだけを返してください（コードブロックや説明文は不要）：
+{"matches":[{"warId":"...","score":0,"matchedFactors":["..."],"reasoning":"...","warningSign":"..."}],"overallRisk":"high|medium|low","summary":"..."}`,
+        messages: [{ role: 'user', content: userContent }],
+      });
+    }
 
     if (response.stop_reason === 'refusal') {
       return NextResponse.json({ error: 'この内容は分析できませんでした。表現を変えてお試しください' }, { status: 422 });
@@ -98,9 +113,13 @@ export async function POST(request: NextRequest) {
 
     let parsed: Result;
     try {
-      parsed = JSON.parse(textBlock.text);
+      const raw = textBlock.text.match(/\{[\s\S]*\}/)?.[0] ?? textBlock.text;
+      parsed = JSON.parse(raw);
     } catch {
       return NextResponse.json({ error: 'AI応答の読み取りに失敗しました' }, { status: 500 });
+    }
+    if (!Array.isArray(parsed?.matches)) {
+      return NextResponse.json({ error: '分析結果が不正な形式です' }, { status: 500 });
     }
 
     // 念のため収録外のIDを除外し、名前はサイトのデータから付ける
@@ -122,6 +141,7 @@ export async function POST(request: NextRequest) {
     if (error instanceof Anthropic.AuthenticationError) {
       return NextResponse.json({ error: 'API認証エラーが発生しました' }, { status: 500 });
     }
-    return NextResponse.json({ error: 'サーバーエラーが発生しました。もう一度お試しください' }, { status: 500 });
+    const code = error instanceof Anthropic.APIError ? error.status : undefined;
+    return NextResponse.json({ error: `サーバーエラーが発生しました。もう一度お試しください${code ? `（コード ${code}）` : ''}` }, { status: 500 });
   }
 }
