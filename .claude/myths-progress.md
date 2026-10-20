@@ -11,8 +11,8 @@ dev server: preview_start {name:"war-chronicle"}（port 3200）
 - 1時代（era）ごとに commit。
 
 ## フェーズ
-- [ ] M1 データ構造・UI（戦争ページの「通説と史実」タブ、/myths 一覧、ナビ、トップ導線）
-- [ ] M2 先史・古代文明（prehistoric）
+- [x] M1 データ構造・UI（戦争タブ・/myths・ナビ・検索）※トップ導線は M9 で
+- [x] M2 先史・古代文明（prehistoric）：誤解9件、本文修正41箇所
 - [ ] M3 古代（ancient）
 - [ ] M4 中世（medieval）
 - [ ] M5 近世前期（renaissance）
@@ -22,6 +22,7 @@ dev server: preview_start {name:"war-chronicle"}（port 3200）
 - [ ] M9 build・全ページ確認・ユーザーへ報告・Cron削除
 
 ## 次にやること
-M1 から。
+M3 古代（ancient）から。手順: scratchpad の dump-<era>.txt（無ければ lib/_dump.ts <era> で再生成）を読む → scratchpad/fixes_<era>.py に FIXES を書き apply_fixes.py で適用（HTMLタグを含む箇所は原文を確認）→ lib/myths/<era>.ts に誤解を書く → tsc → commit。
 
 ## ログ
+- 2026-10-21 prehistoric: カデシュ（銀板原本は現存せず・最古の条約ではない）、トロイア（プリアモスの財宝は1000年以上古い層、通行料説は推測）、海の民（ウガリト書簡の窯の話は誤り・最後の王はアンムラピ）、牧野（盟津800諸侯・奴隷兵は伝承と明記）、長平40万、アッシリア（史上初の誇張、ナクルートゥ語削除）、ニネヴェ（洪水説・自焚は伝説、アミュティス婚約はベロッソス伝）
