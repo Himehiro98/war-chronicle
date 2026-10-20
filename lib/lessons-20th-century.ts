@@ -125,7 +125,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
     commonalities: '<strong>日清戦争</strong>・<strong>日露戦争</strong>での勝利体験の延長、<strong>太平洋戦争</strong>と一体化。<strong>中国国共内戦</strong>の構図を決定づけた。',
     universality: '<strong>泥沼化</strong>と<strong>下剋上</strong>（出先の軍が勝手に動く）。盧溝橋事件は現地の小さな衝突が拡大した<strong>火事場ジレンマ</strong>。すでに使った金や血を惜しんで撤退できなくなる<strong>サンクコスト効果</strong>で、トラウトマン工作（ドイツ仲介の和平案）も逃した。',
     modernLessons: '<strong>米中対立</strong>での偶発衝突がエスカレートするリスク、<strong>南シナ海</strong>での現場部隊の自律行動リスクに直結。',
-    preventable: '歴史家ラナ・ミッターは『忘れられた同盟国』で日本軍部の統制不全が主因と分析。文民統制が機能し、早期の和平交渉を受け入れていれば限定できた。',
+    preventable: '歴史家ラナ・ミッターは『忘れられた同盟国』で、中国が払った犠牲と戦争の全体像を描き直した。日本側では、軍部の統制不全と和平機会の取り逃しが拡大の大きな要因とされる。文民統制が機能し、早期の和平交渉を受け入れていれば限定できた可能性がある。',
     reproducibility: '危ないサイン：現地軍の独走×文民統制の喪失×和平機会の取り逃し。シビリアン・コントロール（軍を政治家が抑える仕組み）の劣化は普遍的なリスク。',
   },
   'first-indochina-war': {
