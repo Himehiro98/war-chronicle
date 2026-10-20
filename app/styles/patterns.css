@@ -216,3 +216,32 @@ mark { background: rgba(251, 191, 36, 0.45); color: inherit; border-radius: 2px;
 .diagnose__reason { font-size: 15px; line-height: 1.85; color: var(--ink-2); }
 .diagnose__warn { font-size: 14px; line-height: 1.8; background: #fffbeb; border-radius: 8px; padding: 10px 12px; }
 .diagnose__more { font-size: 13px; font-weight: 700; color: var(--accent-ink); text-decoration: none; }
+
+/* ── 構造リスク診断 ── */
+.risk__grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 860px) { .risk__grid { grid-template-columns: 1fr; } }
+.risk__group { padding: 14px 18px; margin-bottom: 14px; border: 1px solid var(--line); }
+.risk__group legend { font-weight: 700; font-size: 15px; padding: 0 6px; }
+.risk__item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 8px; border-radius: 8px; cursor: pointer; font-size: 15px; line-height: 1.6; }
+.risk__item:hover { background: var(--surface-2); }
+.risk__item.is-checked { background: var(--accent-soft); }
+.risk__item input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--accent); flex-shrink: 0; }
+.risk__tag { display: inline-block; margin-left: 8px; font-size: 11px; color: var(--muted); }
+.risk__side { position: sticky; top: calc(var(--header-h) + 16px); display: grid; gap: 14px; }
+@media (max-width: 860px) { .risk__side { position: static; } }
+.risk__meter { padding: 16px 18px; }
+.risk__count { font-size: 14px; color: var(--muted); }
+.risk__count strong { font-size: 32px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.risk__bar { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; margin: 8px 0 10px; }
+.risk__bar span { display: block; height: 100%; background: var(--accent); transition: width .3s; }
+.risk__meter p { font-size: 14px; color: var(--ink-2); }
+.risk__panel { padding: 16px 18px; }
+.risk__panel h2 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.risk__danger + .risk__danger { margin-top: 10px; }
+.risk__danger p { font-size: 14px; color: var(--ink-2); line-height: 1.75; }
+.risk__matches { list-style: decimal; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.risk__matches a { font-weight: 700; color: var(--ink); }
+.risk__matches span { margin-left: 8px; font-size: 12px; }
+.risk__lesson { margin-top: 12px; border-left: 3px solid var(--accent); padding-left: 12px; }
+.risk__lesson div { font-size: 12px; font-weight: 700; color: var(--muted); }
+.risk__lesson p { font-size: 14px; line-height: 1.8; }
