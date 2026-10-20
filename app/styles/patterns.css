@@ -162,3 +162,32 @@ mark { background: rgba(251, 191, 36, 0.45); color: inherit; border-radius: 2px;
 .wanta-entry p { font-size: 15px; line-height: 1.8; }
 @media (max-width: 560px) { .wanta-entry { grid-template-columns: 1fr; gap: 2px; } }
 .pager { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 28px; }
+
+/* ── フラッシュカード ── */
+.practice-body { padding-top: 28px; padding-bottom: 64px; }
+.deck__stats { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 13px; color: var(--muted); }
+.deck__stats .is-known { color: #15803d; font-weight: 700; }
+.deck__stats .is-unknown { color: #b91c1c; font-weight: 700; }
+.deck__bar { flex: 1; min-width: 120px; height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.deck__bar span { display: block; height: 100%; background: #16a34a; }
+.deck__count { font-size: 13px; color: var(--muted); margin-bottom: 8px; text-align: center; }
+.deck__card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center;
+  width: 100%; min-height: 280px; padding: 32px 28px; border-radius: 16px; cursor: pointer; font: inherit;
+  background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow);
+}
+.deck__card.is-flipped { background: #fffbeb; border-color: #fde68a; }
+.deck__card--placeholder { cursor: default; }
+.deck__kind { font-size: 12px; font-weight: 700; color: var(--accent-ink); background: var(--accent-soft); padding: 2px 10px; border-radius: 999px; }
+.deck__q { font-family: var(--font-head); font-size: clamp(20px, 3vw, 26px); line-height: 1.5; font-weight: 700; }
+.deck__a { font-size: 18px; line-height: 1.8; color: var(--ink); max-width: 560px; }
+.deck__hint { font-size: 13px; color: var(--muted); }
+.deck__actions { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
+.deck__link { text-align: center; margin-top: 12px; font-size: 13px; }
+.deck__link a { color: var(--accent-ink); }
+.deck__done { padding: 28px; text-align: center; }
+.deck__done h2 { font-family: var(--font-head); font-size: 24px; margin-bottom: 6px; }
+.deck__done p { color: var(--ink-2); margin-bottom: 16px; }
+.deck__reset { margin-top: 40px; font-size: 14px; }
+.deck__reset summary { cursor: pointer; color: var(--muted); }
+.deck__reset p { margin: 8px 0; }
