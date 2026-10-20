@@ -145,3 +145,20 @@ mark { background: rgba(251, 191, 36, 0.45); color: inherit; border-radius: 2px;
 .topic-war__meta { font-size: 13px; color: var(--muted); }
 .topic-war__name { font-weight: 700; font-size: 17px; }
 .topic-war__summary { font-size: 14px; color: var(--ink-2); line-height: 1.8; }
+
+/* ── わんたの解説 ── */
+.wanta-hero__inner { display: flex; align-items: center; gap: 24px; }
+.wanta-hero__img { width: 96px; height: 96px; border-radius: 50%; background: #fef3c7; border: 3px solid var(--highlight); object-fit: cover; flex-shrink: 0; }
+@media (max-width: 560px) { .wanta-hero__inner { flex-direction: column; align-items: flex-start; } }
+.wanta-body { padding-top: 28px; padding-bottom: 64px; }
+.wanta-list { display: grid; gap: 14px; }
+.wanta-group { padding: 16px 20px; }
+.wanta-group__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 8px; }
+.wanta-group__name { font-weight: 700; font-size: 17px; text-decoration: none; }
+.wanta-group__name:hover { text-decoration: underline; color: var(--accent-ink); }
+.wanta-group ul { list-style: none; display: grid; gap: 8px; }
+.wanta-entry { display: grid; grid-template-columns: 7em 1fr; gap: 10px; align-items: baseline; padding: 8px 12px; background: #fffbeb; border-radius: 8px; }
+.wanta-entry__tab { font-size: 12px; font-weight: 700; color: #92400e; text-decoration: none; }
+.wanta-entry p { font-size: 15px; line-height: 1.8; }
+@media (max-width: 560px) { .wanta-entry { grid-template-columns: 1fr; gap: 2px; } }
+.pager { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 28px; }
