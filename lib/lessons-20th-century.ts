@@ -188,7 +188,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
     commonalities: '<strong>第一次インドシナ戦争</strong>と並ぶフランスの脱植民地戦争、<strong>ケニア独立戦争</strong>と類似の入植者植民地紛争。<strong>ベトナム戦争</strong>と類似の対反乱戦失敗。',
     universality: '<strong>入植者植民地</strong>の構造的矛盾——百万人のフランス系入植者が現地に住んでいた。研究者アリスター・ホーンの『野蛮な平和の戦争』が古典。テロと拷問の悪循環、<strong>軍事的に勝てる戦争を政治的に失う</strong>典型例。',
     modernLessons: '<strong>シリア・イラク</strong>でのISIS対応、<strong>イスラエル・パレスチナ</strong>紛争分析の参照点。対反乱戦と政治解決の関係。',
-    preventable: 'ドゴール大統領の最終決断は遅すぎた。歴史家レイモン・アロンは早期独立論者で、1954年初期で独立を承認していれば流血を最小化できたと論じた。',
+    preventable: 'ド・ゴール大統領の最終決断は遅すぎたとの批判がある。社会学者レイモン・アロンは1957年の著書『アルジェリアの悲劇』で、早期に独立を認めるべきだと論じていた。',
     reproducibility: '危ないサイン：入植者×先住民×宗主国の財政負担。占領長期化のコストは現代でも普遍。',
   },
   'guatemalan-civil-war': {
