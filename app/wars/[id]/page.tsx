@@ -143,6 +143,10 @@ export default function WarPage({ params }: { params: { id: string } }) {
           ) : <span />}
         </nav>
 
+        <p className="war-compare">
+          <Link href={`/compare?w=${war.id}${causes[0] ? `,${causes[0].id}` : influences[0] ? `,${influences[0].id}` : ''}`}>この戦争をほかの戦争と比較する →</Link>
+        </p>
+
         {(causes.length > 0 || influences.length > 0) && (
           <section className="war-more">
             <h2 className="panel-subhead">あわせて読みたい</h2>

@@ -9,6 +9,8 @@ const nextConfig = {
         destination: '/wars/:war',
         permanent: true,
       },
+      // 旧・因果ネットワーク図（非公開化済み）→ 因果の大河
+      { source: '/network', destination: '/chains', permanent: true },
     ];
   },
 };

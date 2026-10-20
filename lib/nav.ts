@@ -28,6 +28,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { label: '年表・地図', href: '/explore', desc: '時代と地域で戦争を俯瞰する' },
       { label: '戦争一覧', href: '/wars', desc: '全戦争を絞り込み・並べ替え' },
+      { label: '戦争を比較', href: '/compare', desc: '2〜3の戦争を並べて共通点を見る' },
       { label: '全文検索', href: '/search', desc: 'キーワードで本文を横断検索' },
     ],
   },

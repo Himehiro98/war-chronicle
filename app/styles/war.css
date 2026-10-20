@@ -148,3 +148,4 @@
 .war-pager__name { font-weight: 700; }
 .war-more { margin-top: 24px; }
 @media (max-width: 560px) { .war-pager { grid-template-columns: 1fr; } .war-pager__link--next { text-align: left; } }
+.war-compare { margin-top: 20px; font-size: 14px; } .war-compare a { color: var(--accent-ink); font-weight: 700; }
