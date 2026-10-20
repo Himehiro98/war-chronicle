@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { ExamQuestion, HumanLayerData, LessonsData, TabContent, War } from '@/lib/types';
+import type { ExamQuestion, HumanLayerData, LessonsData, MythEntry, TabContent, War } from '@/lib/types';
 import { firstSentence, formatPeriod } from '@/lib/text';
 
 /** 自前の静的データ（<strong>/<br> のみ）を描画する */
@@ -282,5 +282,53 @@ export function RelatedWars({ causes, influences }: { causes: War[]; influences:
         </div>
       )}
     </div>
+  );
+}
+
+/* ── 通説と史実 ── */
+export function MythCard({ m, index }: { m: MythEntry; index?: number }) {
+  return (
+    <article className={`myth${m.status === 'debated' ? ' is-debated' : ''}`}>
+      <div className="myth__row myth__row--myth">
+        <span className="myth__label">よく語られる説</span>
+        <p>{index !== undefined && <span className="myth__no">{index + 1}</span>}{m.myth}</p>
+      </div>
+      <div className="myth__row myth__row--fact">
+        <span className="myth__label">{m.status === 'debated' ? '研究でわかっていること（議論が続いている点あり）' : '研究でわかっていること'}</span>
+        <p>{m.fact}</p>
+      </div>
+      {m.why && (
+        <div className="myth__row myth__row--why">
+          <span className="myth__label">なぜこの説が広まったのか</span>
+          <p>{m.why}</p>
+        </div>
+      )}
+      {m.refs && m.refs.length > 0 && <p className="myth__refs">参考：{m.refs.join('／')}</p>}
+    </article>
+  );
+}
+
+export function MythsPanel({ myths }: { myths: MythEntry[] }) {
+  return (
+    <>
+      <p className="panel-intro">
+        有名な戦争ほど、後の時代につくられた物語やイメージが「史実」として語られがちです。ここでは、広く知られている説と、研究でわかっていることを並べます。
+        研究者のあいだでも見解が分かれている点は、その旨を明記しています。
+      </p>
+      <div className="myth-list">
+        {myths.map((m, i) => <MythCard key={i} m={m} index={i} />)}
+      </div>
+    </>
+  );
+}
+
+export function MythTeaser({ myths }: { myths: MythEntry[] }) {
+  return (
+    <a href="#myths" className="myth-teaser">
+      <span className="myth-teaser__label">通説と史実</span>
+      <span className="myth-teaser__text">「{myths[0].myth.length > 60 ? myths[0].myth.slice(0, 60) + '…' : myths[0].myth}」は本当？
+        {myths.length > 1 ? `ほか${myths.length - 1}件` : ''}</span>
+      <span className="myth-teaser__go">確かめる →</span>
+    </a>
   );
 }

@@ -7,7 +7,7 @@ import { firstSentence, formatPeriod, stripHtml } from '@/lib/text';
 import WarTabs, { type WarTab } from '@/components/war/WarTabs';
 import WarActions from '@/components/war/WarActions';
 import {
-  DetailPanel, DigestPanel, ExamPanel, HumanPanel, LegacyPanel, LessonsPanel,
+  DetailPanel, DigestPanel, ExamPanel, HumanPanel, LegacyPanel, LessonsPanel, MythsPanel, MythTeaser,
   PerspectivesPanel, QuickGrasp, StructurePanel, ThinkPrompt, WantaNote, WarChip,
 } from '@/components/war/sections';
 
@@ -37,7 +37,7 @@ const WEIGHT_LABEL: Record<number, string> = { 3: '世界秩序を変えた戦�
 export default function WarPage({ params }: { params: { id: string } }) {
   const d = getWarPageData(params.id);
   if (!d) notFound();
-  const { war, content, lessons, human, exam, wanta, think, causes, influences, prev, next } = d;
+  const { war, content, lessons, human, exam, myths, wanta, think, causes, influences, prev, next } = d;
   const period = formatPeriod(war.year, war.endYear, war.ongoing);
 
   const tabs: WarTab[] = [];
@@ -49,11 +49,16 @@ export default function WarPage({ params }: { params: { id: string } }) {
     panels.overview = (
       <>
         <QuickGrasp content={content} lessons={lessons} />
+        {myths.length > 0 && <MythTeaser myths={myths} />}
         <DigestPanel data={content.digest} />
         <ThinkPrompt question={think} hint={hint} />
         <WantaNote text={wanta.digest} />
       </>
     );
+    if (myths.length) {
+      tabs.push({ id: 'myths', label: `通説と史実（${myths.length}）` });
+      panels.myths = <MythsPanel myths={myths} />;
+    }
     tabs.push({ id: 'story', label: '詳しく読む' });
     panels.story = (<><DetailPanel data={content.detail} /><WantaNote text={wanta.detail} /></>);
 

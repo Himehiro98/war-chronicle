@@ -17,6 +17,7 @@ export const NAV_GROUPS: NavGroup[] = [
     label: '読む',
     items: [
       { label: '通史', href: '/chronicle', desc: '6つの幕で戦争史の背骨をつかむ' },
+      { label: '通説と史実', href: '/myths', desc: 'よくある誤解を研究の知見で確かめる' },
       { label: '学習パス', href: '/learn', desc: 'テーマ別のおすすめの読み順' },
       { label: '現代の問い', href: '/themes', desc: '「なぜ今こうなのか」から歴史へ' },
       { label: '宗教から読む', href: '/religions', desc: '主要5宗教と戦争の関係' },

@@ -149,3 +149,31 @@
 .war-more { margin-top: 24px; }
 @media (max-width: 560px) { .war-pager { grid-template-columns: 1fr; } .war-pager__link--next { text-align: left; } }
 .war-compare { margin-top: 20px; font-size: 14px; } .war-compare a { color: var(--accent-ink); font-weight: 700; }
+
+/* ── 通説と史実 ── */
+.myth-list { display: grid; gap: 16px; }
+.myth { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.myth__row { padding: 14px 20px; }
+.myth__row + .myth__row { border-top: 1px solid var(--line); }
+.myth__label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 4px; }
+.myth__row p { font-size: 15px; line-height: 1.95; }
+.myth__row--myth { background: #f8f7f4; }
+.myth__row--myth .myth__label { color: var(--muted); }
+.myth__row--myth p { color: var(--ink-2); }
+.myth__row--fact .myth__label { color: #166534; }
+.myth.is-debated .myth__row--fact .myth__label { color: #92400e; }
+.myth__row--why .myth__label { color: var(--muted); }
+.myth__row--why p { font-size: 14px; color: var(--ink-2); }
+.myth__no { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--line-strong); color: var(--ink); font-size: 12px; font-weight: 700; margin-right: 8px; vertical-align: 1px; }
+.myth__refs { padding: 0 20px 12px; font-size: 12px; color: var(--muted); }
+.myth-teaser { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 12px 16px; margin-bottom: 20px; border-radius: var(--radius); background: #f0fdf4; border: 1px solid #bbf7d0; text-decoration: none; }
+.myth-teaser:hover { border-color: #86efac; }
+.myth-teaser__label { font-size: 12px; font-weight: 700; color: #fff; background: #15803d; border-radius: 4px; padding: 1px 8px; }
+.myth-teaser__text { flex: 1; min-width: 200px; font-size: 14px; }
+.myth-teaser__go { font-size: 13px; font-weight: 700; color: #15803d; }
+.myths-body { padding-top: 28px; padding-bottom: 64px; }
+.myths-war { margin-top: 36px; }
+.myths-war__title { font-family: var(--font-head); font-size: 22px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+.myths-war__title a { text-decoration: none; }
+.myths-war__title a:hover { text-decoration: underline; color: var(--accent-ink); }
+.myths-war__title span { font-family: var(--font-body); font-size: 13px; color: var(--muted); font-weight: 400; }

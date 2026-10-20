@@ -188,6 +188,18 @@ export interface TagDescription {
 }
 
 /**
+ * 通説と史実 — 広く流布している説（俗説・神話化されたナラティブ）と、研究で分かっていること
+ * 実在する誤解だけを扱う。学説が割れている場合は status: 'debated' とし、断定しない。
+ */
+export interface MythEntry {
+  myth: string;                         // よく語られる説
+  fact: string;                         // 研究で分かっていること
+  why?: string;                         // その説が広まった理由（誰が、なぜ語ったか）
+  status: 'corrected' | 'debated';      // corrected: 史実と異なる / debated: 研究上も議論が続く
+  refs?: string[];                      // 参考（実在する研究者・書名のみ）
+}
+
+/**
  * 論述チャレンジ — 本サイトオリジナルの入試型論述問題
  * 実在の入試問題の転載ではなく、国公立二次・難関私大の
  * 出題形式を踏襲したオリジナル問題（著作権・捏造出典の問題を回避）

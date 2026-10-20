@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { WAR_CONTENT } from '@/lib/content';
 import { LESSONS } from '@/lib/lessons';
 import { HUMAN_LAYERS } from '@/lib/human-layers';
+import { MYTHS } from '@/lib/myths';
 import { MODERN_THEMES } from '@/lib/modern-themes';
 import { RELIGION_THEMES } from '@/lib/religion-themes';
 import { WARS_CHRONO } from '@/lib/war-data';
@@ -51,6 +52,8 @@ function searchWar(w: War, q: string): { score: number; hits: Hit[] } {
   }
   const l = LESSONS[w.id];
   if (l) fields.push(['教訓', 'lessons', [l.commonalities, l.universality, l.preventable, l.reproducibility, l.modernLessons].join(' ')]);
+  const m = MYTHS[w.id];
+  if (m?.length) fields.push(['通説と史実', 'myths', m.map((x) => `${x.myth} ${x.fact} ${x.why ?? ''}`).join(' ')]);
   const h = HUMAN_LAYERS[w.id];
   if (h) fields.push(['市民の視点', 'people', Object.values(h).join(' ')]);
 

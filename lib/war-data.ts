@@ -10,6 +10,7 @@ import { HUMAN_LAYERS } from './human-layers';
 import { EXAM_QUESTIONS } from './exam-questions';
 import { THINK_QUESTIONS } from './think-questions';
 import { WANTA_COMMENTS } from './wanta';
+import { MYTHS } from './myths';
 import type { War, WarTag } from './types';
 
 /** 年代順（開始年→終了年→名前）に並べた戦争リスト */
@@ -54,6 +55,7 @@ export function getWarPageData(id: string) {
   const lessons = LESSONS[id] ?? content?.lessons ?? null;
   const human = HUMAN_LAYERS[id] ?? content?.human ?? null;
   const exam = EXAM_QUESTIONS[id] ?? [];
+  const myths = MYTHS[id] ?? [];
   const wanta = { ...(content?.wanta ?? {}), ...(WANTA_COMMENTS[id] ?? {}) };
 
   const tag = (war.tags ?? []).find((t) => THINK_TEMPLATES[t]);
@@ -76,7 +78,7 @@ export function getWarPageData(id: string) {
   const prev = idx > 0 ? WARS_CHRONO[idx - 1] : null;
   const next = idx < WARS_CHRONO.length - 1 ? WARS_CHRONO[idx + 1] : null;
 
-  return { war, content, lessons, human, exam, wanta, think, causes, influences, prev, next };
+  return { war, content, lessons, human, exam, myths, wanta, think, causes, influences, prev, next };
 }
 
 export type WarPageData = NonNullable<ReturnType<typeof getWarPageData>>;
