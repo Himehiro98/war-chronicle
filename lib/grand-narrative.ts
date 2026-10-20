@@ -1,7 +1,7 @@
 /**
  * 通史モード「人類戦争の大きな物語」
  *
- * 176の戦争を「点」として並べるのではなく、6つの「幕（Act）」を通る
+ * 戦争を「点」として並べるのではなく、6つの「幕（Act）」を通る
  * 一本の物語として再構成する。各幕は：
  *  - thesis    : その時代の戦争の本質を一言で
  *  - lead      : 時代の戦争の性質（2-3文）
@@ -15,7 +15,7 @@
 import { WarTag } from './types';
 
 export interface NarrativeKeyWar {
-  id: string;     // war ID（/explore?war=id へリンク）
+  id: string;     // war ID（/wars/[id] へリンク）
   why: string;    // なぜこの幕の象徴なのか（1文）
 }
 
@@ -39,7 +39,7 @@ export const GRAND_NARRATIVE: NarrativeAct[] = [
     id: 'act-ancient',
     roman: 'Ⅰ',
     era: '古代',
-    period: 'BC1457 — AD500',
+    period: '前1457年〜500年',
     thesis: '定住と余剰が、戦争を生んだ',
     emoji: '🏛️',
     accent: '#b45309',
@@ -60,7 +60,7 @@ export const GRAND_NARRATIVE: NarrativeAct[] = [
     id: 'act-medieval',
     roman: 'Ⅱ',
     era: '中世',
-    period: '500 — 1450',
+    period: '500〜1450年',
     thesis: '神と血統が、動員の論理になった',
     emoji: '⛪',
     accent: '#0f766e',
@@ -80,7 +80,7 @@ export const GRAND_NARRATIVE: NarrativeAct[] = [
     id: 'act-renaissance',
     roman: 'Ⅲ',
     era: '近世',
-    period: '1450 — 1700',
+    period: '1450〜1700年',
     thesis: '主権国家が、生まれた',
     emoji: '⚓',
     accent: '#6d28d9',
@@ -100,7 +100,7 @@ export const GRAND_NARRATIVE: NarrativeAct[] = [
     id: 'act-revolution',
     roman: 'Ⅳ',
     era: '革命と国民国家',
-    period: '1700 — 1899',
+    period: '1700〜1899年',
     thesis: '国民が、兵士になった',
     emoji: '🗽',
     accent: '#4338ca',
@@ -119,7 +119,7 @@ export const GRAND_NARRATIVE: NarrativeAct[] = [
     id: 'act-20century',
     roman: 'Ⅴ',
     era: '20世紀',
-    period: '1900 — 1991',
+    period: '1900〜1991年',
     thesis: '世界全体が、戦場になった',
     emoji: '🌍',
     accent: '#b91c1c',
@@ -140,7 +140,7 @@ export const GRAND_NARRATIVE: NarrativeAct[] = [
     id: 'act-contemporary',
     roman: 'Ⅵ',
     era: '現代',
-    period: '1991 — 現在',
+    period: '1991年〜現在',
     thesis: '国家対国家から、国家対ネットワークへ',
     emoji: '📡',
     accent: '#1d4ed8',

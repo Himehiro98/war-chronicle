@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'War Chronicle — 多角的戦争史データベース',
     short_name: 'War Chronicle',
-    description: '戦争は突然起きない。人類は似た条件で何度も衝突してきた。175戦争を多角的に分析する知的教養プラットフォーム。',
+    description: '戦争は突然起きない。古代から現代までの戦争を、時系列・地理・因果・構造で横断して読む歴史学習サイト。',
     start_url: '/',
     display: 'standalone',
     background_color: '#0f172a',

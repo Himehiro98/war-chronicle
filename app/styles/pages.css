@@ -1,0 +1,39 @@
+/* ════════════════════════════════════════════════
+   Page-specific styles（通史・パターン・因果・教訓・検索など）
+   ════════════════════════════════════════════════ */
+
+/* ── 章目次（sticky） ── */
+.act-nav { position: sticky; top: var(--header-h); z-index: 30; background: rgba(246, 243, 238, 0.95); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+.act-nav__inner { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-top: 8px; padding-bottom: 8px; }
+.act-nav__inner::-webkit-scrollbar { display: none; }
+.act-nav__item { flex-shrink: 0; white-space: nowrap; font-size: 14px; padding: 6px 12px; border-radius: 999px; text-decoration: none; color: var(--ink-2); border: 1px solid transparent; }
+.act-nav__item:hover { border-color: var(--line-strong); }
+.act-nav__item.is-active { background: var(--ink); color: #fff; }
+
+/* ── 通史 ── */
+.chronicle-time { margin-top: 14px; font-size: 13px; color: var(--on-navy-muted); }
+.act { --c: var(--accent); scroll-margin-top: calc(var(--header-h) + 52px); border-bottom: 1px solid var(--line); position: relative; }
+.act:nth-of-type(even) { background: #efeae2; }
+.act__inner { position: relative; padding-top: 64px; padding-bottom: 56px; }
+.act__roman { position: absolute; right: 16px; top: 28px; font-family: var(--font-display), serif; font-size: clamp(90px, 16vw, 160px); line-height: 1; color: var(--c); opacity: 0.12; pointer-events: none; }
+.act__label { font-size: 14px; font-weight: 700; color: var(--c); letter-spacing: 0.04em; }
+.act__label span { margin-left: 12px; color: var(--muted); font-weight: 400; font-variant-numeric: tabular-nums; }
+.act__thesis { font-family: var(--font-head); font-size: clamp(26px, 4vw, 36px); line-height: 1.4; margin: 8px 0 22px; }
+.act__transition { border-left: 3px solid var(--c); padding: 4px 0 4px 16px; margin-bottom: 18px; }
+.act__transition-label { font-size: 12px; font-weight: 700; color: var(--muted); }
+.act__transition p { font-size: 15px; color: var(--ink-2); }
+.act__lead { font-size: 17px; line-height: 2; margin-bottom: 18px; }
+.act__logics { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 30px; }
+.act__logics > span { font-size: 12px; font-weight: 700; color: var(--muted); margin-right: 4px; }
+.act__wars-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+.act__wars { list-style: none; counter-reset: w; display: grid; gap: 10px; }
+.act__wars li { counter-increment: w; }
+.act-war { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 14px 18px 14px 54px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; position: relative; transition: border-color .15s, box-shadow .15s; }
+.act-war::before { content: counter(w); position: absolute; left: 16px; top: 15px; width: 26px; height: 26px; border-radius: 50%; background: var(--c); color: #fff; font-size: 13px; font-weight: 700; display: grid; place-items: center; }
+.act-war:hover { border-color: var(--c); box-shadow: var(--shadow-sm); }
+.act-war__name { font-weight: 700; font-size: 16px; }
+.act-war__year { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+.act-war__why { grid-column: 1 / -1; font-size: 14px; color: var(--ink-2); line-height: 1.8; }
+.act__throughline { margin-top: 28px; padding-top: 20px; border-top: 1px dashed var(--line-strong); font-size: 16px; line-height: 1.95; color: var(--ink-2); }
+.act__next { display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 700; color: var(--c); text-decoration: none; }
+.chronicle-end { background: var(--surface); }

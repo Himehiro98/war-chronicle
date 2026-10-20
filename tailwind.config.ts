@@ -27,8 +27,9 @@ const config: Config = {
         'gold-pale': '#f5e8c0',
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        body: ['"Source Serif 4"', 'Georgia', 'serif'],
+        serif: ['var(--font-display)', 'var(--font-serif-jp)', 'serif'],
+        body: ['var(--font-sans)', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'sans-serif'],
       },
     },
   },

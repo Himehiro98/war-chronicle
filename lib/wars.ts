@@ -8,13 +8,13 @@ import { WARS_RENAISSANCE } from './wars-renaissance';
 import { WARS_EXTRA } from './wars-extra';
 
 export const ERA_CONFIG: Record<EraId, { label: string; start: number; end: number }> = {
-  'prehistoric':    { label: '先史〜古代文明（〜BC700）', start: -3000, end: -700 },
-  'ancient':        { label: '古代（BC700〜AD500）', start: -700, end: 500 },
-  'medieval':       { label: '中世（500〜1450）', start: 500,  end: 1450 },
-  'renaissance':    { label: '近世初期（1450〜1700）', start: 1450, end: 1700 },
-  'early-modern':   { label: '近世（1700〜）',   start: 1700, end: 1899 },
-  '20th-century':   { label: '20世紀',           start: 1900, end: 1999 },
-  'contemporary':   { label: '現代',             start: 2000, end: 2030 },
+  'prehistoric':    { label: '先史・古代文明（〜前700年）', start: -3000, end: -700 },
+  'ancient':        { label: '古代（前700〜500年）', start: -700, end: 500 },
+  'medieval':       { label: '中世（500〜1450年）', start: 500,  end: 1450 },
+  'renaissance':    { label: '近世前期（1450〜1700年）', start: 1450, end: 1700 },
+  'early-modern':   { label: '近世・近代（1700〜1899年）',  start: 1700, end: 1899 },
+  '20th-century':   { label: '20世紀（1900〜1999年）', start: 1900, end: 1999 },
+  'contemporary':   { label: '21世紀（2000年〜）', start: 2000, end: 2030 },
 };
 
 const _WARS_INLINE: War[] = [
@@ -1221,7 +1221,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'somali-civil-war',
-    year: 1991, endYear: 2025,
+    year: 1991, endYear: 2026, ongoing: true,
     name: 'ソマリア内戦',
     region: 2, type: 'war', era: '20th-century',
     theater: 'ソマリア全土・モガディシュ',
@@ -1872,7 +1872,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'burmese-independence-war',
-    year: 1948, endYear: 2025,
+    year: 1948, endYear: 1960,
     name: 'ミャンマー内戦',
     region: 1, type: 'colonial', era: '20th-century',
     theater: 'ミャンマー全土（ビルマ族中央・カレン州・シャン高原・カチン州）',
@@ -1978,7 +1978,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'boko-haram-insurgency',
-    year: 2009, endYear: 2025,
+    year: 2009, endYear: 2026, ongoing: true,
     name: 'ボコ・ハラム反乱',
     region: 2, type: 'revolution', era: 'contemporary',
     theater: 'ナイジェリア北東部・チャド湖周辺',
@@ -2018,7 +2018,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'yemen-civil-war',
-    year: 2014, endYear: 2025,
+    year: 2014, endYear: 2026, ongoing: true,
     name: 'イエメン内戦',
     region: 2, type: 'war', era: 'contemporary',
     theater: 'イエメン全土・紅海',
@@ -2058,7 +2058,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'south-sudan-civil-war',
-    year: 2013, endYear: 2025,
+    year: 2013, endYear: 2026, ongoing: true,
     name: '南スーダン内戦',
     region: 2, type: 'war', era: 'contemporary',
     theater: '南スーダン',
@@ -2078,7 +2078,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'mali-conflict',
-    year: 2012, endYear: 2025,
+    year: 2012, endYear: 2026, ongoing: true,
     name: 'マリ内戦（サヘル危機）',
     region: 2, type: 'war', era: 'contemporary',
     theater: 'マリ北部・サヘル全域',
@@ -2098,7 +2098,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'central-african-civil-war',
-    year: 2012, endYear: 2025,
+    year: 2012, endYear: 2026, ongoing: true,
     name: '中央アフリカ内戦',
     region: 2, type: 'war', era: 'contemporary',
     theater: '中央アフリカ共和国',
@@ -2138,7 +2138,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'myanmar-civil-war',
-    year: 2021, endYear: 2025,
+    year: 2021, endYear: 2026, ongoing: true,
     name: 'ミャンマー内戦（クーデター後）',
     region: 1, type: 'revolution', era: 'contemporary',
     theater: 'ミャンマー全土',
@@ -2178,7 +2178,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'sudan-civil-war-2023',
-    year: 2023, endYear: 2025,
+    year: 2023, endYear: 2026, ongoing: true,
     name: 'スーダン内戦',
     region: 2, type: 'war', era: 'contemporary',
     theater: 'スーダン全土',
@@ -2198,7 +2198,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'gaza-war',
-    year: 2023, endYear: 2025,
+    year: 2023, endYear: 2026, ongoing: true,
     name: 'ガザ戦争',
     region: 2, type: 'war', era: 'contemporary',
     theater: 'ガザ地区・イスラエル南部',
@@ -2218,10 +2218,10 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'iran-israel-war',
-    year: 2024, endYear: 2025,
-    name: 'イラン・イスラエル直接軍事衝突',
+    year: 2024, endYear: 2026, ongoing: true,
+    name: 'イラン・イスラエル戦争（米国・イラン戦争を含む）',
     region: 2, type: 'war', era: 'contemporary',
-    theater: 'イスラエル・イラン・シリア',
+    theater: 'イラン・イスラエル・湾岸・レバノン・ホルムズ海峡',
     mapHighlight: 'middle-east',
     markers: [
       { coordinates: [34.8, 32.1], label: 'テルアビブ（イスラエル本土）', isMain: true },
@@ -2229,8 +2229,11 @@ const _WARS_INLINE: War[] = [
       { coordinates: [36.3, 33.5], label: 'ダマスカス（イラン大使館複合施設・イスラエル空爆）' },
       { coordinates: [51.7, 32.4], label: 'イスファハン（イスラエル反撃・核施設周辺）', enemy: true },
       { coordinates: [34.9, 31.2], label: 'ネバティム空軍基地（イランミサイル着弾）' },
+      { coordinates: [50.9, 34.9], label: 'フォルドゥ（地下核施設・2025年米軍空爆）', enemy: true },
+      { coordinates: [56.3, 26.6], label: 'ホルムズ海峡（2026年封鎖）', isMain: true },
+      { coordinates: [35.5, 33.3], label: '南レバノン（2026年ヒズボラとの戦闘）' },
     ],
-    weight: 2,
+    weight: 3,
     tags: ['核抑止', '安全保障ジレンマ', '情報戦・プロパガンダ', '宗教対立', '誤算・誤認知'],
     ideologies: ['シオニズム', 'イスラム主義', 'イラン革命思想'],
     causes: ['gaza-war', 'iran-iraq-war'],
@@ -2238,7 +2241,7 @@ const _WARS_INLINE: War[] = [
   },
   {
     id: 'ukraine-war',
-    year: 2022, endYear: 2025,
+    year: 2022, endYear: 2026, ongoing: true,
     name: 'ロシア・ウクライナ戦争',
     region: 0, type: 'war', era: 'contemporary',
     theater: 'ウクライナ全域',
