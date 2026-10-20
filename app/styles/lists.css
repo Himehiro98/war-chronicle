@@ -1,0 +1,28 @@
+/* ════════════════════════════════════════════════
+   Filters & lists（戦争一覧など）
+   ════════════════════════════════════════════════ */
+.wars-index { padding-top: 28px; padding-bottom: 64px; }
+.filters { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 10px; margin-bottom: 28px; }
+.filters__row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.filters__label { font-size: 12px; font-weight: 700; color: var(--muted); margin-right: 4px; min-width: 2.5em; }
+.filters__sep { width: 1px; height: 20px; background: var(--line); margin: 0 6px; }
+.filters__tags summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--ink-2); padding: 4px 0; }
+.filters__tags .filters__row { margin-top: 8px; }
+.filters__result { font-size: 13px; color: var(--muted); }
+.filters__result a { color: var(--accent-ink); }
+
+.wars-group { margin-bottom: 36px; }
+.wars-group__title { font-family: var(--font-head); font-size: 22px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); display: flex; align-items: baseline; gap: 10px; }
+.wars-group__title span { font-family: var(--font-body); font-size: 13px; color: var(--muted); font-weight: 400; }
+.wars-list { list-style: none; }
+.wars-row { display: grid; grid-template-columns: 9.5em 1fr; gap: 16px; padding: 14px 8px; border-bottom: 1px solid var(--line); text-decoration: none; border-radius: 6px; }
+.wars-row:hover { background: var(--surface); }
+.wars-row__period { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.wars-row__name { font-size: 17px; font-weight: 700; line-height: 1.5; }
+.wars-row__badge { display: inline-block; margin-left: 8px; font-size: 11px; font-weight: 700; color: #fff; background: #dc2626; border-radius: 4px; padding: 1px 6px; vertical-align: 2px; }
+.wars-row__meta { font-size: 13px; color: var(--muted); }
+.wars-row__summary { font-size: 14px; color: var(--ink-2); line-height: 1.75; margin-top: 4px; }
+@media (max-width: 640px) {
+  .wars-row { grid-template-columns: 1fr; gap: 2px; }
+  .filters__sep { display: none; }
+}

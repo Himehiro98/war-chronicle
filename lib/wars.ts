@@ -8,13 +8,13 @@ import { WARS_RENAISSANCE } from './wars-renaissance';
 import { WARS_EXTRA } from './wars-extra';
 
 export const ERA_CONFIG: Record<EraId, { label: string; start: number; end: number }> = {
-  'prehistoric':    { label: '先史〜古代文明（〜BC700）', start: -3000, end: -700 },
-  'ancient':        { label: '古代（BC700〜AD500）', start: -700, end: 500 },
-  'medieval':       { label: '中世（500〜1450）', start: 500,  end: 1450 },
-  'renaissance':    { label: '近世初期（1450〜1700）', start: 1450, end: 1700 },
-  'early-modern':   { label: '近世（1700〜）',   start: 1700, end: 1899 },
-  '20th-century':   { label: '20世紀',           start: 1900, end: 1999 },
-  'contemporary':   { label: '現代',             start: 2000, end: 2030 },
+  'prehistoric':    { label: '先史・古代文明（〜前700年）', start: -3000, end: -700 },
+  'ancient':        { label: '古代（前700〜500年）', start: -700, end: 500 },
+  'medieval':       { label: '中世（500〜1450年）', start: 500,  end: 1450 },
+  'renaissance':    { label: '近世前期（1450〜1700年）', start: 1450, end: 1700 },
+  'early-modern':   { label: '近世・近代（1700〜1899年）',  start: 1700, end: 1899 },
+  '20th-century':   { label: '20世紀（1900〜1999年）', start: 1900, end: 1999 },
+  'contemporary':   { label: '21世紀（2000年〜）', start: 2000, end: 2030 },
 };
 
 const _WARS_INLINE: War[] = [

@@ -197,7 +197,7 @@ export default function ThemePage({ params }: { params: { themeId: string } }) {
                       {snippet.length > 240 ? snippet.slice(0, 240) + '…' : snippet}
                     </p>
                     <Link
-                      href={`/explore?war=${war.id}`}
+                      href={`/wars/${war.id}`}
                       className="inline-flex items-center gap-1 text-sm font-bold hover:underline"
                       style={{ color: accent }}
                     >

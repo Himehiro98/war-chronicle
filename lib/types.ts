@@ -55,6 +55,7 @@ export interface War {
   causes?: string[];        // この戦争を引き起こした戦争IDs（因果ネットワーク）
   influences?: string[];    // この戦争が影響を与えた戦争IDs
   ideologies?: string[];    // 関連イデオロギー（ナショナリズム/共産主義/民族自決 等）
+  ongoing?: boolean;        // 現在も継続中（endYear は最新確認年として扱う）
 }
 
 export interface MapMarker {

@@ -181,7 +181,7 @@ export default function ChroniclePage() {
                 const info = WAR_LOOKUP[kw.id];
                 if (!info) return null;
                 return (
-                  <Link key={kw.id} href={`/explore?war=${kw.id}`}
+                  <Link key={kw.id} href={`/wars/${kw.id}`}
                     style={{
                       display: 'flex', gap: 14, alignItems: 'flex-start',
                       padding: '14px 16px', borderRadius: 10, textDecoration: 'none',

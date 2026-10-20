@@ -95,7 +95,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
     if (!p?.warId) return;
     // 既選択 → そのまま詳細ページへ
     if (selected?.warId === p.warId) {
-      router.push(`/explore?war=${p.warId}`);
+      router.push(`/wars/${p.warId}`);
       return;
     }
     // 未選択 → カードで情報表示（詳細はボタン押下で）
@@ -234,7 +234,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
 
           {/* 詳細ページへ */}
           <button
-            onClick={() => router.push(`/explore?war=${selected.warId}`)}
+            onClick={() => router.push(`/wars/${selected.warId}`)}
             style={{
               width: '100%',
               padding: '8px 14px',

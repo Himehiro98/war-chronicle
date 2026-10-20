@@ -293,7 +293,7 @@ export default function LessonsPage() {
                       </div>
                     ))}
                     <div style={{ marginTop: 12, paddingTop: 10, borderTop: `1px solid ${COLORS.border}`, display: 'flex', gap: 8 }}>
-                      <Link href={`/explore?war=${war.id}`}
+                      <Link href={`/wars/${war.id}`}
                         style={{
                           fontSize: 12, padding: '5px 12px', borderRadius: 4,
                           background: COLORS.rust, color: '#fff', textDecoration: 'none', fontWeight: 600,

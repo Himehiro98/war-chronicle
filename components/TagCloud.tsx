@@ -106,7 +106,7 @@ export default function TagCloud() {
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {matched.map((w) => (
-                  <a key={w.id} href={`/explore?war=${w.id}`} style={{
+                  <a key={w.id} href={`/wars/${w.id}`} style={{
                     fontSize: 13, padding: '5px 10px', borderRadius: 4,
                     background: '#f1f5f9', color: '#1e293b',
                     border: '1px solid rgba(15,23,42,0.08)',

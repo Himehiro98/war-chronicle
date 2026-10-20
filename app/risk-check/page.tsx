@@ -339,7 +339,7 @@ export default function RiskCheckPage() {
                           <TagChip key={t} tag={t} />
                         ))}
                       </div>
-                      <Link href={`/explore?war=${war.id}`} style={{
+                      <Link href={`/wars/${war.id}`} style={{
                         fontSize: 13, color: '#64748b', textDecoration: 'none',
                       }}>
                         詳細を見る →
@@ -362,7 +362,7 @@ export default function RiskCheckPage() {
                     {topLesson.modernLessons.replace(/<[^>]*>/g, '').substring(0, 300)}
                     {topLesson.modernLessons.length > 300 && '…'}
                   </div>
-                  <Link href={`/explore?war=${matchedWars[0].war.id}`} style={{
+                  <Link href={`/wars/${matchedWars[0].war.id}`} style={{
                     display: 'inline-block', marginTop: 10,
                     fontSize: 13, color: '#8b3a1e', textDecoration: 'none', fontWeight: 600,
                   }}>

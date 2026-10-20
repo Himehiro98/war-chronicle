@@ -122,7 +122,7 @@ function ConflictCard({ c }: { c: LiveConflictStats }) {
 
           {/* ソースリンク + 詳細ページ */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
-            <Link href={`/explore?war=${c.id}`} style={{
+            <Link href={`/wars/${c.id}`} style={{
               fontSize: 12, padding: '5px 12px', borderRadius: 4,
               background: COLORS.rust, color: '#fff', textDecoration: 'none', fontWeight: 600,
             }}>

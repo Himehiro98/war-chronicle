@@ -617,7 +617,7 @@ function RelatedWarsNav({ war }: { war: War }) {
   if (causes.length === 0 && influences.length === 0) return null;
 
   const Chip = ({ w, color }: { w: War; color: string }) => (
-    <a href={`/explore?war=${w.id}`}
+    <a href={`/wars/${w.id}`}
       style={{
         display: 'inline-flex', alignItems: 'baseline', gap: 5,
         padding: '4px 10px', borderRadius: 14, fontSize: 12, fontWeight: 600,

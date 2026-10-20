@@ -122,7 +122,7 @@ export default function ChainsPage() {
                   const isLast = i === chain.nodes.length - 1;
                   return (
                     <div key={node.id}>
-                      <Link href={`/explore?war=${w.id}`}
+                      <Link href={`/wars/${w.id}`}
                         style={{ display: 'flex', gap: 12, alignItems: 'center', textDecoration: 'none', padding: '2px 0' }}
                         onMouseEnter={(e) => { (e.currentTarget.querySelector('[data-nm]') as HTMLElement).style.color = chain.accent; }}
                         onMouseLeave={(e) => { (e.currentTarget.querySelector('[data-nm]') as HTMLElement).style.color = '#f8fafc'; }}>
@@ -186,7 +186,7 @@ export default function ChainsPage() {
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                   {upstream.map(({ level, war }) => (
-                    <Link key={war.id} href={`/explore?war=${war.id}`}
+                    <Link key={war.id} href={`/wars/${war.id}`}
                       style={{
                         display: 'flex', gap: 10, alignItems: 'center', textDecoration: 'none',
                         paddingLeft: (level - 1) * 22, opacity: level === 1 ? 1 : 0.72,
@@ -214,7 +214,7 @@ export default function ChainsPage() {
                   {formatYear(trace.year)}–{formatYear(trace.endYear)} ／ 原因{trace.causes.length}・影響{trace.influences.length}
                 </div>
               </div>
-              <Link href={`/explore?war=${trace.id}`} style={{
+              <Link href={`/wars/${trace.id}`} style={{
                 marginLeft: 'auto', fontSize: 13, fontWeight: 700, padding: '7px 13px',
                 borderRadius: 6, background: '#fbbf24', color: '#0f172a', textDecoration: 'none', whiteSpace: 'nowrap',
               }}>📖 詳しく</Link>
@@ -230,7 +230,7 @@ export default function ChainsPage() {
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                   {downstream.map(({ level, war }) => (
-                    <Link key={war.id} href={`/explore?war=${war.id}`}
+                    <Link key={war.id} href={`/wars/${war.id}`}
                       style={{
                         display: 'flex', gap: 10, alignItems: 'center', textDecoration: 'none',
                         paddingLeft: (level - 1) * 22, opacity: level === 1 ? 1 : 0.72,

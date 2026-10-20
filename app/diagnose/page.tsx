@@ -84,7 +84,7 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
           </div>
           <div>
             <Link
-              href={`/explore?war=${match.warId}`}
+              href={`/wars/${match.warId}`}
               style={{
                 color: C.text, fontWeight: 700, fontSize: 24,
                 textDecoration: 'none', display: 'block',
@@ -166,7 +166,7 @@ function MatchCard({ match, index }: { match: MatchItem; index: number }) {
       {/* 詳細リンク */}
       <div style={{ textAlign: 'right' }}>
         <Link
-          href={`/explore?war=${match.warId}`}
+          href={`/wars/${match.warId}`}
           style={{
             color: C.amber, fontSize: 16, textDecoration: 'none',
             fontWeight: 500,

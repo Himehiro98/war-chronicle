@@ -270,7 +270,7 @@ export default function WantaListPage() {
                   </p>
                 </div>
                 {/* ジャンプボタン */}
-                <a href={`/explore?war=${e.warId}`} style={{
+                <a href={`/wars/${e.warId}`} style={{
                   flexShrink: 0, alignSelf: 'center', marginLeft: 'auto',
                   fontSize: 12, fontWeight: 700, padding: '7px 12px', borderRadius: 6,
                   background: COLORS.amberDark, color: '#fff', textDecoration: 'none',
@@ -311,7 +311,7 @@ export default function WantaListPage() {
                   }}>
                     {group.entries.length} 件
                   </span>
-                  <a href={`/explore?war=${group.warId}`} style={{
+                  <a href={`/wars/${group.warId}`} style={{
                     fontSize: 12, fontWeight: 700, padding: '5px 10px', borderRadius: 6,
                     background: COLORS.amberDark, color: '#fff', textDecoration: 'none',
                     whiteSpace: 'nowrap', flexShrink: 0,

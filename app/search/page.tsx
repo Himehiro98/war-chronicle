@@ -282,7 +282,7 @@ export default function SearchPage() {
                           ))}
                         </div>
                       </div>
-                      <Link href={`/explore?war=${r.warId}`} style={{
+                      <Link href={`/wars/${r.warId}`} style={{
                         flexShrink: 0, fontSize: 12, padding: '5px 12px', borderRadius: 4,
                         background: COLORS.rust, color: '#fff', textDecoration: 'none', fontWeight: 600,
                       }}>

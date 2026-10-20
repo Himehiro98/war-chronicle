@@ -101,7 +101,7 @@ export default function ReligionPage() {
           <div style={{ position: 'relative', paddingLeft: 28 }}>
             <div style={{ position: 'absolute', left: 8, top: 8, bottom: 8, width: 2, background: theme.accent, opacity: 0.4 }} />
             {relatedWars.map((war) => (
-              <Link key={war.id} href={`/explore?war=${war.id}`} style={{ textDecoration: 'none' }}>
+              <Link key={war.id} href={`/wars/${war.id}`} style={{ textDecoration: 'none' }}>
                 <div style={{ position: 'relative', marginBottom: 16, background: 'white', border: '1px solid rgba(15,23,42,0.08)', borderRadius: 8, padding: 16, transition: 'all 0.2s', cursor: 'pointer' }}
                   onMouseEnter={e => { e.currentTarget.style.transform = 'translateX(4px)'; e.currentTarget.style.borderColor = theme.accent; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = 'translateX(0)'; e.currentTarget.style.borderColor = 'rgba(15,23,42,0.08)'; }}>

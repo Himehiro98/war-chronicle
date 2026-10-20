@@ -214,7 +214,7 @@ export default function PatternsEvolutionPage() {
                   </div>
                 )}
                 {/* 戦争行 */}
-                <Link href={`/explore?war=${w.id}`}
+                <Link href={`/wars/${w.id}`}
                   style={{
                     display: 'flex', alignItems: 'center', gap: 0, textDecoration: 'none',
                     padding: '5px 0', position: 'relative',
