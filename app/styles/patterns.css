@@ -128,3 +128,20 @@ mark { background: rgba(251, 191, 36, 0.45); color: inherit; border-radius: 2px;
 .quiz__result.is-pass { background: #f0fdf4; color: #166534; }
 .quiz__done { margin-top: 12px; font-size: 13px; color: #15803d; font-weight: 700; }
 .path-next { margin-top: 48px; }
+
+/* ── テーマ・宗教の詳細 ── */
+.topic-body { padding-top: 16px; padding-bottom: 64px; }
+.topic-section { padding: 32px 0; border-bottom: 1px solid var(--line); }
+.topic-section:last-child { border-bottom: 0; }
+.topic-section h2 { font-family: var(--font-head); font-size: 24px; line-height: 1.4; margin: 4px 0 14px; }
+.topic-section .eyebrow { color: var(--c, var(--accent)); }
+.topic-concepts { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.topic-concepts li { padding: 6px 12px; border-radius: 6px; background: var(--surface); border: 1px solid var(--line-strong); font-size: 14px; font-weight: 700; }
+.topic-wars { list-style: none; display: grid; gap: 10px; position: relative; padding-left: 22px; }
+.topic-wars::before { content: ""; position: absolute; left: 5px; top: 10px; bottom: 10px; width: 2px; background: var(--c, var(--accent)); opacity: 0.35; }
+.topic-war { display: flex; flex-direction: column; gap: 2px; padding: 14px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; position: relative; transition: border-color .15s; }
+.topic-war::before { content: ""; position: absolute; left: -22px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--c, var(--accent)); border: 2px solid var(--bg); }
+.topic-war:hover { border-color: var(--c, var(--accent)); }
+.topic-war__meta { font-size: 13px; color: var(--muted); }
+.topic-war__name { font-weight: 700; font-size: 17px; }
+.topic-war__summary { font-size: 14px; color: var(--ink-2); line-height: 1.8; }
