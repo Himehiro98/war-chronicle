@@ -2,7 +2,7 @@ import { WARS } from './wars';
 
 /** サイト全体で使う数値（表記ゆれを防ぐため、数字は必ずデータから計算する。サーバー側専用） */
 
-const formatYear = (y: number) => (y < 0 ? `BC${-y}` : `${y}`);
+const formatYear = (y: number) => (y < 0 ? `紀元前${-y}年` : `${y}年`);
 
 export const WAR_COUNT = WARS.length;
 export const FIRST_YEAR = Math.min(...WARS.map((w) => w.year));

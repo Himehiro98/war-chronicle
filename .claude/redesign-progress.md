@@ -20,14 +20,14 @@ dev server: `C:\Users\user\Desktop\.claude\launch.json` の "war-chronicle"（po
   - lib/site.ts（サーバー専用の数値）, lib/nav.ts（ナビ定義）, lib/text.ts（stripHtml/firstSentence/formatPeriod）
   - smoke test: scratchpad/smoke.sh（無ければ全ルートを curl で 200 確認）
 - [x] P3 戦争ページ `/wars/[id]`（SSG）＋ `/explore?war=` 308転送＋タブのハッシュ連動・前後ナビ・パンくず＋探索画面作り直し（components/explore/）＋戦争一覧 `/wars`（サーバー側フィルタ）。DetailDrawer/SearchModal/旧Timeline/WantaBubble 削除。CompareModal は components/_legacy-CompareModal.tsx.txt に退避 → P6 で /compare ページとして作り直す
-- [ ] P4 トップ再設計（3導線・数値自動計算）
+- [x] P4 トップ再設計（サーバー描画・3つの入口・いま続いている戦争・構造パターン一覧・編集方針）。Hero/TagCloud 削除、styles/home.css
 - [ ] P5 内容是正：C1数の統一 / C2ライブデータ更新(WebSearchで2026-10時点)＋ワークフロー修正 / C3ダミーバー撤去 / C4再現性統計撤去 / C5生HTML / C6学習パス / C7文言
 - [ ] P6 各ページ磨き込み：chronicle, patterns, chains, lessons, search, learn, themes, religions, wanta, flashcards, diagnose, risk-check, live
 - [ ] P7 SEO：ページ別 metadata（route layout.tsx）、sitemap.ts、robots.ts
 - [ ] P8 QA：build、モバイル、全ルート確認、master merge、ユーザーへ報告、Cron削除
 
 ## 次にやること
-P4 トップ再設計から。※スクショは Browser pane が隠れていると失敗するので javascript_tool で検証する。
+P5 内容是正から。※スクショは Browser pane が隠れていると失敗するので javascript_tool で検証する。
 
 ## ログ
 - 2026-10-20 開始。master を pull（timestamp commit 17件）、ブランチ作成。lib/causal-chains.ts の未コミット修正（イタリア→ドイツ統一の接続文の史実修正）は妥当なので維持。
