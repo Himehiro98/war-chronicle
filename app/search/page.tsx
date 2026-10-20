@@ -1,323 +1,151 @@
-'use client';
-
-import { useState, useMemo } from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { WARS } from '@/lib/wars';
-import { LESSONS } from '@/lib/lessons';
 import { WAR_CONTENT } from '@/lib/content';
-import { WarTag } from '@/lib/types';
+import { LESSONS } from '@/lib/lessons';
+import { HUMAN_LAYERS } from '@/lib/human-layers';
+import { MODERN_THEMES } from '@/lib/modern-themes';
+import { RELIGION_THEMES } from '@/lib/religion-themes';
+import { WARS_CHRONO } from '@/lib/war-data';
+import { formatPeriod, stripHtml } from '@/lib/text';
+import type { War } from '@/lib/types';
 
-const COLORS = {
-  bg: '#0f172a',
-  panel: '#1e293b',
-  card: '#1a2540',
-  rust: '#8b3a1e',
-  teal: '#1a4a42',
-  gold: '#b8860b',
-  text: '#f8fafc',
-  textSub: '#94a3b8',
-  border: 'rgba(248,250,252,0.08)',
-  borderHover: 'rgba(248,250,252,0.18)',
-  highlight: '#d97706',
+export const metadata: Metadata = {
+  title: '全文検索',
+  description: '戦争名・人物・地名・概念などのキーワードで、すべての戦争の本文・教訓・市民の視点を横断検索できます。',
 };
 
-type MatchField = {
-  label: string;
-  snippet: string;
-  emoji: string;
-};
+const POPULAR = ['ヴェルサイユ条約', '民族自決', '核', '難民', '飢饉', '同盟', '宗教改革', '石油', '独立', 'クーデター', 'ジェノサイド', '海峡'];
 
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
+type Hit = { label: string; tab: string; snippet: string };
+
+function snippet(plain: string, q: string, width = 70) {
+  const i = plain.indexOf(q);
+  if (i < 0) return null;
+  const s = Math.max(0, i - width);
+  const e = Math.min(plain.length, i + q.length + width);
+  return (s > 0 ? '…' : '') + plain.slice(s, e) + (e < plain.length ? '…' : '');
 }
 
-function getSnippet(text: string, query: string, maxLen = 120): string {
-  const plain = stripHtml(text);
-  const lowerText = plain.toLowerCase();
-  const lowerQ = query.toLowerCase();
-  const idx = lowerText.indexOf(lowerQ);
-  if (idx === -1) return plain.slice(0, maxLen) + (plain.length > maxLen ? '…' : '');
-  const start = Math.max(0, idx - 40);
-  const end = Math.min(plain.length, idx + lowerQ.length + 80);
-  let snippet = plain.slice(start, end);
-  if (start > 0) snippet = '…' + snippet;
-  if (end < plain.length) snippet = snippet + '…';
-  return snippet;
+function Highlight({ text, q }: { text: string; q: string }) {
+  const parts = text.split(q);
+  return <>{parts.map((p, i) => <span key={i}>{p}{i < parts.length - 1 && <mark>{q}</mark>}</span>)}</>;
 }
 
-function highlight(text: string, query: string): React.ReactNode {
-  if (!query.trim()) return text;
-  const parts = text.split(new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'));
-  return parts.map((part, i) =>
-    part.toLowerCase() === query.toLowerCase()
-      ? <mark key={i} style={{ background: '#d9770640', color: '#fcd34d', borderRadius: 2, padding: '0 2px' }}>{part}</mark>
-      : part
-  );
+function searchWar(w: War, q: string): { score: number; hits: Hit[] } {
+  const hits: Hit[] = [];
+  let score = 0;
+  if (w.name.includes(q)) { score += 100; }
+  if ((w.tags ?? []).some((t) => t.includes(q))) { score += 30; hits.push({ label: '構造パターン', tab: 'overview', snippet: (w.tags ?? []).join('・') }); }
+  if ((w.ideologies ?? []).some((t) => t.includes(q))) { score += 20; hits.push({ label: 'イデオロギー', tab: 'overview', snippet: (w.ideologies ?? []).join('・') }); }
+  if (w.theater.includes(q)) { score += 20; hits.push({ label: '舞台', tab: 'overview', snippet: w.theater }); }
+
+  const c = WAR_CONTENT[w.id];
+  const fields: [string, string, string | undefined][] = [];
+  if (c) {
+    fields.push(['歴史的背景', 'overview', c.digest.background], ['当事者と動機', 'overview', c.digest.actors],
+      ['構造的な要因', 'overview', c.digest.structural], ['その後の連鎖', 'overview', c.digest.aftermath],
+      ['詳しく読む', 'story', [c.detail.lead, ...c.detail.sections.map((s) => `${s.heading} ${s.body}`)].join(' ')],
+      ['各国の視点', 'perspectives', c.perspectives.map((p) => `${p.nation}：${p.text}`).join(' ')],
+      ['構造', 'structure', [c.structure.summary, ...c.structure.factors.map((f) => `${f.title} ${f.body}`)].join(' ')],
+      ['その後', 'legacy', c.legacy.map((l) => l.text).join(' ')]);
+  }
+  const l = LESSONS[w.id];
+  if (l) fields.push(['教訓', 'lessons', [l.commonalities, l.universality, l.preventable, l.reproducibility, l.modernLessons].join(' ')]);
+  const h = HUMAN_LAYERS[w.id];
+  if (h) fields.push(['市民の視点', 'people', Object.values(h).join(' ')]);
+
+  for (const [label, tab, raw] of fields) {
+    const plain = stripHtml(raw);
+    const sn = snippet(plain, q);
+    if (sn) {
+      score += label === '歴史的背景' ? 8 : 5;
+      score += Math.min(plain.split(q).length - 1, 5);
+      hits.push({ label, tab, snippet: sn });
+    }
+  }
+  return { score, hits };
 }
 
-interface SearchResult {
-  warId: string;
-  warName: string;
-  year: number;
-  endYear: number;
-  theater: string;
-  tags: WarTag[];
-  matchedFields: MatchField[];
-}
-
-const REGION_LABELS = ['欧州', 'アジア', '中東・アフリカ', '南北米'];
-const REGION_COLORS = ['#1a4a42', '#8b3a1e', '#b8860b', '#3a5a8b'];
-
-export default function SearchPage() {
-  const [query, setQuery] = useState('');
-
-  const results = useMemo<SearchResult[]>(() => {
-    const q = query.trim();
-    if (q.length < 1) return [];
-    const ql = q.toLowerCase();
-
-    return WARS.flatMap(war => {
-      const matchedFields: MatchField[] = [];
-      const lessons = LESSONS[war.id];
-      const content = WAR_CONTENT[war.id];
-
-      // 戦争名
-      if (war.name.toLowerCase().includes(ql)) {
-        matchedFields.push({ label: '戦争名', snippet: war.name, emoji: '⚔️' });
-      }
-      // タグ
-      const matchedTags = (war.tags ?? []).filter(t => t.toLowerCase().includes(ql));
-      if (matchedTags.length > 0) {
-        matchedFields.push({ label: 'タグ', snippet: matchedTags.join('・'), emoji: '🏷️' });
-      }
-      // イデオロギー
-      const matchedIdeologies = (war.ideologies ?? []).filter(i => i.toLowerCase().includes(ql));
-      if (matchedIdeologies.length > 0) {
-        matchedFields.push({ label: 'イデオロギー', snippet: matchedIdeologies.join('・'), emoji: '💭' });
-      }
-      // 地域
-      if (war.theater.toLowerCase().includes(ql)) {
-        matchedFields.push({ label: '地域', snippet: war.theater, emoji: '🌍' });
-      }
-      // 教訓
-      if (lessons) {
-        const lessonFields: { key: keyof typeof lessons; label: string; emoji: string }[] = [
-          { key: 'modernLessons', label: '現代への教訓', emoji: '💡' },
-          { key: 'commonalities', label: '共通パターン', emoji: '🔗' },
-          { key: 'universality', label: '普遍的メカニズム', emoji: '🌐' },
-          { key: 'preventable', label: '防止可能性', emoji: '🛡️' },
-          { key: 'reproducibility', label: '再現性', emoji: '⚠️' },
-        ];
-        for (const { key, label, emoji } of lessonFields) {
-          const plain = stripHtml(String(lessons[key] ?? ''));
-          if (plain.toLowerCase().includes(ql)) {
-            matchedFields.push({ label, snippet: getSnippet(plain, q), emoji });
-            break; // 教訓は1フィールドのみ
-          }
-        }
-      }
-      // コンテンツ（背景・aftermath）
-      if (content) {
-        const bgPlain = stripHtml(content.digest?.background ?? '');
-        if (bgPlain.toLowerCase().includes(ql)) {
-          matchedFields.push({ label: '歴史的背景', snippet: getSnippet(bgPlain, q), emoji: '🏛️' });
-        }
-        const afterPlain = stripHtml(content.digest?.aftermath ?? '');
-        if (afterPlain.toLowerCase().includes(ql)) {
-          matchedFields.push({ label: 'その後の連鎖', snippet: getSnippet(afterPlain, q), emoji: '🌊' });
-        }
-      }
-
-      if (matchedFields.length === 0) return [];
-      return [{
-        warId: war.id,
-        warName: war.name,
-        year: war.year,
-        endYear: war.endYear,
-        theater: war.theater,
-        tags: war.tags ?? [],
-        matchedFields,
-      }];
-    });
-  }, [query]);
-
-  const POPULAR_QUERIES: string[] = [
-    'ナショナリズム', '民族浄化', '核抑止', '安全保障ジレンマ',
-    '経済危機', '同盟暴走', '権力真空', '誤算・誤認知',
-    '宗教対立', '植民地解放', '資源争奪', '冷戦構造',
-  ];
+export default function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
+  const q = (searchParams.q ?? '').trim().slice(0, 50);
+  const results = q
+    ? WARS_CHRONO.map((w) => ({ w, ...searchWar(w, q) })).filter((r) => r.score > 0).sort((a, b) => b.score - a.score)
+    : [];
+  const themeHits = q
+    ? [
+        ...MODERN_THEMES.filter((t) => [t.question, t.shortAnswer, t.background, t.modernSituation, ...t.keyConcepts].join(' ').includes(q))
+          .map((t) => ({ href: `/themes/${t.id}`, title: t.question, kind: '現代の問い' })),
+        ...RELIGION_THEMES.filter((t) => stripHtml([t.name, t.shortThesis, t.origin, t.coreBeliefs, t.paradox, t.modernSituation, ...t.keyConcepts].join(' ')).includes(q))
+          .map((t) => ({ href: `/religions/${t.id}`, title: t.name, kind: '宗教から読む' })),
+      ]
+    : [];
 
   return (
-    <div style={{ background: COLORS.bg, minHeight: '100vh', color: COLORS.text }}>
-
-
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '40px 20px' }}>
-
-        {/* タイトル */}
-        <div style={{ marginBottom: 28, textAlign: 'center' }}>
-          <h1 className="font-serif" style={{ fontSize: 30, fontWeight: 700, color: '#f8fafc', marginBottom: 8 }}>
-            🔍 全文検索
-          </h1>
-          <p style={{ fontSize: 14, color: COLORS.textSub }}>
-            戦争名・タグ・イデオロギー・教訓・歴史的背景まで横断検索
-          </p>
+    <main>
+      <section className="page-hero">
+        <div className="container-read">
+          <div className="eyebrow">Search</div>
+          <h1>全文検索</h1>
+          <p className="lead">戦争名・人物・地名・概念などで、すべての戦争の本文・各国の視点・教訓・市民の視点を横断して探せます。</p>
+          <form action="/search" method="get" className="search-form" role="search">
+            <label htmlFor="q" className="sr-only">キーワード</label>
+            <input id="q" name="q" type="search" className="input" defaultValue={q} placeholder="例：ヴェルサイユ条約、難民、ビスマルク" autoFocus={!q} />
+            <button type="submit" className="btn btn--primary">検索</button>
+          </form>
         </div>
+      </section>
 
-        {/* 検索ボックス */}
-        <div style={{ position: 'relative', marginBottom: 20 }}>
-          <input
-            type="text"
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-            placeholder="例：ナショナリズム、核、民族浄化、安全保障ジレンマ..."
-            autoFocus
-            style={{
-              width: '100%', padding: '14px 50px 14px 18px', borderRadius: 8, fontSize: 18,
-              background: COLORS.panel, border: `1px solid ${query ? COLORS.highlight : COLORS.border}`,
-              color: COLORS.text, outline: 'none', boxSizing: 'border-box',
-              transition: 'border-color 0.2s',
-            }}
-          />
-          {query && (
-            <button onClick={() => setQuery('')} style={{
-              position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
-              background: 'none', border: 'none', cursor: 'pointer', fontSize: 19, color: COLORS.textSub,
-            }}>×</button>
-          )}
-        </div>
-
-        {/* 人気キーワード（未入力時） */}
-        {!query && (
-          <div>
-            <div style={{ fontSize: 12, color: COLORS.textSub, marginBottom: 10, letterSpacing: '0.08em', fontWeight: 700 }}>
-              よく使われる検索キーワード
+      <div className="container-read search-body">
+        {!q && (
+          <section>
+            <h2 className="panel-subhead">よく調べられているキーワード</h2>
+            <div className="war-chip-list">
+              {POPULAR.map((p) => <Link key={p} href={`/search?q=${encodeURIComponent(p)}`} className="chip">{p}</Link>)}
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {POPULAR_QUERIES.map(q => (
-                <button key={q} onClick={() => setQuery(q)}
-                  style={{
-                    padding: '6px 14px', borderRadius: 20, fontSize: 13, cursor: 'pointer',
-                    background: COLORS.panel, color: COLORS.textSub,
-                    border: `1px solid ${COLORS.border}`,
-                    transition: 'all 0.15s',
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.highlight; e.currentTarget.style.color = COLORS.highlight; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.color = COLORS.textSub; }}>
-                  {q}
-                </button>
-              ))}
-            </div>
-
-            {/* 使い方ガイド */}
-            <div style={{ marginTop: 32, padding: '16px 18px', background: COLORS.panel, borderRadius: 8, border: `1px solid ${COLORS.border}` }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.text, marginBottom: 10 }}>🔍 検索できる内容</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 8 }}>
-                {[
-                  { emoji: '🏷️', label: '構造タグ', desc: 'ナショナリズム・核抑止・民族浄化など' },
-                  { emoji: '💭', label: 'イデオロギー', desc: 'ファシズム・共産主義・民族自決など' },
-                  { emoji: '💡', label: '教訓・警戒', desc: '現代への教訓・再現性・防止可能性' },
-                  { emoji: '🏛️', label: '歴史的背景', desc: '戦争の原因・背景・勢力関係' },
-                  { emoji: '🌐', label: '地域・戦場', desc: 'バルカン・中東・東欧・南アジアなど' },
-                  { emoji: '⚔️', label: '戦争名', desc: '第一次世界大戦・朝鮮戦争など' },
-                ].map(({ emoji, label, desc }) => (
-                  <div key={label} style={{ padding: '8px 10px', background: COLORS.card, borderRadius: 6 }}>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.text, marginBottom: 2 }}>
-                      {emoji} {label}
-                    </div>
-                    <div style={{ fontSize: 11, color: COLORS.textSub }}>{desc}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+            <p className="muted" style={{ marginTop: 24, fontSize: 14 }}>
+              構造パターン（ナショナリズム、安全保障ジレンマなど）で探すなら<Link href="/wars" style={{ color: 'var(--accent-ink)' }}>戦争一覧</Link>の絞り込みが便利です。
+            </p>
+          </section>
         )}
 
-        {/* 検索結果 */}
-        {query && (
+        {q && (
           <>
-            <div style={{ fontSize: 13, color: COLORS.textSub, marginBottom: 14 }}>
-              「<strong style={{ color: COLORS.highlight }}>{query}</strong>」の検索結果：<strong style={{ color: COLORS.text }}>{results.length}</strong> 件
-            </div>
-
-            {results.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '48px 20px', color: COLORS.textSub }}>
-                <div style={{ fontSize: 41, marginBottom: 12 }}>🔍</div>
-                <div style={{ fontSize: 16 }}>「{query}」に一致する戦争が見つかりませんでした</div>
-                <div style={{ fontSize: 13, marginTop: 8 }}>別のキーワードを試してみてください</div>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {results.map(r => (
-                  <div key={r.warId} style={{
-                    background: COLORS.panel,
-                    border: `1px solid ${COLORS.border}`,
-                    borderRadius: 8, overflow: 'hidden',
-                    transition: 'border-color 0.15s',
-                  }}
-                    onMouseEnter={e => e.currentTarget.style.borderColor = COLORS.borderHover}
-                    onMouseLeave={e => e.currentTarget.style.borderColor = COLORS.border}
-                  >
-                    {/* カードヘッダー */}
-                    <div style={{ padding: '12px 16px', borderBottom: `1px solid ${COLORS.border}`, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
-                      <div>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 4 }}>
-                          <span className="font-serif" style={{ fontSize: 17, fontWeight: 700, color: COLORS.text }}>
-                            {highlight(r.warName, query)}
-                          </span>
-                          <span style={{ fontSize: 12, color: COLORS.textSub, fontVariantNumeric: 'tabular-nums' }}>
-                            {r.year}–{r.endYear}
-                          </span>
-                          <span style={{ fontSize: 11, color: COLORS.textSub }}>{r.theater}</span>
-                        </div>
-                        <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                          {r.tags.slice(0, 5).map(tag => (
-                            <span key={tag} onClick={() => setQuery(tag)} style={{
-                              fontSize: 11, padding: '1px 6px', borderRadius: 3, cursor: 'pointer',
-                              background: tag.toLowerCase() === query.toLowerCase() ? `${COLORS.highlight}30` : 'rgba(148,163,184,0.08)',
-                              color: tag.toLowerCase() === query.toLowerCase() ? '#fcd34d' : COLORS.textSub,
-                              border: `1px solid ${tag.toLowerCase() === query.toLowerCase() ? COLORS.highlight : 'rgba(148,163,184,0.15)'}`,
-                            }}>
-                              {highlight(tag, query)}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <Link href={`/wars/${r.warId}`} style={{
-                        flexShrink: 0, fontSize: 12, padding: '5px 12px', borderRadius: 4,
-                        background: COLORS.rust, color: '#fff', textDecoration: 'none', fontWeight: 600,
-                      }}>
-                        📖 詳細
-                      </Link>
-                    </div>
-
-                    {/* マッチしたフィールド */}
-                    <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-                      {r.matchedFields.slice(0, 3).map((f, i) => (
-                        <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-                          <span style={{ fontSize: 16, flexShrink: 0, marginTop: 1 }}>{f.emoji}</span>
-                          <div>
-                            <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.textSub, letterSpacing: '0.08em', marginBottom: 2 }}>
-                              {f.label}
-                            </div>
-                            <div style={{ fontSize: 13, lineHeight: 1.6, color: '#cbd5e1' }}>
-                              {highlight(f.snippet, query)}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                      {r.matchedFields.length > 3 && (
-                        <div style={{ fontSize: 12, color: COLORS.textSub }}>
-                          +{r.matchedFields.length - 3} 件のフィールドでも一致
-                        </div>
-                      )}
-                    </div>
-                  </div>
+            <p className="search-count">「{q}」の検索結果：戦争 {results.length}件{themeHits.length > 0 && `・テーマ ${themeHits.length}件`}</p>
+            {themeHits.length > 0 && (
+              <div className="war-chip-list" style={{ marginBottom: 20 }}>
+                {themeHits.map((t) => (
+                  <Link key={t.href} href={t.href} className="war-chip">
+                    <span className="war-chip__name">{t.title}</span>
+                    <span className="war-chip__year">{t.kind}</span>
+                  </Link>
                 ))}
               </div>
+            )}
+            <ol className="search-results">
+              {results.slice(0, 80).map(({ w, hits }) => (
+                <li key={w.id} className="search-result">
+                  <Link href={`/wars/${w.id}`} className="search-result__title">
+                    <Highlight text={w.name} q={q} />
+                  </Link>
+                  <div className="search-result__meta">{formatPeriod(w.year, w.endYear, w.ongoing)}・{w.theater}</div>
+                  <ul className="search-result__hits">
+                    {hits.slice(0, 3).map((h, i) => (
+                      <li key={i}>
+                        <Link href={`/wars/${w.id}#${h.tab}`} className="search-result__label">{h.label}</Link>
+                        <span><Highlight text={h.snippet} q={q} /></span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
+            {results.length > 80 && <p className="muted">上位80件を表示しています。キーワードを足して絞り込んでください。</p>}
+            {results.length === 0 && themeHits.length === 0 && (
+              <p className="muted" style={{ padding: '24px 0' }}>見つかりませんでした。表記を変える（例：「WW1」→「第一次世界大戦」）か、短いキーワードで試してください。</p>
             )}
           </>
         )}
       </div>
-    </div>
+    </main>
   );
 }
