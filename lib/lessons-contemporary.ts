@@ -46,7 +46,7 @@ export const LESSONS_CONTEMPORARY: Record<string, LessonsData> = {
   },
   'yemen-civil-war': {
     commonalities: 'シリア内戦と同じ<strong>サウジアラビアvsイランの代理戦争</strong>。レバノン内戦のように、宗派（フーシ派＝ザイド派シーア）と地域・部族が複雑に絡む。',
-    universality: '<strong>代理戦争＋飢餓を武器に使う＋人道危機が永遠に続く</strong>。サウジは港を封鎖して食料を入れさせず、世界最悪の人道危機（国連認定）が起きた。<br/>イエメン沖の<strong>バーブ・エル・マンデブ海峡</strong>はスエズ運河に向かう船が通る大動脈。フーシ派がここを攻撃すると、世界の物流が止まる。',
+    universality: '<strong>代理戦争＋飢餓を武器に使う＋人道危機が永遠に続く</strong>。サウジ主導連合による港の封鎖や輸入制限で食料・燃料の流入が滞り、国連が「世界最悪」と呼ぶ人道危機が起きた。<br/>イエメン沖の<strong>バーブ・エル・マンデブ海峡</strong>はスエズ運河に向かう船が通る大動脈。フーシ派がここを攻撃すると、世界の物流が止まる。',
     modernLessons: '<strong>地域の代理戦争が世界に波及する</strong>。フーシ派の紅海攻撃で、世界中の貿易が混乱した。<br/>アメリカ・イギリスがサウジに武器を売る倫理問題。<br/>子ども兵士・餓死した子どもがニュースに出ない「見えない戦争」。',
     preventable: '2015年のサウジ介入を止められれば長期化を防げた。<strong>サレハ大統領時代（〜2011）に権力を分け合えなかった</strong>のが遠い原因。',
     reproducibility: '<strong>高い</strong>。「弱小国＋宗派対立＋海峡＋大国の代理」モデルは、ホルムズ海峡・マラッカ海峡でも繰り返せる。',
@@ -109,7 +109,7 @@ export const LESSONS_CONTEMPORARY: Record<string, LessonsData> = {
   },
   'central-african-civil-war': {
     commonalities: '<strong>セレカ（ムスリム）vsアンチ・バラカ（キリスト教）</strong>——宗教対立の見た目をした権力闘争。スーダン・ナイジェリア・南スーダンとアフリカの宗教断層上にある。',
-    universality: '<strong>失敗国家の連鎖</strong>。中央政府がない＋鉱物資源（ダイヤ・金）＋外国の民間軍事会社（<strong>ワグネル</strong>）。経済学者ポール・コリアーが書いた「<strong>資源の呪い</strong>」（資源があるから内戦が起きる）の典型例。',
+    universality: '<strong>失敗国家の連鎖</strong>。中央政府がない＋鉱物資源（ダイヤ・金）＋外国の民間軍事会社（<strong>ワグネル</strong>）。経済学者ポール・コリアーらが論じた、資源が内戦を起こしやすく長引かせる「資源の呪い」の典型例。',
     modernLessons: '<strong>ロシアのアフリカ進出の足がかり</strong>。ワグネルが金鉱の権利と引き換えに政権を守る。<br/>フランス軍が出ていき、ロシア軍が入ってきた——アフリカでの大国交代が進んでいる。<br/><strong>国際社会の関心がゼロ</strong>だから、暴虐が止まらない。',
     preventable: '2003年のボジゼ・クーデター時の対応失敗が遠因。<strong>クーデターを繰り返す文化</strong>を断ち切る機会を逃した。',
     reproducibility: '<strong>確実</strong>。サヘルから中部アフリカに同じ条件が広がっている。ワグネル型民間軍事会社が現地化することで、構造的に悪化していく。',
