@@ -191,3 +191,28 @@ mark { background: rgba(251, 191, 36, 0.45); color: inherit; border-radius: 2px;
 .deck__reset { margin-top: 40px; font-size: 14px; }
 .deck__reset summary { cursor: pointer; color: var(--muted); }
 .deck__reset p { margin: 8px 0; }
+
+/* ── AI診断 ── */
+.diagnose__form { padding: 18px 20px; }
+.diagnose__examples { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
+.diagnose__textarea { min-height: 160px; resize: vertical; line-height: 1.8; }
+.diagnose__actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; font-size: 12px; }
+.diagnose__error { margin-top: 16px; padding: 12px 14px; border-radius: 8px; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+.diagnose__result { margin-top: 28px; }
+.diagnose__summary { padding: 18px 20px; border-left: 4px solid var(--muted); margin-bottom: 16px; }
+.diagnose__summary.is-high { border-left-color: #dc2626; }
+.diagnose__summary.is-medium { border-left-color: #d97706; }
+.diagnose__summary.is-low { border-left-color: #16a34a; }
+.diagnose__risk { font-weight: 700; margin-bottom: 4px; }
+.diagnose__matches { list-style: none; display: grid; gap: 12px; }
+.diagnose__match { padding: 18px 20px; display: grid; gap: 10px; }
+.diagnose__match-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.diagnose__rank { width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; font-size: 13px; display: grid; place-items: center; }
+.diagnose__name { font-weight: 700; font-size: 18px; text-decoration: none; flex: 1; }
+.diagnose__name:hover { text-decoration: underline; color: var(--accent-ink); }
+.diagnose__score { font-size: 13px; font-weight: 700; color: var(--accent-ink); }
+.diagnose__bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.diagnose__bar span { display: block; height: 100%; background: var(--accent); }
+.diagnose__reason { font-size: 15px; line-height: 1.85; color: var(--ink-2); }
+.diagnose__warn { font-size: 14px; line-height: 1.8; background: #fffbeb; border-radius: 8px; padding: 10px 12px; }
+.diagnose__more { font-size: 13px; font-weight: 700; color: var(--accent-ink); text-decoration: none; }
