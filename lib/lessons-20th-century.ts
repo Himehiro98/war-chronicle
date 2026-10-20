@@ -207,7 +207,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
   },
   'sino-vietnamese-war': {
     commonalities: '<strong>ベトナム戦争</strong>の後遺症、<strong>カンボジア虐殺</strong>に波及。中ソ対立構造下の<strong>朝鮮戦争</strong>の逆パターン。',
-    universality: '<strong>共産主義一枚岩神話</strong>の崩壊——共産主義国同士でも国益が対立すれば戦う。研究者ミアシャイマーの「攻撃的リアリズム」（イデオロギーより国家利益が優先）の実証。<strong>懲罰的戦争</strong>（教えるための戦争）の失敗例。',
+    universality: '<strong>共産主義一枚岩神話</strong>の崩壊——共産主義国同士でも国益が対立すれば戦う。イデオロギーより国家利益が優先するという「リアリズム」の見方を裏づける例とされる。<strong>懲罰的戦争</strong>（教えるための戦争）の失敗例。',
     modernLessons: '<strong>米中対立</strong>下のベトナムの戦略的位置、<strong>南シナ海</strong>紛争の歴史的背景。同盟は固定的でない、という教訓。',
     preventable: '研究者キング・チェンは『中国のベトナムとの戦争』で中国の戦略的誤算を分析。ベトナムのカンボジア侵攻と中越国境問題が連鎖したが、外交解決の余地はあった。',
     reproducibility: '危ないサイン：同盟関係の転換×懲罰戦争論理。アジアでのパワーバランス変動下で反復リスク。',
@@ -403,7 +403,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
   },
   'soviet-afghan-war': {
     commonalities: '<strong>ベトナム戦争</strong>と並ぶ大国介入失敗、<strong>米アフガニスタン戦争</strong>の前史。<strong>イラン・イラク戦争</strong>と同時代の中央アジア紛争。',
-    universality: '<strong>帝国の墓場</strong>パターン——アレキサンダー以来、大国がアフガンで負ける。<strong>逆ドミノ</strong>——米国が支援したムジャヒディンが後にアル・カーイダを生んだ。研究者スティーブ・コールの『ゴースト・ウォーズ』が古典。',
+    universality: '<strong>「帝国の墓場」</strong>と呼ばれる（ただしアレクサンドロス大王やモンゴル、ムガル帝国などは征服に成功しており、この呼び名には誇張もある）。<strong>逆ドミノ</strong>——米国が支援したムジャヒディンが後にアル・カーイダを生んだ。研究者スティーブ・コールの『ゴースト・ウォーズ』が古典。',
     modernLessons: '<strong>米中対立</strong>下のアフガン情勢、<strong>テロリズム逆流</strong>分析の核心。<strong>ロシア・ウクライナ戦争(2022-)</strong>のロシア軍ドクトリンへの影響。',
     preventable: 'ブレジネフの介入決定が分岐点。アミン政権粛清を放置していれば泥沼化を回避できた。',
     reproducibility: '危ないサイン：近隣の不安定政権×イデオロギー使命×ゲリラ向きの地形。継続的リスク。',
