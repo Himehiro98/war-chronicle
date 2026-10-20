@@ -6,6 +6,7 @@ import { CONTENT_MEDIEVAL } from './content-medieval';
 import { CONTENT_MEDIEVAL_EXTRA } from './content-medieval-extra';
 import { CONTENT_RENAISSANCE } from './content-renaissance';
 import { CONTENT_EXTRA } from './content-extra';
+import { applyContentUpdates } from './content-updates-2026';
 
 const _CONTENT_INLINE: Record<string, TabContent> = {
   'great-northern-war': {
@@ -5556,8 +5557,8 @@ const _CONTENT_INLINE: Record<string, TabContent> = {
   },
 };
 
-// 全コンテンツマージ
-export const WAR_CONTENT: Record<string, TabContent> = {
+// 全コンテンツマージ（最後に継続中の戦争の最新状況を重ねる）
+export const WAR_CONTENT: Record<string, TabContent> = applyContentUpdates({
   ...CONTENT_PREHISTORIC,
   ...CONTENT_ANCIENT,
   ...CONTENT_ANCIENT_EXTRA,
@@ -5566,4 +5567,4 @@ export const WAR_CONTENT: Record<string, TabContent> = {
   ...CONTENT_RENAISSANCE,
   ..._CONTENT_INLINE,
   ...CONTENT_EXTRA,
-};
+});

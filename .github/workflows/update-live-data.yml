@@ -1,65 +1,46 @@
-name: Update Live Conflict Data
+name: Check live conflict data freshness
+
+# 以前は日付だけを毎週書き換えていたが、中身が古いまま「最新」に見えてしまうため廃止。
+# 代わりに、編集部の確認日（LIVE_DATA_REVIEWED）が古くなったら Issue で知らせる。
+# データの更新は lib/live-conflicts.ts と lib/content-updates-2026.ts を人が見直して行う。
 
 on:
-  # 毎週月曜 9:00 JST (UTC 00:00) に自動実行
   schedule:
+    # 毎週月曜 9:00 JST (UTC 00:00)
     - cron: '0 0 * * 1'
-  # 手動実行ボタン
   workflow_dispatch:
-    inputs:
-      reason:
-        description: '更新理由（任意）'
-        required: false
-        default: '手動更新'
 
 jobs:
-  update-live-data:
+  check-freshness:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+      issues: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Update last-updated date in live-conflicts.ts
+      - name: Check review date
+        id: check
         run: |
-          TODAY=$(date -u +"%Y-%m-%d")
-          echo "Updating LIVE_DATA_UPDATED to $TODAY"
-          sed -i "s/export const LIVE_DATA_UPDATED = '[0-9-]*'/export const LIVE_DATA_UPDATED = '$TODAY'/" lib/live-conflicts.ts
-          echo "Updated successfully"
-        working-directory: .
+          REVIEWED=$(grep -oP "LIVE_DATA_REVIEWED = '\K[0-9-]+" lib/live-conflicts.ts)
+          AGE_DAYS=$(( ( $(date -u +%s) - $(date -u -d "$REVIEWED" +%s) ) / 86400 ))
+          echo "reviewed=$REVIEWED" >> $GITHUB_OUTPUT
+          echo "age=$AGE_DAYS" >> $GITHUB_OUTPUT
+          echo "## Live data last reviewed: $REVIEWED ($AGE_DAYS days ago)" >> $GITHUB_STEP_SUMMARY
 
-      - name: Check if file was modified
-        id: check_changes
+      - name: Open reminder issue if stale (45+ days)
+        if: ${{ steps.check.outputs.age >= 45 }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if git diff --quiet lib/live-conflicts.ts; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
+          TITLE="進行中の戦争データの見直し（最終確認 ${{ steps.check.outputs.reviewed }}）"
+          if gh issue list --state open --search "進行中の戦争データの見直し in:title" --json number --jq 'length' | grep -q '^0$'; then
+            gh issue create --title "$TITLE" --body "lib/live-conflicts.ts の最終確認から ${{ steps.check.outputs.age }} 日経過しました。
+
+          - [ ] 各紛争の数値・最新動向を確認して更新（asOf / latestDate も）
+          - [ ] lib/content-updates-2026.ts（戦争ページの最新状況）を見直し
+          - [ ] 終結・新規の紛争があれば lib/wars.ts の ongoing を更新
+          - [ ] LIVE_DATA_REVIEWED を確認日に変更"
           fi
-
-      - name: Commit and push if changed
-        if: steps.check_changes.outputs.changed == 'true'
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add lib/live-conflicts.ts
-          git commit -m "chore: update live conflict data timestamp $(date -u +%Y-%m-%d)"
-          git push
-
-      - name: Summary
-        run: |
-          echo "## Live Data Update Complete" >> $GITHUB_STEP_SUMMARY
-          echo "Updated: $(date -u +%Y-%m-%d)" >> $GITHUB_STEP_SUMMARY
-          echo "Changes committed: ${{ steps.check_changes.outputs.changed }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 手動でデータを更新するには" >> $GITHUB_STEP_SUMMARY
-          echo "1. \`lib/live-conflicts.ts\` の各紛争の数値を更新" >> $GITHUB_STEP_SUMMARY
-          echo "2. \`latestDevelopment\` と \`latestDate\` フィールドを編集" >> $GITHUB_STEP_SUMMARY
-          echo "3. このワークフローを手動実行してタイムスタンプを更新" >> $GITHUB_STEP_SUMMARY

@@ -2,7 +2,7 @@ import { LearningPath } from './types';
 
 /**
  * キュレーションされた学習パス
- * 100戦争を前にした初学者の「どこから見れば？」に答える
+ * 多数の戦争を前にした初学者の「どこから読めば？」に答える
  */
 export const LEARNING_PATHS: LearningPath[] = [
   {
@@ -10,7 +10,7 @@ export const LEARNING_PATHS: LearningPath[] = [
     title: '20世紀を理解する5つの戦争',
     subtitle: '世界秩序はこうして形作られた',
     description:
-      '人類最大の二度の大戦と、その間と後に世界を分断した冷戦。20世紀の地政学的構造と現代の国際秩序の起源を、5本の戦争で一気に押さえる。',
+      '二度の世界大戦と、そのあいだのスペイン内戦、そして冷戦の最初の熱戦となった朝鮮戦争。現代の国際秩序がどのように形づくられたかを、5つの戦争で押さえる。',
     emoji: '🌍',
     accent: '#1e40af',
     warIds: [
@@ -27,7 +27,7 @@ export const LEARNING_PATHS: LearningPath[] = [
     title: '現代中国を理解するルート',
     subtitle: 'なぜ今の中国はあの中国なのか',
     description:
-      'アヘン戦争の屈辱から共産党革命、文化大革命、そして改革開放まで。現代中国の「百年の屈辱」史観と「中華民族の偉大な復興」の歴史的背景を辿る。',
+      'アヘン戦争から太平天国、日清戦争、義和団事件、日中戦争、そして国共内戦まで。現代中国が語る「百年の屈辱」と「中華民族の偉大な復興」という物語の歴史的背景を、7つの戦争でたどる。',
     emoji: '🐉',
     accent: '#dc2626',
     warIds: [
@@ -68,26 +68,27 @@ export const LEARNING_PATHS: LearningPath[] = [
     title: '冷戦を理解するルート',
     subtitle: '直接衝突しない大国対立の作法',
     description:
-      '核戦争を避けながら世界全土で戦われた「代理戦争」の構造。陣営化・イデオロギー・封じ込め・デタント・崩壊。今日の「新冷戦」言説を読み解く土台となる。',
+      '米ソが直接は戦わず、世界各地の内戦や革命が代理戦争になった時代。トルーマン・ドクトリンの起点となったギリシャ内戦から、朝鮮・ハンガリー・キューバ・ベトナム・アンゴラ・アフガニスタン・ニカラグアまで、陣営化と封じ込めの構造をたどる。今日の「新冷戦」を考える土台になる。',
     emoji: '🧊',
     accent: '#0f766e',
     warIds: [
+      'greek-civil-war',
       'korean-war',
-      'vietnam-war',
+      'hungarian-uprising',
       'cuban-revolution',
+      'vietnam-war',
       'angolan-civil-war',
       'soviet-afghan-war',
-      'falklands-war',
-      'bosnian-war',
+      'nicaraguan-revolution',
     ],
-    estimatedMinutes: 50,
+    estimatedMinutes: 55,
   },
   {
     id: 'how-wars-start',
     title: '戦争はこうして起きる：6つのパターン',
     subtitle: '構造から学ぶ戦争発生の力学',
     description:
-      '同盟暴走（WW1）、経済危機からの急進化（WW2）、安全保障ジレンマ（冷戦）、誤算（イラク戦争）、権力真空（リビア・シリア）、ナショナリズム（バルカン）。再現される人類のパターンを6本の戦争で。',
+      '同盟の連鎖（第一次世界大戦）、経済危機からの急進化（第二次世界大戦）、安全保障ジレンマ（クリミア戦争）、誤算（イラク戦争）、権力の空白（リビア内戦）、ナショナリズムと民族浄化（ボスニア戦争）。繰り返し現れる6つのパターンを、6つの戦争で学ぶ。',
     emoji: '🧬',
     accent: '#7c3aed',
     warIds: [

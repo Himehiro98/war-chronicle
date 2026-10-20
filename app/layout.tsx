@@ -5,6 +5,7 @@ import "./styles/war.css";
 import "./styles/explore.css";
 import "./styles/lists.css";
 import "./styles/home.css";
+import "./styles/live.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, WAR_COUNT, YEAR_RANGE_LABEL } from "@/lib/site";

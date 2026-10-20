@@ -609,7 +609,7 @@ export default function LearnPathPage() {
                 全ての戦争を探索する
               </div>
               <div className="text-sm text-slate-500 flex items-center gap-1">
-                100戦争のマップ・年表
+                年表と地図ですべての戦争を見る
                 <span className="transition-transform group-hover:translate-x-1">
                   →
                 </span>
