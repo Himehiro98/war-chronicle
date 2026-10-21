@@ -6,16 +6,31 @@ import { LEARNING_PATHS } from '@/lib/learning-paths';
 import { MODERN_THEMES } from '@/lib/modern-themes';
 import { RELIGION_THEMES } from '@/lib/religion-themes';
 import { LIVE_CONFLICTS } from '@/lib/live-conflicts';
+import { MYTHS } from '@/lib/myths';
 import { TAGS, TAG_LIST } from '@/lib/tags';
 import { WARS } from '@/lib/wars';
 import { WAR_COUNT, YEAR_RANGE_LABEL } from '@/lib/site';
 
 const STATUS_LABEL: Record<string, string> = { active: '戦闘継続', ceasefire: '停戦・移行期', frozen: '膠着' };
 
+/** トップに出す「通説と史実」の例（戦争ID と、通説の文に含まれる語） */
+const MYTH_SAMPLES: [string, string][] = [
+  ['mongol-invasions', '神風'],
+  ['napoleonic-wars', '背が低'],
+  ['world-war-1', 'クリスマス'],
+];
+
 export default function Home() {
   const tagCount = new Map<string, number>();
   for (const w of WARS) for (const t of w.tags ?? []) tagCount.set(t, (tagCount.get(t) ?? 0) + 1);
   const patterns = TAG_LIST.map((t) => ({ ...TAGS[t], count: tagCount.get(t) ?? 0 })).sort((a, b) => b.count - a.count);
+  const mythWarCount = Object.values(MYTHS).filter((m) => m.length).length;
+  const mythTotal = Object.values(MYTHS).reduce((n, m) => n + m.length, 0);
+  const mythSamples = MYTH_SAMPLES.flatMap(([id, keyword]) => {
+    const m = MYTHS[id]?.find((e) => e.myth.includes(keyword));
+    const w = WARS.find((x) => x.id === id);
+    return m && w ? [{ id, name: w.name, myth: m.myth }] : [];
+  });
 
   return (
     <main>
@@ -63,6 +78,32 @@ export default function Home() {
               <p>テーマごとに選んだ5〜10の戦争を順番に読み、理解度チェックで確かめながら進みます。</p>
               <span className="entry-card__go">学習パスへ →</span>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 通説と史実 ── */}
+      <section className="section section--alt">
+        <div className="container">
+          <div className="section-head section-head--row">
+            <div>
+              <div className="eyebrow">Myths &amp; Facts</div>
+              <h2>その「常識」は史実ですか？</h2>
+              <p>
+                戦争には、後からつくられた物語が史実のように語られているものがあります。
+                広く知られた説と研究でわかっていることを並べて、{mythWarCount}の戦争について{mythTotal}件を確かめています。
+              </p>
+            </div>
+            <Link href="/myths" className="home-more">すべての通説と史実 →</Link>
+          </div>
+          <div className="card-grid">
+            {mythSamples.map((s) => (
+              <Link key={s.id} href={`/wars/${s.id}#myths`} className="card home-myth">
+                <span className="home-myth__label">よく聞く説</span>
+                <p className="home-myth__myth">{s.myth}</p>
+                <span className="home-myth__go">{s.name}の史実を見る →</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
