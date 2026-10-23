@@ -76,7 +76,7 @@ export const HUMAN_LAYERS_CONTEMPORARY: Record<string, HumanLayerData> = {
   'tigray-war': {
     civilianLife: '2020年11月、エチオピア政府軍とTPLF（ティグライ人民解放戦線）の戦闘が始まり、エリトリア軍も参戦。ティグライ州<strong>600万人</strong>が完全封鎖下に置かれ、通信・銀行・電力・燃料・医薬品輸入がすべて遮断──「<strong>包囲下の州</strong>」状態が2年間続いた。',
     refugees: 'スーダンへの難民<strong>約7万人</strong>（UNHCR）、IDP<strong>約260万人</strong>。封鎖により国外脱出経路自体が限られ、難民数は人道危機規模に比して少ない──「<strong>逃げられない戦争</strong>」。',
-    hunger: '<strong>飢餓の戦争兵器化</strong>（weaponization of hunger）が国際的に告発された。封鎖下で人口の<strong>9割</strong>が食料不安、<strong></strong>35万人以上が飢饉相当（IPC、2021年）。ソ連の人為的飢餓（ホロドモール）と比較する研究者もいる。',
+    hunger: '<strong>飢餓の戦争兵器化</strong>（weaponization of hunger）が国際的に告発された。封鎖下で人口の<strong>9割</strong>が食料不安、<strong>35万人以上</strong>が飢饉相当（IPC、2021年）。ソ連の人為的飢餓（ホロドモール）と比較する研究者もいる。',
     trauma: '死者推計<strong>10万-60万人</strong>（飢餓・疾病による間接死含む、Ghent大学推計）──21世紀でも最大級。組織的性暴力<strong>1万件超</strong>が国際機関に報告、エリトリア軍関与の証言多数（Amnesty/HRW）。',
     children: '学校<strong>2,500校以上</strong>が略奪・損壊、<strong>140万人</strong>の児童が就学不可（UNICEF）。栄養不良入院児童は通常の<strong>10倍</strong>へ急増、ワクチン・新生児ケアも停止。',
     cityDestruction: 'メケレ（州都）、アクスム（古代都市・世界遺産）、アディグラト等が空爆と地上戦で被害。アクスムでは2020年11月に<strong>数百人</strong>の住民虐殺がAmnestyに記録された。',
