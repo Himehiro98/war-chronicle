@@ -149,7 +149,7 @@ export const LESSONS_EARLY_MODERN: Record<string, LessonsData> = {
     commonalities: '<strong>ナショナリズム統一戦争</strong>。同時代の<strong>普仏戦争</strong>でドイツが統一されたのと双子。<strong>ギリシャ独立・ラテンアメリカ独立</strong>のナショナリズム潮流の地中海版。',
     universality: '<strong>「上からのナショナリズム」</strong>——民衆ではなく支配エリートが主導して国を統一するパターン。サルデーニャ王国の宰相カヴールの<strong>狡猾な外交</strong>（クリミア戦争にわざわざ参戦してフランスの恩を売る）は、チャンスをつかむ外交の教科書例。',
     modernLessons: '<strong>EU統合</strong>論議の歴史的伏線。北部と南部の経済格差（メッツォジョルノ問題）は150年経っても解消せず、今の<strong>北部同盟・五つ星運動</strong>の温床になっている。「上からの統一」の限界。',
-    preventable: 'オーストリアがロンバルディア（北イタリア）を早く譲っていれば、段階的統合が可能だった。フランスとサルデーニャが結んだ1859年の<strong>プロンビエール密約</strong>が連鎖の発火点。',
+    preventable: 'オーストリアがロンバルディア（北イタリア）を早く譲っていれば、段階的統合が可能だった。フランスとサルデーニャが結んだ1858年の<strong>プロンビエール密約</strong>が連鎖の発火点。',
     reproducibility: '危険サイン：(1)分断地域の言語や文化が同質、(2)カリスマ統一指導者、(3)外部大国の戦略的後援、(4)教皇国家のような時代遅れの中間体。',
   },
 
@@ -228,7 +228,7 @@ export const LESSONS_EARLY_MODERN: Record<string, LessonsData> = {
   'spanish-american-war': {
     commonalities: '<strong>新興大国の植民地獲得宣言戦争</strong>。<strong>日清戦争</strong>（日本）・<strong>普仏戦争</strong>（独）と同型の<strong>「大国仲間入り戦争」</strong>。メーン号沈没事件はイエロージャーナリズム（センセーショナルな新聞報道）の古典例で<strong>トンキン湾事件</strong>とも通じる。',
     universality: '<strong>米国帝国主義の転換点</strong>。プエルトリコ・グアム・フィリピン獲得で<strong>大陸国家→海洋帝国</strong>へ移行。マハンの「制海権が国を強くする」という考えを実装。',
-    modernLessons: '<strong>米国のグローバル軍事プレゼンス</strong>の歴史的起点。グアンタナモ基地は1898年の延長。フィリピンの米軍基地問題、対キューバ60年制裁も同戦争の長い影。<strong>イラク戦争（2003年）</strong>のメディア扇動構造もこの系譜。',
+    modernLessons: '<strong>米国のグローバル軍事プレゼンス</strong>の歴史的起点。グアンタナモ基地は1903年の租借条約に由来する（1898年の戦争の帰結）。フィリピンの米軍基地問題、対キューバ60年制裁も同戦争の長い影。<strong>イラク戦争（2003年）</strong>のメディア扇動構造もこの系譜。',
     preventable: 'メーン号沈没原因の調査（現代では石炭庫の自然発火説が有力）で慎重に対応していれば、開戦は防げた。',
     reproducibility: '危険サイン：(1)イエロージャーナリズム・SNSの扇動、(2)衰退帝国の弱点露呈、(3)新興国の威信欲求、(4)煽情的な偽旗事件。',
   },

@@ -81,7 +81,7 @@ export const WARS_ANCIENT_EXTRA: War[] = [
     weight: 2,
     tags: ['安全保障ジレンマ', '資源争奪', '帝国衰退'],
     ideologies: ['ローマ帝国主義', 'パルティア・アルサケス朝'],
-    causes: ['caesars-civil-war'],
+    causes: [],
     influences: ['crisis-of-third-century', 'jewish-roman-wars'],
   },
   {
@@ -116,7 +116,7 @@ export const WARS_ANCIENT_EXTRA: War[] = [
       { coordinates: [112.4540, 34.6197], label: '洛陽（311年永嘉の乱・西晋崩壊）', isMain: true, enemy: true },
       { coordinates: [108.9398, 34.3416], label: '長安（316年陥落）', isMain: true, enemy: true },
       { coordinates: [111.5190, 36.0894], label: '平陽（304年劉淵漢趙建国）', isMain: true },
-      { coordinates: [115.4640, 32.9389], label: '淝水の戦い（383年・東晋勝利）', isMain: true },
+      { coordinates: [116.8, 32.6], label: '淝水の戦い（383年・東晋勝利）', isMain: true },
       { coordinates: [113.6253, 39.8000], label: '平城（北魏都・439年華北統一）', isMain: true, ally: true },
       { coordinates: [118.7969, 32.0603], label: '建康（東晋・南朝）', ally: true },
     ],

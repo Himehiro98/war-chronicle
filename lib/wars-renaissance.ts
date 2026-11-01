@@ -221,7 +221,7 @@ export const WARS_RENAISSANCE: War[] = [
     mapHighlight: 'asia',
     markers: [
       { coordinates: [123.43, 41.80], label: '瀋陽（後金・清の本拠地）', isMain: true },
-      { coordinates: [116.40, 39.90], label: '北京（1644年4月李自成入城・5月清軍入城）', isMain: true },
+      { coordinates: [116.40, 39.90], label: '北京（1644年4月李自成入城・6月清軍入城）', isMain: true },
       { coordinates: [119.55, 40.00], label: '山海関（1644年5月呉三桂が清軍を導入）' },
       { coordinates: [113.27, 23.13], label: '広州（1673-81年三藩の乱・呉三桂反乱）' },
       { coordinates: [120.30, 22.99], label: '台湾（1683年鄭氏政権降伏・最終統一）', isMain: true },

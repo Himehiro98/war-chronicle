@@ -44,7 +44,7 @@ export const CAUSAL_CHAINS: CausalChain[] = [
   {
     id: 'middle-east-river',
     title: 'パレスチナの宿命',
-    thesis: 'ホロコーストの罪悪感から生まれた建国が、75年に及ぶ戦争の連鎖を生んだ。一つの未解決が、次の戦争を呼び続ける。',
+    thesis: 'ホロコーストの罪悪感から生まれた建国が、70年以上に及ぶ戦争の連鎖を生んだ。一つの未解決が、次の戦争を呼び続ける。',
     emoji: '🕊️',
     accent: '#0891b2',
     nodes: [

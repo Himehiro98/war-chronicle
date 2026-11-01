@@ -101,7 +101,7 @@ export const LESSONS_MEDIEVAL: Record<string, LessonsData> = {
     reproducibility: '危ないサイン：強烈な個人指導者×軍事的天才×制度未整備×継承計画なし。21世紀の独裁国家にそのまま当てはまる。',
   },
   'fall-constantinople': {
-    commonalities: '<strong>1453年5月29日のコンスタンティノープル陥落</strong>——21歳の<strong>メフメト2世</strong>が1000年続いたビザンツ帝国を滅ぼした。<strong>百年戦争</strong>の終結（同年）と重なり、ヨーロッパ史と中東史の分水嶺。<strong>マラズギルト1071</strong>から始まったビザンツ衰退の最終局面。',
+    commonalities: '<strong>1453年5月29日のコンスタンティノープル陥落</strong>——21歳の<strong>メフメト2世</strong>が約1100年続いたビザンツ帝国を滅ぼした。<strong>百年戦争</strong>の終結（同年）と重なり、ヨーロッパ史と中東史の分水嶺。<strong>マラズギルト1071</strong>から始まったビザンツ衰退の最終局面。',
     universality: '<strong>軍事技術の決定力</strong>——巨大青銅大砲（ウルバン砲）が中世の城壁を無力化した。<strong>ハードウェアの世代差</strong>が地政学を書き換える典型例。<strong>百年戦争</strong>のカスティヨンと同じ年に大砲が時代を変えたのは偶然ではない。',
     modernLessons: '<strong>ロシア・ウクライナ戦争(2022-)</strong>でドローン・極超音速ミサイル・スターリンクが戦場を変えたのは、ウルバン砲がコンスタンティノープルを落としたのと同じ軍事革命。<strong>米中対立</strong>でAI・量子技術の優位がパワーバランスを決める可能性。難民流出（ビザンツ学者がイタリアに逃れて<strong>ルネサンス</strong>を加速）のような副次効果も、現代の頭脳流出に通じる。',
     preventable: '西欧諸国が連合して救援していれば防げた可能性が高い。<strong>第三回十字軍</strong>同様、連合の不成立が致命的だった。教会分裂（東方正教vsカトリック）の和解失敗が連合を妨げた。',

@@ -326,7 +326,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
   },
   'mexican-revolution': {
     commonalities: '<strong>キューバ革命</strong>に先行するラテンアメリカ農民革命、<strong>ロシア革命</strong>と同時代の体制変革。',
-    universality: '<strong>長期独裁の崩壊</strong>（ディアス体制34年）後の権力闘争。研究者アラン・ナイトの『メキシコ革命』が社会革命としての性格を分析。米国介入（ヴェラクルス）も含む。',
+    universality: '<strong>長期独裁の崩壊</strong>（ディアス体制35年）後の権力闘争。研究者アラン・ナイトの『メキシコ革命』が社会革命としての性格を分析。米国介入（ヴェラクルス）も含む。',
     modernLessons: 'ラテンアメリカのポピュリズム（メキシコのAMLOら）の歴史的根拠、<strong>米国・ラテンアメリカ関係</strong>の構造的緊張の根源。',
     preventable: 'ディアス末期の漸進改革（マデロ受け入れ）があれば回避できた。長期独裁の出口戦略の欠如が主因。',
     reproducibility: '危ないサイン：長期独裁×経済発展×権力継承の不在。権威主義体制の終わり方として普遍的リスク。',

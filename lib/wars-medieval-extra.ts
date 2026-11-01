@@ -99,7 +99,7 @@ export const WARS_MEDIEVAL_EXTRA: War[] = [
     tags: ['宗教対立', '革命', 'ナショナリズム'],
     ideologies: ['フス派', 'カトリック', 'チェコ・ナショナリズム'],
     causes: ['black-death-jacquerie'],
-    influences: ['wars-of-the-roses'],
+    influences: [],
   },
   {
     id: 'wars-of-the-roses',

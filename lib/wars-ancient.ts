@@ -218,7 +218,7 @@ export const WARS_ANCIENT: War[] = [
       { coordinates: [4.0500, 49.1000], label: 'カタラウヌム平原の戦い（451年・対アッティラ）', isMain: true },
       { coordinates: [12.4964, 41.9028], label: '西ローマ帝国滅亡（476年）', isMain: true },
       { coordinates: [28.9784, 41.0082], label: 'コンスタンティノープル（東ローマ）', ally: true },
-      { coordinates: [37.6173, 55.7558], label: 'フン族西進拠点', enemy: true },
+      { coordinates: [19.0, 47.0], label: 'フン族西進拠点（パンノニア）', enemy: true },
     ],
     weight: 3,
     tags: ['帝国衰退', '権力真空', '経済危機', 'ナショナリズム', '遊牧vs農耕'],

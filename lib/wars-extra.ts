@@ -159,6 +159,6 @@ export const WARS_EXTRA: War[] = [
     tags: ['植民地解放', 'ナショナリズム', '帝国衰退'],
     ideologies: ['帝国主義', 'エチオピア・ナショナリズム', '正教会'],
     causes: ['italian-unification'],
-    influences: ['second-italo-ethiopian-war', 'mahdist-war'],
+    influences: ['second-italo-ethiopian-war'],
   },
 ];

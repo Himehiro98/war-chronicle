@@ -90,7 +90,7 @@ export const GRAND_NARRATIVE: NarrativeAct[] = [
     keyWars: [
       { id: 'spanish-conquest-mexico', why: '数百人が帝国を倒した——疫病・現地の分裂・技術差が生む非対称征服の典型。' },
       { id: 'dutch-revolt', why: '小国が金融と信用で帝国スペインを消耗させ、近代的な独立を勝ち取った。' },
-      { id: 'thirty-years-war', why: 'ドイツ人口の3分の1が消えた宗教戦争。その終結（ウェストファリア条約）が主権国家体制を生んだ。' },
+      { id: 'thirty-years-war', why: 'ドイツ人口の2〜3割が失われたとされる宗教戦争。その終結（ウェストファリア条約）が主権国家体制を生んだ。' },
       { id: 'english-civil-war', why: '国王を裁判にかけ処刑した——「王も法の下にある」という近代の核が誕生。' },
       { id: 'sengoku-unification', why: '鉄砲と築城の軍事革命が、日本に中央集権の常備軍国家をもたらした。' },
     ],
