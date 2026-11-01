@@ -108,7 +108,7 @@ export const LIVE_CONFLICTS: LiveConflictStats[] = [
     needHumanitarian: 'ほぼ全住民',
     humanitarianSource: 'Al Jazeera・人道団体（2026年10月）',
     latestDevelopment:
-      '停戦から1年が経過したが、ハマスの武装解除、イスラエル軍の撤退、戦後統治をめぐる交渉は膠着。100を超える人道団体が「停戦は名ばかり」と声明を出した（2026年10月）。復興資金の拠出表明は相次いでいる。',
+      '停戦から1年が経過したが、2026年7月末にハマスが武装解除ロードマップを受け入れたと報じられたが、撤退との順序や戦後統治をめぐる対立は続く。100を超える人道団体が「停戦は名ばかり」と声明を出した（2026年10月）。復興資金の拠出表明は相次いでいる。',
     latestDate: '2026年10月',
     sources: [
       { label: 'Amnesty（2026年10月）', url: 'https://www.amnesty.org/en/latest/news/2026/10/gaza-ceasefire-exists-in-name-only-say-more-than-100-organizations/' },
@@ -134,7 +134,7 @@ export const LIVE_CONFLICTS: LiveConflictStats[] = [
     needHumanitarian: '約3,370万人',
     humanitarianSource: 'OCHA（2026年5月）',
     latestDevelopment:
-      '国軍は一部で巻き返す一方、RSFはダルフールのほぼ全域を支配。2026年10月にはハルツーム空港周辺へのドローン攻撃で子どもが死亡するなど、民間人の被害が続く。国軍のブルハン司令官は交渉を拒否し、全土の奪還を宣言している。',
+      '国軍は一部で巻き返す一方、RSFは2025年10月のエル・ファシェル制圧後、ダルフールのほぼ全域を支配。ドローン攻撃などで民間人の被害が続く。国軍のブルハン司令官は交渉を拒否し、全土の奪還を宣言している。',
     latestDate: '2026年10月',
     sources: [
       { label: 'Al Jazeera（2026年10月7日）', url: 'https://www.aljazeera.com/news/2026/10/7/sudans-al-burhan-rejects-talks-vows-to-retake-all-territory-from-rsf' },

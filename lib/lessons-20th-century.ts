@@ -76,7 +76,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
     commonalities: '<strong>第二次印パ戦争</strong>・<strong>カルギル戦争</strong>・<strong>バングラデシュ独立戦争</strong>と続く印パ反復紛争の起点。<strong>第一次中東戦争</strong>と並ぶ「植民地が独立するときに宗教で分断された」パターン。',
     universality: '<strong>分割の遺産</strong>——イギリスが去るときにインドとパキスタンを宗教で線引きしたが、カシミール藩王国（小さな国）の所属が決まらず<strong>権力真空</strong>になった。地図に線を引くのを最後まで先延ばしにしたツケが、戦争として爆発した。',
     modernLessons: '<strong>カシミール</strong>は核保有国同士が衝突する世界最大級のリスク地帯。<strong>中印係争</strong>（後の中印戦争に続く）、<strong>米中対立</strong>下のインド太平洋戦略にも直結する。',
-    preventable: '研究者の間では、最後の総督マウントバッテンの「拙速な分割線」が広く批判されている。藩王国の地位を事前にハッキリさせていれば回避できた可能性が高い。',
+    preventable: '研究者の間では、最後の総督マウントバッテンの「拙速な分割（期日の前倒しとラドクリフ線）」が広く批判されている。藩王国の地位を事前にハッキリさせていれば回避できた可能性が高い。',
     reproducibility: '危ないサイン：宗教民族の分断×領土の線引きが決まらない×核武装。植民地時代の遺産は南アジア・中東で何度も再発火源として働いている。',
   },
   'sino-indian-war': {
@@ -88,7 +88,7 @@ export const LESSONS_20TH_CENTURY: Record<string, LessonsData> = {
   },
   'second-indo-pakistani-war': {
     commonalities: '<strong>第一次印パ戦争</strong>の続き、<strong>カルギル戦争</strong>の前史。<strong>第三次中東戦争</strong>と同年(1965)で、冷戦下の地域戦争パターン。',
-    universality: 'パキスタンが非正規兵をカシミールに送り込む「ジブラルタル作戦」（こっそり工作員を浸透させる作戦）の失敗。<strong>攻撃が有利</strong>という思い込みに基づくパキスタンの誤算。米ソが共同でタシケント会談を主導し、冷戦下では珍しく<strong>大国協調</strong>が働いた。',
+    universality: 'パキスタンが非正規兵をカシミールに送り込む「ジブラルタル作戦」（こっそり工作員を浸透させる作戦）の失敗。<strong>攻撃が有利</strong>という思い込みに基づくパキスタンの誤算。ソ連の仲介でタシケント会談が開かれ（米国は国連で停戦決議を主導）し、冷戦下では珍しく<strong>大国協調</strong>が働いた。',
     modernLessons: '<strong>カシミール紛争</strong>の継続、印パが核を持った後の限定戦争のリスク管理問題に繋がる。',
     preventable: '研究者スミット・ガングリーは『終わらぬ紛争』でパキスタン側の戦略的誤算が中心要因と分析した。インドの自制と国際調停があれば早期収束できた。',
     reproducibility: '危ないサイン：非正規工作員の浸透×通常戦争へのエスカレーション。ハイブリッド戦争（正規軍と工作の組み合わせ）の原型として現代でも通用する。',

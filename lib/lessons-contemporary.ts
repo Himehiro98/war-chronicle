@@ -76,7 +76,7 @@ export const LESSONS_CONTEMPORARY: Record<string, LessonsData> = {
     commonalities: '第一次ナゴルノ・カラバフ戦争（1988-94）の続編。<strong>ソ連崩壊で凍結されていた紛争</strong>が、ドローン技術の進化で30年後に解凍された事例。',
     universality: '<strong>軍事技術の大ブレイクスルー</strong>。トルコ製ドローンバイラクタルTB2などが、固定された陣地や旧式の防空網の弱さを突いた。装備の差より「使い方」の差が勝敗を決めた好例。',
     modernLessons: '<strong>ドローン時代の戦争を象徴する</strong>事例。<br/>ロシアが後退し、トルコが南カフカスで影響力を強めた——地域の力関係が変わった。<br/>停戦監視をロシアに頼ったが、2023年にアルメニア人がカラバフから追放された（民族浄化）。<strong>頼る相手を間違えると守ってもらえない</strong>。',
-    preventable: 'OSCE（欧州の調停組織）の失敗が遠因。<strong>1994年の停戦から30年、双方とも譲歩しなかった</strong>制度の失敗。',
+    preventable: 'OSCE（欧州の調停組織）の失敗が遠因。<strong>1994年の停戦から約四半世紀、双方とも譲歩しなかった</strong>制度の失敗。',
     reproducibility: '<strong>非常に高い</strong>。旧ソ連の凍結紛争（沿ドニエストル・南オセチア・アブハジア）はすべて同じリスク。ドローンが広がり、攻める側が有利な時代になった。',
   },
   'iran-israel-war': {

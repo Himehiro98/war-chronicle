@@ -137,7 +137,7 @@ export const LESSONS_MEDIEVAL: Record<string, LessonsData> = {
   },
   'hussite-wars': {
     commonalities: '<strong>1415年のヤン・フス火刑</strong>から始まり、<strong>1434年のリパニの戦い</strong>で穏健派が急進派を倒して終結。<strong>アルビジョア十字軍</strong>と並ぶ宗教戦争で、後の<strong>宗教改革（ルター）</strong>の100年前のリハーサル。<strong>百年戦争</strong>末期と並行した。',
-    universality: '<strong>殉教者効果</strong>——フスを火刑にしたことで、彼が殉教者となり運動が爆発的に広がった。<strong>抑圧は反対派を強くする</strong>という法則。フス派の戦車隊（ワゴンブルク）は当時最先端の戦術で、<strong>軍事技術革新</strong>の例でもある。',
+    universality: '<strong>殉教者効果</strong>——フスを火刑にしたことで、彼が殉教者となり運動が爆発的に広がった。<strong>抑圧は反対派を強くする</strong>という法則。フス派の荷車陣地（ワゴンブルク）は当時最先端の戦術で、<strong>軍事技術革新</strong>の例でもある。',
     modernLessons: '<strong>イスラム原理主義</strong>の指導者処刑が運動を強化する構図、<strong>香港デモ</strong>や<strong>ミャンマー反軍政</strong>での弾圧が抵抗を生む構図。SNS時代では殉教者は瞬時に世界中に拡散する。<strong>反対派を物理的に消すと運動は強くなる</strong>。',
     preventable: 'コンスタンツ公会議でフスに安全通行証を出しながら処刑したのは<strong>約束違反</strong>で、回避可能な失策だった。対話路線を取れば改革は穏健に進んだ可能性。',
     reproducibility: '危ないサイン：宗教・思想改革者の処刑×中央権威の譲歩拒否×改革派の武装化。現代の権威主義国家での再現リスク。',
