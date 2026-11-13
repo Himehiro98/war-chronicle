@@ -15,12 +15,14 @@ export const dynamicParams = false;
 export function generateStaticParams() {
   return LEARNING_PATHS.map((p) => ({ pathId: p.id }));
 }
-export function generateMetadata({ params }: { params: { pathId: string } }): Metadata {
+export async function generateMetadata({ params: paramsPromise }: { params: Promise<{ pathId: string }> }): Promise<Metadata> {
+  const params = await paramsPromise;
   const p = LEARNING_PATHS.find((x) => x.id === params.pathId);
   return p ? { title: `${p.title}｜学習パス`, description: p.description } : {};
 }
 
-export default function LearnPathPage({ params }: { params: { pathId: string } }) {
+export default async function LearnPathPage({ params: paramsPromise }: { params: Promise<{ pathId: string }> }) {
+  const params = await paramsPromise;
   const path = LEARNING_PATHS.find((p) => p.id === params.pathId);
   if (!path) notFound();
   const wars = path.warIds.map((id) => WAR_BY_ID[id]).filter((w): w is War => !!w);
