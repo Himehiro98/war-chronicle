@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { WARS } from '@/lib/wars';
 import { TAG_LIST } from '@/lib/tags';
+import { checkRateLimit, getClientKey } from '@/lib/rate-limit';
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -69,6 +70,16 @@ export async function POST(request: NextRequest) {
     }
     if (situation.length > 5000) {
       return NextResponse.json({ error: '入力が長すぎます（5000文字以内）' }, { status: 400 });
+    }
+
+    // 有料のAI呼び出しの前にレート制限（検証を通った要求だけ数える）。
+    // カウンターはインスタンスごとのベストエフォート。確実な上限は Anthropic キーの支出上限と Vercel Firewall で掛ける
+    const limit = checkRateLimit(getClientKey(request.headers));
+    if (!limit.ok) {
+      return NextResponse.json(
+        { error: 'アクセスが集中しています。しばらく待ってからもう一度お試しください' },
+        { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } },
+      );
     }
 
     const userContent = `次の状況を分析し、構造的に似ている過去の戦争を挙げてください。
