@@ -10,12 +10,14 @@ export const dynamicParams = false;
 export function generateStaticParams() {
   return MODERN_THEMES.map((t) => ({ themeId: t.id }));
 }
-export function generateMetadata({ params }: { params: { themeId: string } }): Metadata {
+export async function generateMetadata({ params: paramsPromise }: { params: Promise<{ themeId: string }> }): Promise<Metadata> {
+  const params = await paramsPromise;
   const t = MODERN_THEMES.find((x) => x.id === params.themeId);
   return t ? { title: `${t.question}｜現代の問い`, description: t.shortAnswer } : {};
 }
 
-export default function ThemePage({ params }: { params: { themeId: string } }) {
+export default async function ThemePage({ params: paramsPromise }: { params: Promise<{ themeId: string }> }) {
+  const params = await paramsPromise;
   const theme = MODERN_THEMES.find((t) => t.id === params.themeId);
   if (!theme) notFound();
   const wars = theme.keyWarIds.map((id) => WAR_BY_ID[id]).filter((w): w is War => !!w);

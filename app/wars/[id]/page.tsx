@@ -17,7 +17,8 @@ export function generateStaticParams() {
   return WARS.map((w) => ({ id: w.id }));
 }
 
-export function generateMetadata({ params }: { params: { id: string } }): Metadata {
+export async function generateMetadata({ params: paramsPromise }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const params = await paramsPromise;
   const d = getWarPageData(params.id);
   if (!d) return {};
   const { war, content } = d;
@@ -34,7 +35,8 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
 const TYPE_LABEL: Record<string, string> = { war: '戦争', revolution: '革命・内戦', colonial: '植民地戦争' };
 const WEIGHT_LABEL: Record<number, string> = { 3: '世界秩序を変えた戦争', 2: '地域秩序を変えた戦争', 1: '内戦・地域紛争' };
 
-export default function WarPage({ params }: { params: { id: string } }) {
+export default async function WarPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+  const params = await paramsPromise;
   const d = getWarPageData(params.id);
   if (!d) notFound();
   const { war, content, lessons, human, exam, myths, wanta, think, causes, influences, prev, next } = d;

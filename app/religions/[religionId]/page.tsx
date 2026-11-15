@@ -12,12 +12,14 @@ export const dynamicParams = false;
 export function generateStaticParams() {
   return RELIGION_THEMES.map((t) => ({ religionId: t.id }));
 }
-export function generateMetadata({ params }: { params: { religionId: string } }): Metadata {
+export async function generateMetadata({ params: paramsPromise }: { params: Promise<{ religionId: string }> }): Promise<Metadata> {
+  const params = await paramsPromise;
   const t = RELIGION_THEMES.find((x) => x.id === params.religionId);
   return t ? { title: `${t.name}から歴史を読む`, description: stripHtml(t.shortThesis) } : {};
 }
 
-export default function ReligionPage({ params }: { params: { religionId: string } }) {
+export default async function ReligionPage({ params: paramsPromise }: { params: Promise<{ religionId: string }> }) {
+  const params = await paramsPromise;
   const theme = RELIGION_THEMES.find((t) => t.id === params.religionId);
   if (!theme) notFound();
   const wars = theme.keyWarIds.map((id) => WAR_BY_ID[id]).filter((w): w is War => !!w);
