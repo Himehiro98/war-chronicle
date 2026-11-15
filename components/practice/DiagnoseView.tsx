@@ -30,11 +30,12 @@ const RISK = {
   low: { label: '類似は限定的', cls: 'is-low' },
 };
 
-export default function DiagnoseView() {
+export default function DiagnoseView({ aiAvailable = true }: { aiAvailable?: boolean }) {
   const [situation, setSituation] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<DiagnoseResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [unavailable, setUnavailable] = useState(!aiAvailable);
 
   const submit = async () => {
     if (!situation.trim() || loading) return;
@@ -48,7 +49,8 @@ export default function DiagnoseView() {
         body: JSON.stringify({ situation }),
       });
       const data = await res.json();
-      if (!res.ok) setError(data.error || '分析中にエラーが発生しました');
+      if (res.status === 503 && data.code === 'AI_UNAVAILABLE') setUnavailable(true);
+      else if (!res.ok) setError(data.error || '分析中にエラーが発生しました');
       else setResult(data);
     } catch {
       setError('通信エラーが発生しました。もう一度お試しください');
@@ -78,11 +80,13 @@ export default function DiagnoseView() {
         />
         <div className="diagnose__actions">
           <span className="muted">{situation.length} / 5000文字・Ctrl+Enterでも送信できます</span>
-          <button type="button" className="btn btn--accent" disabled={!situation.trim() || loading} onClick={submit}>
+          <button type="button" className="btn btn--accent" disabled={!situation.trim() || loading || unavailable} onClick={submit}>
             {loading ? '分析しています…' : 'AIで分析する'}
           </button>
         </div>
       </div>
+
+      {unavailable && <div className="diagnose__notice" role="status">AI診断は現在準備中です。</div>}
 
       {error && <div className="diagnose__error" role="alert">{error}</div>}
 

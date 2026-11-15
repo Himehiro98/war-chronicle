@@ -61,6 +61,13 @@ type Result = {
 };
 
 export async function POST(request: NextRequest) {
+  // APIキー未設定（準備中）のときは Anthropic を呼ばずに 503 を返す
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return NextResponse.json(
+      { error: 'AI診断は現在準備中です。', code: 'AI_UNAVAILABLE' },
+      { status: 503 },
+    );
+  }
   try {
     const body = await request.json();
     const { situation } = body;

@@ -198,6 +198,7 @@ mark { background: rgba(251, 191, 36, 0.45); color: inherit; border-radius: 2px;
 .diagnose__textarea { min-height: 160px; resize: vertical; line-height: 1.8; }
 .diagnose__actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; font-size: 12px; }
 .diagnose__error { margin-top: 16px; padding: 12px 14px; border-radius: 8px; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+.diagnose__notice { margin-top: 16px; padding: 12px 14px; border-radius: 8px; background: var(--surface, #f5f5f4); color: var(--muted, #57534e); border: 1px solid var(--border, #e7e5e4); }
 .diagnose__result { margin-top: 28px; }
 .diagnose__summary { padding: 18px 20px; border-left: 4px solid var(--muted); margin-bottom: 16px; }
 .diagnose__summary.is-high { border-left-color: #dc2626; }

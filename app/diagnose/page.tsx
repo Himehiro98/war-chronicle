@@ -7,7 +7,12 @@ export const metadata: Metadata = {
   description: 'いま起きている出来事や状況を入力すると、構造的に似ている過去の戦争をAIが探し、注意すべき類似点を示します。',
 };
 
+// 環境変数の有無はビルド時ではなくリクエスト時に判定する
+export const dynamic = 'force-dynamic';
+
 export default function DiagnosePage() {
+  // 真偽値だけを渡す（キーの値は絶対にクライアントへ渡さない）
+  const aiAvailable = Boolean(process.env.ANTHROPIC_API_KEY);
   return (
     <main>
       <section className="page-hero">
@@ -21,7 +26,7 @@ export default function DiagnosePage() {
         </div>
       </section>
       <div className="container-read practice-body">
-        <DiagnoseView />
+        <DiagnoseView aiAvailable={aiAvailable} />
       </div>
     </main>
   );
