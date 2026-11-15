@@ -3,12 +3,11 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { WARS } from '@/lib/wars';
 
 // react-globe.gl は WebGL/Three.js ベースなので動的インポートで SSR を回避
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
 
-interface PointData {
+export interface PointData {
   lat: number;
   lng: number;
   label: string;
@@ -36,6 +35,8 @@ const REGION_LABELS: Record<number, string> = {
 
 interface Props {
   size?: number;
+  /** 地球儀に載せる戦場マーカー（サーバー側で生成して渡す。WARS データをクライアントに同梱しないため） */
+  points: PointData[];
 }
 
 function formatYear(y: number): string {
@@ -43,7 +44,7 @@ function formatYear(y: number): string {
   return `${y}年`;
 }
 
-export default function RotatingGlobe({ size = 600 }: Props) {
+export default function RotatingGlobe({ size = 600, points }: Props) {
   const router = useRouter();
   const globeRef = useRef<any>(null);
   const [ready, setReady] = useState(false);
@@ -73,22 +74,7 @@ export default function RotatingGlobe({ size = 600 }: Props) {
     controls.autoRotate = !selected;
   }, [selected, ready]);
 
-  // 戦争マーカー
-  const pointsData: PointData[] = WARS.flatMap((w) =>
-    (w.markers ?? [])
-      .filter((m) => m.isMain)
-      .map((m) => ({
-        lat: m.coordinates[1],
-        lng: m.coordinates[0],
-        label: w.name,
-        year: w.year,
-        endYear: w.endYear,
-        weight: w.weight ?? 1,
-        region: w.region,
-        warId: w.id,
-        era: w.era,
-      })),
-  );
+  const pointsData = points;
 
   const handlePointClick = useCallback((point: any) => {
     const p = point as PointData;

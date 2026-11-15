@@ -32,6 +32,23 @@ export default function Home() {
     return m && w ? [{ id, name: w.name, myth: m.myth }] : [];
   });
 
+  // 地球儀に載せる戦場マーカー（サーバー側で生成し、WARS 全データをクライアントに送らない）
+  const globePoints = WARS.flatMap((w) =>
+    (w.markers ?? [])
+      .filter((m) => m.isMain)
+      .map((m) => ({
+        lat: m.coordinates[1],
+        lng: m.coordinates[0],
+        label: w.name,
+        year: w.year,
+        endYear: w.endYear,
+        weight: w.weight ?? 1,
+        region: w.region,
+        warId: w.id,
+        era: w.era,
+      })),
+  );
+
   return (
     <main>
       {/* ── ヒーロー ── */}
@@ -52,7 +69,7 @@ export default function Home() {
               <Link href="/explore" className="btn btn--ghost-dark">年表と地図で探す</Link>
             </div>
           </div>
-          <HeroGlobe />
+          <HeroGlobe points={globePoints} />
         </div>
       </section>
 
